@@ -1,0 +1,3 @@
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/comm/nvtmem/nvtmem.ko
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/comm/nvtmem/nvtmem_main_no_tracer.o
+

@@ -1,0 +1,12 @@
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_gfx/videosprite/nvt_videosprite.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_gfx/nvt_gfx.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_videoout/unit/kflow_videoout.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_videodec/unit/kflow_videodec.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_videoenc/unit/kflow_videoenc.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_audioenc/unit/kflow_audioenc.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_audiodec/unit/kflow_audiodec.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_audiocapture/unit/kflow_audiocap.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_audioout/unit/kflow_audioout.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_common/kflow_common.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_videocapture/kflow_videocapture.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_flow/source/kflow_videoprocess/kflow_videoprocess.ko

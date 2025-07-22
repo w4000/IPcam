@@ -1,0 +1,625 @@
+#/app/tool
+#
+#	Makefile for IPM-Hi application.
+#
+###############################################################################
+
+export TOP_DIR := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+
+########################################################################
+# Only Development
+REL_BUILD ?= 0
+include $(MODEL_SPEC)
+include Makefile.nova
+
+
+
+
+DEVELOP_MODEL=21C26IP6
+MODEL=DEVELOP_MODEL
+NARCH=NT98566
+SENSOR_TYPE=imx327
+
+
+
+VIDEOTYPE ?= 0
+USE_STREAM_CONSUMER ?= 0
+USE_VIDEO_POOL ?= 0
+USE_WEBSOCKET ?= 0
+USE_NEW_ONVIF ?= 0
+USE_DF2_SUPPORT ?= 0
+SUPPORT_MJPEG ?= 0
+SUPPORT_MFZ_PIXEL ?= 0
+_USE_WEBSOCKET_SERVER_ ?= 1
+IPDEVICE_TYPE ?= 327
+
+
+RSETUP_DIR = ${TOP_DIR}/tools/new_rsetup_jQuery/v1018/
+
+
+ifeq ($(MODEL),)
+$(error "!!! Missing Parameter !!! (Invalid MODEL=$(MODEL))")
+endif
+
+ifeq ($(NARCH),)
+$(error "!!! Missing Parameter !!! (Invalid NOVAKTE ARCH)")
+endif
+
+
+ifeq ($(SENSOR_TYPE),)
+$(error "!!! Missing Parameter !!! (Invalid SENSOR_TYPE)")
+endif
+
+include $(TOP_DIR)/Makefile.param
+include $(TOP_DIR)/Makefile.pretty
+
+ifdef NARCH
+	ARCH_PATH=$(subst ,,$(NARCH))
+	USE_DF2_SUPPORT = 1
+endif
+
+export NARCH
+export ARCH_PATH
+export OEM
+export SUPPORT_FISHEYE
+export USE_NEW_ONVIF
+export HKARCH
+export USE_DF2_SUPPORT
+export SUPPORT_MJPEG
+export SUPPORT_MFZ_PIXEL
+export _USE_WEBSOCKET_SERVER_
+
+
+
+TARGET = ecam
+
+TARGET_BIN = $(TARGET)
+export TARGET_BIN
+
+ALL_ARCH = NT98566
+OTHER_ARCH = $(filter-out $(ARCH_PATH),$(ALL_ARCH))
+EXCLUDES = $(foreach var, $(OTHER_ARCH),--exclude=*$(var)* )
+
+DEST_DIR ?= $(TOP_DIR)/_output/$(ARCH_PATH)
+export DEST_DIR
+ARCH_TYPE = ARCH_ARM
+USE_STATUS_OSD ?= 0
+
+
+
+
+
+
+# USE_STREAM_CONSUMER = 1
+RELVER = ${DEVICE_VER1}
+MAJVER = ${DEVICE_VER2}
+MINVER = ${DEVICE_VER3}
+HWMODEL = 0
+RELDATE = 0
+CAM_MAX = 3
+ONVIF_CAM_MAX = 3
+export CAM_MAX ONVIF_CAM_MAX
+FPS_MAX = 120
+
+
+export RELVER
+export MAJVER
+export MINVER
+
+ifeq ($(USE_STATUS_OSD), 1)
+ADD_MACRO += -D'USE_STATUS_OSD=$(USE_STATUS_OSD)'
+endif
+
+MACRO = -D'TARGET_BIN="$(TARGET_BIN)"' \
+		-D'CAM_MAX=$(CAM_MAX)' \
+		-D'ONVIF_CAM_MAX=$(ONVIF_CAM_MAX)' \
+		-D'FPS_MAX=$(FPS_MAX)' \
+		-D'AUDIN_MAX=$(AUDIN_MAX)' \
+		-D'REVISION="$(REVISION)"' \
+		-D'VER_STR="$(RELVER).$(MAJVER).$(MINVER)"' \
+		-D$(ARCH_TYPE) \
+		-D'HIARCH=$(HIARCH)' \
+		-D'FS=1' \
+		-D'DEBUG_CONSOLE=$(DEBUG_CONSOLE)' \
+		-D'BETA_VER=$(BETA_VER)' \
+
+
+CFLAGS += -D'RELVER="$(RELVER)"' -D'MAJVER="$(MAJVER)"' -D'MINVER="$(MINVER)"' -D'RELDATE="$(RELDATE)"'
+
+
+ADD_MACRO += -D'NARCH=$(NARCH)'
+
+
+ifeq ($(_USE_WEBSOCKET_SERVER_), 1)
+ADD_MACRO += -D'_USE_WEBSOCKET_SERVER_'
+endif
+
+
+ifeq ($(USE_NEW_ONVIF), 1)
+ADD_MACRO += -D'USE_NEW_ONVIF'
+ADD_MACRO += -D'USE_ONVIF_PORT_PROXY'
+endif
+
+
+ifeq ($(USE_DF2_SUPPORT), 1)
+ADD_MACRO += -D'USE_DF2_SUPPORT'
+endif
+
+ADD_MACRO += -D'MODEL_NAME="$(MODEL)"'
+
+ADD_MACRO += -D'$(OEM)' \
+			 -D'PLATFORM_MODEL=$(HWMODEL)' \
+			 -D'SUB_MODEL=$(SUB_MODEL)'
+
+ADD_MACRO += -D'USE_SETUP_ENCRYPTION'
+ADD_MACRO += -DLIGHTTPD
+ADD_MACRO += -D'SUPPORT_H265'
+
+
+ifneq ($(SUPPORT_MJPEG),0)
+ADD_MACRO += -D'SUPPORT_MJPEG'
+endif
+
+
+ifeq ($(SUPPORT_FISHEYE),1)
+ADD_MACRO += -D'SUPPORT_FISHEYE'
+endif
+
+
+ifeq ($(VIDEO_CROP), 1)
+ADD_MACRO += -D'VIDEO_CROP'
+endif
+
+ifeq ($(VIDEO_VERTICAL), 1)
+ADD_MACRO += -D'VIDEO_VERTICAL'
+endif
+
+
+ifeq ($(SUPPORT_MD_PUSH), 1)
+ADD_MACRO += -D'SUPPORT_MD_PUSH'
+endif
+
+
+
+
+ifeq ($(SENSOR_TYPE),imx327)
+	# LOGO_FILE = logo.2mp.png
+	ADD_MACRO += -D'SENSOR_2M_PIXEL'
+	ADD_MACRO += -D'SENSOR_IMX327'
+	ADD_MACRO += -D'MAX_CH_FPS=30'
+endif
+
+
+ifeq ($(USE_WEBSOCKET), 1)
+USE_VIDEO_POOL = 1
+ADD_MACRO += -D'USE_WEBSOCKET'
+endif
+ifeq ($(USE_STREAM_CONSUMER), 1)
+ADD_MACRO += -D'USE_STREAM_CONSUMER'
+endif
+ifeq ($(USE_VIDEO_POOL), 1)
+ADD_MACRO += -D'USE_VIDEO_POOL'
+endif
+
+
+ifeq ($(NEW_OSD_SETUP),1)
+ADD_MACRO += -DNEW_OSD_SETUP
+endif
+
+export ADD_MACRO
+
+MACRO += $(ADD_MACRO) -D_GNU_SOURCE
+
+TARGET_DIR = $(TOP_DIR)/
+
+# ifneq ($(USE_DF2_SUPPORT), 1)
+OBJS	= $(TOP_DIR)/_config/model_spec.o
+# endif
+
+OBJS	+= \
+	$(TOP_DIR)/main.o					\
+	$(TOP_DIR)/setup/setup.o			\
+	$(TOP_DIR)/setup/nsetup.o			\
+	$(TOP_DIR)/setup/setup_encryption.o	\
+	$(TOP_DIR)/setup/setup_ini.o		\
+	$(TOP_DIR)/utils/utils.o			\
+	$(TOP_DIR)/lib/base64.o				\
+	$(TOP_DIR)/lib/sha256.o				\
+	$(TOP_DIR)/lib/cipher.o				\
+	$(TOP_DIR)/lib/blowfish.o			\
+	$(TOP_DIR)/lib/datetime_glibc.o		\
+	$(TOP_DIR)/lib/datetime.o			\
+	$(TOP_DIR)/lib/filelib.o			\
+	$(TOP_DIR)/lib/md5.o				\
+	$(TOP_DIR)/lib/misc.o				\
+	$(TOP_DIR)/lib/msg.o				\
+	$(TOP_DIR)/lib/net.o				\
+	$(TOP_DIR)/lib/threadsafe.o			\
+	$(TOP_DIR)/lib/upgr.o				\
+	$(TOP_DIR)/lib/verify_user.o		\
+	$(TOP_DIR)/lib/font.o				\
+	$(TOP_DIR)/lib/mongoose.o			\
+	$(TOP_DIR)/lib/ini_impl.o			\
+	$(TOP_DIR)/lib/dbmanager.o			\
+	$(TOP_DIR)/lib/euc-kr.o				\
+	$(TOP_DIR)/lib/pool.o				\
+	$(TOP_DIR)/lib/circular_queue.o	\
+	$(TOP_DIR)/lib/CircularBuffer.o	\
+	$(TOP_DIR)/ipc/ipc_status.o			\
+	$(TOP_DIR)/ipc/ipc_server_proc.o	\
+	$(TOP_DIR)/ipc/ipc_server.o			\
+	$(TOP_DIR)/ipc/ipc_client.o			\
+	$(TOP_DIR)/device/flash.o			\
+	$(TOP_DIR)/device/quaddev.o			\
+	$(TOP_DIR)/device/codecdev.o		\
+	$(TOP_DIR)/file/file.o				\
+	$(TOP_DIR)/file/hdd.o				\
+	$(TOP_DIR)/file/log.o				\
+	$(TOP_DIR)/file/playback.o			\
+	$(TOP_DIR)/file/ssf.o				\
+	$(TOP_DIR)/file/ssfsearch.o			\
+	$(TOP_DIR)/keybd/keybd.o			\
+	$(TOP_DIR)/kmsg/kmsg.o				\
+	$(TOP_DIR)/net/net_protocol.o		\
+	$(TOP_DIR)/netsvr/sysinfo.o			\
+	$(TOP_DIR)/netsvr/netsvr.o			\
+	$(TOP_DIR)/netsvr/server.o			\
+	$(TOP_DIR)/netsvr/auth.o			\
+	$(TOP_DIR)/netsvr/live.o			\
+	$(TOP_DIR)/netsvr/vod.o				\
+	$(TOP_DIR)/netsvr/notify.o			\
+	$(TOP_DIR)/thread/thread.o			\
+	$(TOP_DIR)/timer/timer.o			\
+	$(TOP_DIR)/timer/watchdog.o			\
+	$(TOP_DIR)/encoder/encoder.o 		
+
+
+
+
+ifeq ($(_USE_WEBSOCKET_SERVER_), 1)
+OBJS 	+= \
+ 	$(TOP_DIR)/wsServer/base64/base64.o	\
+ 	$(TOP_DIR)/wsServer/handshake/handshake.o \
+ 	$(TOP_DIR)/wsServer/sha1/sha1.o \
+ 	$(TOP_DIR)/wsServer/websocket_server.o \
+ 	$(TOP_DIR)/wsServer/ws.o
+endif
+
+
+
+OBJS += $(TOP_DIR)/encoder/$(ARCH_PATH)/video_default.o	\
+	$(TOP_DIR)/encoder/$(ARCH_PATH)/encoder_common.o		
+
+OBJS +=  $(TOP_DIR)/encoder/osd.o \
+	$(TOP_DIR)/encoder/vfb.o \
+	$(TOP_DIR)/isp/isp_common.o	\
+	$(TOP_DIR)/encoder/osd_datetime.o \
+	$(TOP_DIR)/encoder/osd_title.o 
+
+
+
+
+OBJS += $(TOP_DIR)/rtsp/RTSP_common.o 		
+
+
+OBJS +=	\
+		$(TOP_DIR)/device/$(ARCH_PATH)/nv_reg_io.o	\
+		$(TOP_DIR)/device/$(ARCH_PATH)/nv_gpio.o	\
+		$(TOP_DIR)/device/$(ARCH_PATH)/gpio.o
+
+
+ifeq ($(USE_VIDEO_POOL), 1)
+OBJS+= \
+	$(TOP_DIR)/lib/video_pool.o
+endif
+
+ifeq ($(USE_WEBSOCKET), 1)
+OBJS+= \
+	$(TOP_DIR)/netsvr/websocket.o
+endif
+
+ISP_CFG_FILES =	$(TOP_DIR)/isp/$(ARCH_PATH)/cfg
+
+ifeq ($(VO_DEVICE),MDIN3xx)
+OBJS+= \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdin3xx.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdinaux.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdinbus.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdincoef.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdindly.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdinfrmt.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdinhtx.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdini2c.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdinipc.o \
+	$(TOP_DIR)/device/vo/$(VO_DEVICE)/mdinpci.o \
+	$(TOP_DIR)/device/vo.o
+endif
+
+
+
+ifeq ($(SUPPORT_MD_PUSH), 1)
+OBJS+= \
+	$(TOP_DIR)/push/push_md_http.o
+endif
+
+
+MACRO += -DNDEBUG
+
+INC = -I$(TOP_DIR)
+INC += -I$(TOP_DIR)/include
+INC += -I$(TOP_DIR)/device/$(ARCH_PATH)
+ifeq ($(VO_DEVICE),MDIN3xx)
+INC += -I$(TOP_DIR)/device/vo/$(VO_DEVICE)/
+endif
+INC += -I$(TOP_DIR)/encoder
+INC += -I$(TOP_DIR)/encoder/$(ARCH_PATH)
+
+INC += -I$(TOP_DIR)/isp
+INC += -I$(TOP_DIR)/extlib/include
+INC += -I$(TOP_DIR)/tools/freetype/include/freetype2
+INC += -I$(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/include/iconv
+
+ifeq ($(USE_NEW_ONVIF), 1)
+COMPILEOPTION = -DEPOLL
+COMPILEOPTION += -DMEDIA_SUPPORT
+COMPILEOPTION += -DIMAGE_SUPPORT
+COMPILEOPTION += -DDEVICEIO_SUPPORT
+COMPILEOPTION += -DMEDIA2_SUPPORT
+COMPILEOPTION += -DVIDEO_ANALYTICS
+INC += -I./onvifserver
+INC += -I./onvifserver/bm
+INC += -I./onvifserver/onvif
+INC += -I./onvifserver/http
+OBJS += ./onvifserver/bm/word_analyse.o
+OBJS += ./onvifserver/bm/util.o
+OBJS += ./onvifserver/bm/sys_os.o
+OBJS += ./onvifserver/bm/sys_buf.o
+OBJS += ./onvifserver/bm/ppstack.o
+OBJS += ./onvifserver/bm/base64.o
+OBJS += ./onvifserver/bm/sha1.o
+OBJS += ./onvifserver/bm/linked_list.o
+OBJS += ./onvifserver/bm/hqueue.o
+OBJS += ./onvifserver/bm/rfc_md5.o
+OBJS += ./onvifserver/bm/xml_node.o
+OBJS += ./onvifserver/bm/hxml.o
+OBJS += ./onvifserver/bm/cam_setup.o
+#w4000
+OBJS += ./onvifserver/http/http_srv.o
+OBJS += ./onvifserver/http/http_auth.o
+OBJS += ./onvifserver/http/http_parse.o
+OBJS += ./onvifserver/http/http_cln.o
+OBJS += ./onvifserver/onvif/soap.o
+OBJS += ./onvifserver/onvif/onvif_probe.o
+OBJS += ./onvifserver/onvif/onvif_pkt.o
+OBJS += ./onvifserver/onvif/onvif.o
+OBJS += ./onvifserver/onvif/soap_parser.o
+OBJS += ./onvifserver/onvif/onvif_device.o
+OBJS += ./onvifserver/onvif/onvif_timer.o
+OBJS += ./onvifserver/onvif/onvif_event.o
+OBJS += ./onvifserver/onvif/onvif_srv.o
+OBJS += ./onvifserver/onvif/onvif_utils.o
+OBJS += ./onvifserver/onvif/onvif_cm.o
+OBJS += ./onvifserver/onvif/onvif_cfg.o
+OBJS += ./onvifserver/onvifserver.o
+#w4000
+
+#w4000 LINKED_OBJS = ./onvifserver/onvifserver.o
+#w4000 LINKED_OBJS += ./onvifserver/bm/cam_setup.o
+
+
+ifneq ($(findstring DEVICEIO_SUPPORT, $(COMPILEOPTION)),)
+OBJS += ./onvifserver/onvif/onvif_deviceio.o
+endif
+
+ifneq ($(findstring MEDIA_SUPPORT, $(COMPILEOPTION)),)
+OBJS += ./onvifserver/onvif/onvif_media.o
+endif
+
+ifneq ($(findstring IMAGE_SUPPORT, $(COMPILEOPTION)),)
+OBJS += ./onvifserver/onvif/onvif_image.o
+endif
+
+ifneq ($(findstring MEDIA2_SUPPORT, $(COMPILEOPTION)),)
+ifeq ($(findstring onvif_media, $(OBJS)),)
+OBJS += ./onvifserver/onvif/onvif_media.o
+endif
+OBJS += ./onvifserver/onvif/onvif_media2.o
+endif
+
+ifneq ($(findstring VIDEO_ANALYTICS, $(COMPILEOPTION)),)
+OBJS += ./onvifserver/onvif/onvif_analytics.o
+endif
+
+MACRO += $(COMPILEOPTION)
+
+endif # USE_NEW_ONVIF
+
+SRCS = $(OBJS:.o=.c)
+SOURCES = $(SRCS)
+HEADERS = $(wildcard *.h)
+RELOBJFILES = $(SOURCES:%.c=%.o)
+
+CROSS_NAME = $(CROSS:gnueabihf-=gnueabihf)
+
+
+SSL_LIBS = -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -lssl -lcrypto
+MARKUP_LIBS = -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -ljansson -lmxml -lsqlite3
+HIK_LIBS = -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -lheopsdk -lhal_bsp -lSysUpg -lUpgEnc_IPC_1 -lhikcry -lpwrapper -lUbootUpg -l_daynight_prot
+GPERF_LIBS = -L$(TOP_DIR)/tools/gperftools/lib/ -lprofiler -ltcmalloc -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-free
+FREETYPE_LIBS = -L$(TOP_DIR)/tools/freetype/lib/$(CROSS_NAME) -lfreetype
+ICONV_LIBS = -L$(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/lib/$(CROSS_NAME) -liconv
+CURL_LIBS = -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -lcurl
+MP4_LIBS = -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -lmp4v2
+OEM_TOOL_LIBS = -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -loemtool
+LIBS = $(SSL_LIBS) $(MARKUP_LIBS) $(FREETYPE_LIBS) $(ICONV_LIBS)
+
+
+ifneq ($(HKARCH),)
+LIBS += $(HIK_LIBS)
+endif
+
+
+ifeq ($(SUPPORT_MD_PUSH), 1)
+LIBS += $(CURL_LIBS)
+endif
+
+
+ifeq ($(USE_DF2_SUPPORT), 1)
+LIBS += $(OEM_TOOL_LIBS)
+OEM_XML_MODEL=$(MODEL)
+endif
+
+
+LIBS += -L$(TOP_DIR)/extlib/lib/$(CROSS_NAME) -laes
+
+
+SUBDIRS = 	$(TOP_DIR)/tools/upgr_load \
+			$(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin \
+			$(TOP_DIR)/tools/new_rsetup_jQuery/cgi-api
+
+FASTCGI = $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin
+
+CPPFLAGS += $(CFLAGS)
+CFLAGS += -Wno-unused-but-set-variable -Wno-implicit-function-declaration -Wno-old-style-declaration
+
+.PHONY: clean release
+
+
+all : release
+
+all_with_tools : all subdirs
+
+upgr_load :
+	make -C $(TOP_DIR)/tools/upgr_load
+
+upgr_load_clean :
+	make -C $(TOP_DIR)/tools/upgr_load clean
+
+cgi_test :
+	make -C $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin cgi_test
+
+cgi-bin :
+	make -C $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin
+
+cgi-bin_clean :
+	make -C $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin clean
+
+cgi-api :
+	make -C $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-api
+	#cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-api/*.fcgi $(DEST_DIR)/www/cgi-bin
+
+cgi-api_clean :
+	make -C $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-api clean
+
+subdirs :
+	@for i in $(SUBDIRS) ; do make -C $$i -j || exit -1 ; done
+
+
+
+# release: $(RELOBJFILES)
+# 	@$(call run_and_test,$(CC) -o $(TARGET) $^ $(ALPUC_OBJ) $(SOC_LIBS) -lrt -lstdc++ $(LIBS) $(CFLAGS), Linking)
+
+# clean:
+# 	$(VERBOSE) -$(RM) -rf $(OBJS) $(TARGET) 
+
+
+release: $(RELOBJFILES)
+	@$(call run_and_test,$(CC) -o $(TARGET) $^ $(LINKED_OBJS) $(ALPUC_OBJ) $(SOC_LIBS) -lrt -lstdc++ $(LIBS) $(CFLAGS), Linking)
+
+
+$(RELOBJFILES):	%.o: %.c
+	@$(call run_and_test,$(CC) -c -o $@ $< $(CFLAGS) $(INC) $(MACRO), Compiling)
+
+
+clean:
+	$(VERBOSE) -$(RM) -rf $(filter-out ./onvifserver/onvifserver.o ./onvifserver/bm/cam_setup.o, $(OBJS)) $(TARGET) $(TOP_DIR)/rootfs_home.squashfs
+
+
+clean_with_tools: clean
+	@for i in $(SUBDIRS) ; do make -C $$i clean || exit -1 ; done
+
+targetdir:
+	mkdir -p $(DEST_DIR)/edvr
+	mkdir -p $(DEST_DIR)/www/cgi-bin
+	mkdir -p $(DEST_DIR)/www/css
+	mkdir -p $(DEST_DIR)/www/html
+	mkdir -p $(DEST_DIR)/www/img
+	mkdir -p $(DEST_DIR)/www/js
+	mkdir -p $(DEST_DIR)/www/lang
+	mkdir -p $(DEST_DIR)/www/onvif
+	mkdir -p $(DEST_DIR)/www/sda1
+	mkdir -p $(DEST_DIR)/www/fonts
+
+install-target: targetdir
+	mkdir -p $(DEST_DIR)/lib
+	cp -a $(TOP_DIR)/extlib/lib/$(CROSS_NAME)/*.so* $(DEST_DIR)/lib
+ifneq ($(ISP_CFG_FILES),)
+	mkdir -p $(DEST_DIR)/edvr/isp_cfg
+	cp -a $(ISP_CFG_FILES)/* $(DEST_DIR)/edvr/isp_cfg
+endif
+	$(CROSS)strip $(TARGET)
+	cp $(TARGET) $(DEST_DIR)/edvr
+
+install-utils: targetdir
+	cp -a $(TOP_DIR)/tools/upgr_load/upgr_load $(DEST_DIR)/edvr
+	cp -a $(TOP_DIR)/tools/freetype/D2Coding.ttf $(DEST_DIR)/edvr
+
+install-web: targetdir
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/index.html $(DEST_DIR)/www
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/js/*.js $(DEST_DIR)/www/js
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/js/decoder $(DEST_DIR)/www/js -a
+	cp -ar $(TOP_DIR)/tools/new_rsetup_jQuery/js/* $(DEST_DIR)/www/js/
+ifneq ($(NARCH),)
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/js/setup.nova.js $(DEST_DIR)/www/js/setup.js
+endif
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/lang/* $(DEST_DIR)/www/lang
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/img $(DEST_DIR)/www
+
+	
+
+
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/css $(DEST_DIR)/www
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/html/*.html $(DEST_DIR)/www/html
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/*.cgi $(DEST_DIR)/www/cgi-bin
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/*.fcgi $(DEST_DIR)/www/cgi-bin
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/libjQuery_common.so $(DEST_DIR)/lib2
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/libajax_common.so $(DEST_DIR)/lib2
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-bin/lib/$(CROSS_NAME)/libcgi.so $(DEST_DIR)/lib
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-api/*.fcgi $(DEST_DIR)/www/cgi-bin
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/cgi-api/*.fcgi $(DEST_DIR)/www/fonts
+	cp -a $(TOP_DIR)/tools/new_rsetup_jQuery/fonts/* $(DEST_DIR)/www/fonts
+
+
+
+install-dhcpcd: targetdir
+	@echo ">>> $@"
+	cp -a $(TOP_DIR)/tools/dhcpcd $(DEST_DIR)/edvr
+
+install-lighttpd: targetdir
+	@echo ">>> $@"
+	cp -a $(TOP_DIR)/tools/lighttpd $(DEST_DIR)/edvr
+
+	cp -a $(TOP_DIR)/tools/lighttpd/lighttpd.conf.default $(DEST_DIR)/edvr/lighttpd/lighttpd.conf.default
+ifeq ($(USE_NEW_ONVIF), 1)
+	cp -a $(TOP_DIR)/tools/lighttpd/conf.d/fastcgi.onvif.conf $(DEST_DIR)/edvr/lighttpd/conf.d/fastcgi.conf
+	cp -a $(TOP_DIR)/tools/lighttpd/conf.d/proxy.onvif.conf $(DEST_DIR)/edvr/lighttpd/conf.d/proxy.conf
+endif
+
+
+
+
+install: install-target install-utils install-web install-lighttpd install-dhcpcd
+	@echo ">>> $@"
+
+mkhome:
+	$(TOP_DIR)/../package/tools/mksquashfs $(DEST_DIR) $(TOP_DIR)/rootfs_home.squashfs -b 256K
+
+tags: clean_tags
+	@echo ">>> $@"
+	ctags -R $(EXCLUDES) --exclude=*min.js --exclude=cscope*
+	find `pwd` -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.h' -o -name '*.s' -o -name '*.S' > cscope.files
+	cscope -i cscope.files -R
+
+clean_tags:
+	@echo ">>> $@"
+	-rm tags cscope.files cscope.out

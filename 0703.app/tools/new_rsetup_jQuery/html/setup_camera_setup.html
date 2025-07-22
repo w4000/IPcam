@@ -1,0 +1,308 @@
+<!--##PARAM_JQUERY_INCLUDE##-->
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="/js/qtloader.js"></script>
+
+<script language="JavaScript">
+     <!--
+      var loginid = "##PARAM_LOGIN_ID##";
+      var loginpwd = "##LOGIN_PWD##";
+      var cam_mac = "##PARAM_MACADDR##";
+     // $("button").button();
+
+
+     function _tabSelect(e, tab) {
+     	var idx = tab.index;
+     	tabSelect(idx);
+     }
+
+     function tabSelect(idx) {
+       var address;
+       var tab_obj;
+      
+       switch (idx) {
+         case 0: // iq
+           address = "/cgi-bin/cam_image_setup_iq.cgi";
+           tab_obj = $("#tabs-iq");
+           break;
+
+         case 1: // ae
+           address = "/cgi-bin/cam_image_setup_ae.cgi";
+           tab_obj = $("#tabs-ae");
+           break;
+
+         case 2: // blc
+           address = "/cgi-bin/cam_image_setup_blc.cgi";
+           tab_obj = $("#tabs-blc");
+           break;
+
+         case 3: // awb
+           address = "/cgi-bin/cam_image_setup_awb.cgi";
+           tab_obj = $("#tabs-awb");
+           break;
+
+         case 4: // day and night
+           address = "/cgi-bin/cam_image_setup_daynight.cgi";
+           tab_obj = $("#tabs-daynight");
+           break;
+
+           break;
+       }
+
+       var d = new Date();
+       var t = d.getTime();
+       address += "?" + t;
+
+
+       $.ajax({
+        type: "POST",
+        url: address,
+        data: {
+        },
+        success: function(data){
+          tab_obj.empty();
+          try
+          {
+            tab_obj.append(data);
+          }
+          catch (err1)
+          {
+            //alert(err1);
+          }
+        },
+        error: function(err) {
+          alert(msgAjaxFail);
+        }
+      });
+    // $(".tab-div").attr("src", address);
+     }
+
+
+     function init() {
+       init_live();
+       tabSelect(0);
+     }
+
+
+     var cam_max = 3;
+        let qtLoader = undefined;
+      	function init_live() {
+          
+          var spinner = document.querySelector('#qtspinner');
+          var canvas = document.querySelector('#screen');
+          var status = document.querySelector('#qtstatus')
+		
+          qtLoader = new QtLoader({
+            canvasElements : [canvas],
+            showLoader: function(loaderStatus) {
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+                // status.innerHTML = loaderStatus + "...";
+                status.innerHTML = "<font color=#ff8127>" + loaderStatus + "...</font>";
+            },
+            showError: function(errorText) {
+
+                status.innerHTML = "<font color=yellow>" + errorText + "</font>";
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+            },
+            showExit: function() {
+                status.innerHTML = "";
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+            },
+            showCanvas: function() {
+                spinner.style.display = 'none';
+                canvas.style.display = 'block';
+
+                setTimeout(
+
+                  function() {
+                    var host = window.location.hostname;
+                    host = "ws://" + window.location.hostname;
+                    var webUrl = qtLoader.module.allocateUTF8(host);
+                    var webMac = qtLoader.module.allocateUTF8(cam_mac);                    
+
+                    var webPort = window.location.port;
+                    
+                    if (webPort == "" || !webPort || webPort == null || webPort == NaN || webPort == undefined)
+                    {
+                        var result = qtLoader.module._uweblive_setSiteInfo(webUrl, 8080, 8080, webMac, 0, 1);
+                    }
+                    else
+                    {
+                        var result = qtLoader.module._uweblive_setSiteInfo(webUrl, webPort, webPort, webMac, 0, 1);
+                    }
+         
+                    // var webUser = qtLoader.module.allocateUTF8("admin");
+                    // var webPass = qtLoader.module.allocateUTF8("1234");
+                    var webUser = qtLoader.module.allocateUTF8(loginid);
+                    var webPass = qtLoader.module.allocateUTF8(loginpwd);
+                    
+
+                    result = qtLoader.module._uweblive_setUserPass(webUser, webPass);
+                    
+ 
+                    {
+                      var result = qtLoader.module._uweblive_connect();
+                    }
+
+                    
+                    }, 
+                    100
+                  );
+
+                
+            },
+        });
+        qtLoader.loadEmscriptenModule("/js/WebLiveViewer");
+
+      	}
+  init();
+     -->
+</script>
+
+<style>
+  .I_Text {
+    border: 0 #ffffff solid;
+    height: 20px;
+    font-family: tahoma;
+    text-align: center;
+    width: 50px !important;
+  }
+
+  .tab-div {
+    margin-top: 10px;
+    width: 100%;
+    height: calc(100vh - 120px);
+  }
+  #screen { border: 0px none; float: center; margin-left: 0; margin-top: 0px; width: 100%; height: 100%; }
+  #screen { outline: 0px solid transparent; caret-color: transparent; cursor:default }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="ribbon ribbon-primary">LIVE VIEW</div>
+            <div class="row">
+              <div class="col-xl-12" style="width: 100%" style="height: 100%">
+                <figure style="overflow:visible;" id="qtspinner">
+                  <center style="margin-top:1.5em; line-height:150%">
+                    <img src="../img/qtlogo.svg" width="320" height="200" style="display:block"></img>
+                    <strong>WebLiveViewer</strong>
+                    <!-- <strong>Qt for WebAssembly: WebLiveViewer</strong> -->
+                    <div id="qtstatus"></div>
+                    <!-- <noscript>JavaScript is disabled. Please enable JavaScript to use this application.</noscript> -->
+                  </center>
+                </figure>
+          
+                <div id="screen"></div>
+                <div style="padding:340px"></div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card-box card-white-box ribbon-box">
+        <div class="ribbon ribbon-primary">##RES_CAMERA_CONFIG##</div>
+
+        <ul class="nav nav-tabs" style="margin-top: 50px">
+          <li class="nav-item">
+            <a
+              href="#tabs-iq"
+              data-toggle="tab"
+              onclick="tabSelect(0)"
+              aria-expanded="false"
+              class="nav-link active"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-account"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_IMAGE_QUALITY##</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#tabs-ae"
+              data-toggle="tab"
+              onclick="tabSelect(1)"
+              aria-expanded="true"
+              class="nav-link"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-home-variant"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_EXPOSURE##</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#tabs-blc"
+              data-toggle="tab"
+              onclick="tabSelect(2)"
+              aria-expanded="true"
+              class="nav-link"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-home-variant"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_BACKLIGHT##</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#tabs-awb"
+              data-toggle="tab"
+              onclick="tabSelect(3)"
+              aria-expanded="true"
+              class="nav-link"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-home-variant"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_WHITE_BALANCE##</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#tabs-daynight"
+              data-toggle="tab"
+              onclick="tabSelect(4)"
+              aria-expanded="true"
+              class="nav-link"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-home-variant"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_DAY_NIGHT##</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane col-xl-12 show active" id="tabs-iq"></div>
+          <div class="tab-pane col-xl-12" id="tabs-ae"></div>
+          <div class="tab-pane col-xl-12" id="tabs-blc"></div>
+          <div class="tab-pane col-xl-12" id="tabs-awb"></div>
+          <div class="tab-pane col-xl-12" id="tabs-daynight"></div>
+        </div>
+      </div>
+      <!-- end col -->
+    </div>
+    <!-- end row -->
+  </div>
+</div>

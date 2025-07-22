@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "############ Setting H/W clock  ################"
+
+/sbin/hwclock --systohc --localtime
+/sbin/hwclock
+
+

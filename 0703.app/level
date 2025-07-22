@@ -1,0 +1,5 @@
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_blc.c:19:   	json_object_set_new(jblc, "mode", json_integer(blc->mode.val));	
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_blc.c:44:	json_object_set_new(jblc, "mode", json_integer(blc->mode.init_val));	
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_blc.c:70:	jrange = json_range_array(blc->mode.disp_val, 2, setup.lang);
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_blc.c:182:		blc->mode.val = mode;
+isp/NT98566/isp_ctrl.c:431:			matrix[i] = (blc->grid[i])?blc->level.val*8:1;

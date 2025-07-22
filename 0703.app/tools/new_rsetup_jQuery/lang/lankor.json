@@ -1,0 +1,54 @@
+{
+	"common": {
+		"USE": "사용",
+		"ON": "사용",
+		"OFF": "사용안함",
+		"MANUAL": "수동",
+		"AUTO": "자동",
+		"DAYLIGHT": "일광",
+		"CLOUDY": "흐림",
+		"TUNGSTEN": "텅스텐",
+		"SUNSET": "일몰",
+		"DAY": "주간",
+		"NIGHT": "야간"
+	},
+
+	"login": {
+		"USER_ID": "아이디",
+		"PASSWD": "비밀번호",
+		"SETUP": "설정",
+		"LIVE": "라이브"
+	},
+
+	"setup_camera_tab_iq": {
+		"BRIGHTNESS": "밝기",
+		"CONTRAST": "명암",
+		"SATURATION": "채도",
+		"HUE": "색조",
+		"SHARPENESS": "선명도",
+		"DENOISE": "노이즈 감소"
+	},
+
+	"setup_camera_tab_ae": {
+		"SHUTTER SPEED": "셔터스피드",
+		"GAIN": "AGC"
+	},
+
+	"setup_camera_tab_blc": {
+		"BLC": "역광보정",
+		"BLC AREA": "역광영역",
+		"WDR": "WDR",
+		"WDR STRENGTH": "WDR강도"
+	},
+
+	"setup_camera_tab_awb": {
+		"MODE": "모드",
+		"R GAIN": "R 게인",
+		"G GAIN": "G 게인",
+		"B GAIN": "B 게인"
+	},
+
+	"setup_camera_tab_daynight": {
+		"MODE": "모드"
+	}
+}

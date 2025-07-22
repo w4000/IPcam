@@ -1,0 +1,155 @@
+body {
+  font-family: sans-serif, "Malgun Gothic";
+  /* font-size: 9pt; */
+}
+
+.default {
+  font-family: sans-serif, "Malgun Gothic";
+  font-size: 3pt;
+}
+
+.Logout {
+  font-size: 15px;
+}
+
+.select_flat {
+  font-family: sans-serif, "Malgun Gothic";
+  font-size: 14px;
+  width: 100%;
+  color: #6c757d;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #dee2e6;
+}
+
+.accordion_in {
+  width: 236px;
+}
+
+.header {
+  color: #2e6eab;
+}
+
+.mainmenu {
+  font-size: 12pt;
+}
+
+.sidemenu {
+  font-size: 9pt;
+}
+
+.resolution {
+  font-size: 9pt;
+}
+
+.img_link {
+  border: none;
+}
+
+.img_link_hide {
+  border: none;
+  display: none;
+}
+
+.main_title {
+  font-family: tahoma, "Malgun Gothic";
+  font-size: 11pt;
+  color: #34470d;
+  font-weight: bold;
+}
+.sub_title {
+  font-family: tahoma, "Malgun Gothic";
+  font-size: 10pt;
+  color: #34470d;
+  font-weight: bold;
+}
+.sub_section {
+  font-family: tahoma, "Malgun Gothic";
+  font-size: 9pt;
+  background-color: #ffffff;
+  font-weight: bold;
+}
+
+.sub_key {
+  font-size: 9pt;
+  color: #ffffff;
+  background-color: #3e89ba;
+  text-align: center;
+}
+
+.sub_key_bright {
+  font-size: 9pt;
+  color: #ffffff;
+  background-color: #79b7e7;
+  text-align: center;
+}
+
+.sub_key_dark {
+  font-size: 9pt;
+  color: #ffffff;
+  background-color: #3e89ba;
+  text-align: center;
+}
+
+.sub_value {
+  font-size: 13px;
+  color: #205072;
+  background-color: #ffffff;
+  /* text-align: center; */
+  padding: 5px;
+}
+
+.sub_key_right {
+  font-size: 12px;
+  color: #ffffff;
+  background-color: #434e6e !important;
+  text-align: center;
+}
+
+.sub_value_center {
+  font-size: 9pt;
+  color: #205072;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sub_key_left {
+  font-size: 9pt;
+  color: #ffffff;
+  background-color: #3e89ba;
+  text-align: left;
+}
+
+.sub_value_left {
+  font-size: 9pt;
+  color: #205072;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.input_flat {
+  font-family: sans-serif;
+  /* font-size: 9pt;
+  background-color: #ffffff;
+  border: 1px solid #4e99ca; */
+}
+
+.ui-state-box {
+  /* border:1px solid #79B7E7; */
+}
+
+.bg-dark {
+  color: white;
+  font-size: 13px;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+}

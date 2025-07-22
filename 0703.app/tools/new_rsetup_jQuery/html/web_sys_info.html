@@ -1,0 +1,175 @@
+<!--##PARAM_JQUERY_INCLUDE##-->
+
+<script src="/js/jquery.form.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+<script language="JavaScript">
+  <!--
+  var remain_timer;
+ 
+ 
+
+  function init() {
+    clearInterval(remain_timer);
+    $("#lan_setup").bind("change", onchanged_language_setup);
+    $("#dialog-finish-ok, #dialog-finish-fail").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_OK##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+ 
+  }
+
+  init();
+  -->
+</script>
+
+<style>
+  .select_lang {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    width: 200px;
+    height: 40px;
+    border: 1px solid #79b7e7;
+  }
+
+  select {
+    border: 1px solid grey !important;
+  }
+
+  .header-title {
+    margin-bottom: 10px;
+  }
+
+  #import_file {
+    height: 30px;
+    margin-right: 25px;
+  }
+
+  .input-group {
+    width: 50%;
+    margin-top: 10px;
+    align-items: center;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+
+  .ui-dialog-titlebar,
+  .ui-icon-alert {
+    display: none;
+  }
+
+  .ui-dialog-content,
+  .ui-dialog-buttonpane {
+    border: none !important;
+  }
+
+  .ui-dialog-buttonset button {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: #434e6e !important;
+    border-color: #434e6e !important;
+    font-size: 1rem !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .ui-dialog-buttonset button span {
+    font-size: 12px !important;
+  }
+
+  #dialog-finish-ok,
+  #dialog-finish-fail {
+    font-size: 17px !important;
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
+</style>
+
+<script language="JavaScript">
+</script>
+
+<div id="dialog-finish-ok" title="##RES_UPLOAD_OK##">
+  <table border="0" cellspacing="0" cellpadding="10px">
+    <tr>
+      <td>
+        <span
+          class="ui-icon ui-icon-info"
+          style="float: left; margin: 0 7px 40px 0"
+        ></span
+        >&nbsp;
+      </td>
+      <td>
+        <font color="#1E445E"><strong>##RES_APPLY_AFTER_REBOOT##</strong></font>
+        <div name="restart_time"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<form
+  name="setup_import"
+  class="container-fluid"
+  id="setup_import"
+  method="POST"
+  action="/cgi-bin/setup_ajax_sys_import.cgi"
+  enctype="multipart/form-data">
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <!-- <div class="card-box card-white-box ribbon-box" style="height: 91%"> -->
+          <div class="card-box card-white-box ribbon-box">
+            <div class="ribbon ribbon-primary">##RES_SYSTEM_INFO##</div>
+
+            <div class="table-responsive">
+              <table class="table table-centered mb-0">
+                <tr>
+                  <td class="side-table-head" width="150px">##RES_MODEL##</td>
+                  <td>
+                    <div class="model_menu">##PARAM_MODEL##</div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head">##RES_VERSION##</td>
+                  <td>##PARAM_SW_VERSION##</td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head">##RES_LANGUAGE##</td>
+                  <td>
+                    <select id="lan_setup" class="select_lang">
+                      ##PARAM_LANGUAGE##
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+
+
+  <!-- end row -->
+</form>

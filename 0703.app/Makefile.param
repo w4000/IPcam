@@ -1,0 +1,20 @@
+
+HAVE_VERSION := $(wildcard $(TOP_DIR)/version)
+ifeq ($(strip $(HAVE_VERSION)),)
+	MK_SYS_VER1 ?= 1
+	MK_SYS_VER2 ?= 2
+	MK_SYS_VER3 ?= 3
+	MK_SYS_VER4 ?= 97
+	MK_SYS_MODEL ?= 107
+	#MK_SYS_MODEL ?= 104
+	MK_CAM_RELEASE ?= 0
+	RELEASE_DATE ?= 2024.01.01
+else
+	include $(TOP_DIR)/version
+endif
+
+	NVT_INC_PATH = $(TOP_DIR)/_sdk/$(NARCH)/include
+	NVT_LIB_PATH = $(TOP_DIR)/_sdk/$(NARCH)/lib
+	export PARAM_FILE = $(TOP_DIR)/_sdk/$(NARCH)/Makefile.param
+	include $(PARAM_FILE)
+

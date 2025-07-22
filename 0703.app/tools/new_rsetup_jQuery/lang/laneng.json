@@ -1,0 +1,54 @@
+{
+	"common": {
+		"USE": "USE",
+		"ON": "ON",
+		"OFF": "OFF",
+		"MANUAL": "MANUAL",
+		"AUTO": "AUTO",
+		"DAYLIGHT": "DAYLIGHT",
+		"CLOUDY": "CLOUDY",
+		"TUNGSTEN": "TUNGSTEN",
+		"SUNSET": "SUNSET",
+		"DAY": "DAY",
+		"NIGHT": "NIGHT"
+	},
+
+	"login": {
+		"USER_ID": "ID",
+		"PASSWD": "PASSWORD",
+		"SETUP": "SETUP",
+		"LIVE": "LIVE"
+	},
+
+	"setup_camera_tab_iq": {
+		"BRIGHTNESS": "BRIGHTNESS",
+		"CONTRAST": "CONTRAST",
+		"SATURATION": "SATURATION",
+		"HUE": "HUE",
+		"SHARPENESS": "SHARPENESS",
+		"DENOISE": "DENOISE"
+	},
+
+	"setup_camera_tab_ae": {
+		"SHUTTER SPEED": "SHUTTER SPEED",
+		"GAIN": "AGC"
+	},
+
+	"setup_camera_tab_blc": {
+		"BLC": "BLC",
+		"BLC AREA": "BLC AREA",
+		"WDR": "WDR",
+		"WDR STRENGTH": "WDR STRENGTH"
+	},
+
+	"setup_camera_tab_awb": {
+		"MODE": "MODE",
+		"R GAIN": "R GAIN",
+		"G GAIN": "G GAIN",
+		"B GAIN": "B GAIN"
+	},
+
+	"setup_camera_tab_daynight": {
+		"MODE": "MODE"
+	}
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!--##PARAM_JQUERY_INCLUDE##-->
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/icons.min.css" />
+    <link rel="stylesheet" href="../css/app.min.css" />
+
+    <style>
+      #my-player {
+        width: 100%;
+        height: 600px;
+      }
+
+      .playlist-div {
+        height: 600px;
+      }
+
+      .playlist {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <!-- Topbar Start -->
+      <div class="navbar-custom">
+        <ul class="list-unstyled topnav-menu float-end mb-0">
+          <li class="notification-list">
+            <a
+              class="nav-link nav-user mr-0 waves-effect waves-light"
+              role="button"
+            >
+              <label
+                class="btn btn-secondary"
+                id="update_save"
+                style="
+                  font-size: 20px !important;
+                  padding: 5px;
+                  margin-left: 20px;
+                "
+                onclick="location.href = '../cgi-bin/live_fview.cgi'"
+                ><i class="fe-video"></i
+              ></label>
+
+              <label
+                class="btn btn-secondary"
+                id="update_save"
+                style="
+                  padding: 5px;
+                  margin-left: 5px;
+                  font-size: 20px !important;
+                "
+                onclick="location.href = '../cgi-bin/websetup.cgi'"
+                ><i class="fe-settings"></i
+              ></label>
+            </a>
+          </li>
+        </ul>
+
+        <!-- LOGO -->
+        <div class="logo-box button-menu-mobile waves-effect waves-light">
+          <a href="#" class="logo text-center">
+            <span class="logo-lg">
+              <!-- <img src="../img/logo-light.png" alt="" height="30" /> -->
+              <!-- <p class="logo">ECAM</p> -->
+              <p class="logo"></p>
+            </span>
+
+            <span class="logo-sm">
+              <p class="logo">E</p>
+            </span>
+          </a>
+        </div>
+      </div>
+      <!-- end Topbar -->
+
+      <div class="content-page" style="margin-left: 0px !important">
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-10">
+                <div class="card-box card-white-box ribbon-box">
+                  <div class="ribbon ribbon-primary">VIDEO PlAYER</div>
+
+                  <div class="table-responsive">
+                    <video id="my-player" controls>
+                      <!-- <source src="/paly/play-1.mp4" type="video/mp4" /> -->
+                      <!-- <source src="/play-1.mp4" type="video/mp4" /> -->
+                      <source src="" type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-2">
+                <div class="card-box card-white-box ribbon-box">
+                  <div class="ribbon ribbon-primary">VIDEO LIST</div>
+
+                  <div class="table-responsive">
+                    <div id="basicTree" class="playlist-div">
+                      <table class="table mb-0 table-hover">
+                        <tbody>
+                          <!--##VIDEO_LIST##-->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script language="JavaScript">
+      var player = document.getElementById("my-player");
+      var source = player.getElementsByTagName("source")[0];
+
+      $(".playlist").click(function () {
+        source.setAttribute("src", $(this).attr("data-src"));
+        source.setAttribute("type", "video/mp4");
+
+        player.load();
+        player.play();
+      });
+    </script>
+  </body>
+</html>

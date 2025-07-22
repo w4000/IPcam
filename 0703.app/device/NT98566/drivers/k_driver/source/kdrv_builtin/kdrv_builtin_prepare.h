@@ -1,0 +1,1 @@
+extern int kdrv_builtin_fastboot_prepare(void);

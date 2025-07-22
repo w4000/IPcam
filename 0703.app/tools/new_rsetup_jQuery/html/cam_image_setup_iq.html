@@ -1,0 +1,369 @@
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script> -->
+
+<script language="JavaScript">
+  <!--
+  // $("button").button();
+
+  var pause_put = 0;
+  var reCnt = 30;
+  var initUpdate = 0;
+
+
+  function get_iq_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/iq/all";
+
+    // if (parseInt(initUpdate) != 0)
+    // {
+    //   return;
+    // }
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        initUpdate = 1;
+
+        init_slider(
+          $("#brightness"),
+          $("#brightness_val"),
+          data.image_quality_range.color.brightness.min,
+          data.image_quality_range.color.brightness.max,
+          data.image_quality.color.brightness,
+          put_iq_setup_value
+        );
+
+        init_slider(
+          $("#contrast"),
+          $("#contrast_val"),
+          data.image_quality_range.color.contrast.min,
+          data.image_quality_range.color.contrast.max,
+          data.image_quality.color.contrast,
+          put_iq_setup_value
+        );
+
+        init_slider(
+          $("#saturation"),
+          $("#saturation_val"),
+          data.image_quality_range.color.saturation.min,
+          data.image_quality_range.color.saturation.max,
+          data.image_quality.color.saturation,
+          put_iq_setup_value
+        );
+
+
+        init_slider(
+          $("#sharpeness"),
+          $("#sharpeness_val"),
+          data.image_quality_range.sharpeness.min,
+          data.image_quality_range.sharpeness.max,
+          data.image_quality.sharpeness,
+          put_iq_setup_value
+        );
+
+        init_slider(
+          $("#denoise"),
+          $("#denoise_val"),
+          data.image_quality_range.nr.denoise.min,
+          data.image_quality_range.nr.denoise.max,
+          data.image_quality.nr.denoise,
+          put_iq_setup_value
+        );
+
+
+
+        
+      },
+      error: function (err) {},
+    });
+
+  }
+
+  function put_iq_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/iq";
+
+    
+    if (pause_put) return;
+
+
+    var form = {
+      image_quality: {
+        color: {
+          brightness: $("#brightness").slider("value"),
+          contrast: $("#contrast").slider("value"),
+          saturation: $("#saturation").slider("value"),
+        },
+        sharpeness: $("#sharpeness").slider("value"),
+        nr: {
+          denoise: $("#denoise").slider("value"),
+        },
+      },
+    };
+
+    $.ajax({
+      url: req_url,
+      type: "PUT",
+      dataType: "json",
+      cache: false,
+      data: JSON.stringify(form),
+      success: function (data) {},
+      error: function (err) {},
+    });
+  }
+
+  function onclick_color_default() {
+    var req_url = "/_fcgiapi/video/quality/iq/default";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+
+        pause_put = 1;
+        refresh_slider_value(
+          $("#brightness"),
+          $("#brightness_val"),
+          data.image_quality_default.color.brightness
+        );
+        refresh_slider_value(
+          $("#contrast"),
+          $("#contrast_val"),
+          data.image_quality_default.color.contrast
+        );
+        refresh_slider_value(
+          $("#saturation"),
+          $("#saturation_val"),
+          data.image_quality_default.color.saturation
+        );
+
+        pause_put = 0;
+        put_iq_setup_value();
+      },
+      error: function (err) {},
+    });
+  }
+
+  function onclick_etc_default() {
+    var req_url = "/_fcgiapi/video/quality/iq/default";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        pause_put = 1;
+        refresh_slider_value(
+          $("#sharpeness"),
+          $("#sharpeness_val"),
+          data.image_quality_default.sharpeness
+        );
+        refresh_slider_value(
+          $("#denoise"),
+          $("#denoise_val"),
+          data.image_quality_default.nr.denoise
+        );
+
+        pause_put = 0;
+        put_iq_setup_value();
+      },
+    });
+  }
+
+
+
+  function init_iq() {
+    load_language("setup_camera_tab_iq");
+    get_iq_setup_value();
+  }
+
+  init_iq();
+
+  -->
+</script>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="table-responsive">
+              <table class="table table-centered mb-0">
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>BRIGHTNESS</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="brightness"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="brightness_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>CONTRAST</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="contrast"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="contrast_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>SATURATION</web-lang>
+                  </td>
+
+                  <td>
+                    <table>
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="saturation"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="saturation_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- <div class="mb-1" style="text-align: right; margin-top: 87px"> -->
+                <div class="mb-1" style="text-align: right; margin-top: 20px">
+                <button
+                  class="btn btn-secondary waves-effect waves-light"
+                  onclick="onclick_color_default();"
+                  id="iq_default"
+                >
+                  RESET
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <div class="card-box card-white-box ribbon-box">
+        <div class="table-responsive">
+          <table class="table table-centered mb-0">
+            <tr>
+              <td class="side-table-head" width="150px">
+                <web-lang>SHARPENESS</web-lang>
+              </td>
+              <td>
+                <table width="100%">
+                  <tr>
+                    <td width="95%" style="padding: 8px">
+                      <div id="sharpeness"></div>
+                    </td>
+
+                    <td>
+                      <input
+                        class="I_Text"
+                        id="sharpeness_val"
+                        type="text"
+                        size="5"
+                        readonly="readonly"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side-table-head" width="150px">
+                <web-lang>DENOISE</web-lang>
+              </td>
+              <td>
+                <table width="100%">
+                  <tr>
+                    <td width="95%" style="padding: 8px">
+                      <div id="denoise"></div>
+                    </td>
+
+                    <td>
+                      <input
+                        class="I_Text"
+                        id="denoise_val"
+                        type="text"
+                        size="5"
+                        readonly="readonly"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+
+          <div class="mb-1" style="text-align: right; margin-top:82px">
+            <button
+              class="btn btn-secondary waves-effect waves-light"
+              onclick="onclick_etc_default();"
+              id="iq_default"
+            >
+              RESET
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</div>

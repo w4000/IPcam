@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+
+    <title>##RES_LIVE_MONITORING##</title>
+
+    <!--##PARAM_JQUERY_INCLUDE##-->
+    <script src="../js/live.js"></script>
+    <script type="text/javascript" src="/js/qtloader.js"></script>
+    <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+    <script language="JavaScript">
+       <!--
+
+    var loginid = "##PARAM_LOGIN_ID##";
+    var loginpwd = "##LOGIN_PWD##";
+    var cam_mac = "##PARAM_MACADDR##";
+    function onload_body() {
+        init_live();
+      }
+
+
+
+
+      function init() {
+       init_live();
+
+     }
+
+        var cam_max = 3;
+        let qtLoader = undefined;
+      	function init_live() {
+          
+          var spinner = document.querySelector('#qtspinner');
+          var canvas = document.querySelector('#screen');
+          var status = document.querySelector('#qtstatus')
+
+		
+          qtLoader = new QtLoader({
+            canvasElements : [canvas],
+            showLoader: function(loaderStatus) {
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+                status.innerHTML = "<font color=#ff8127>" + loaderStatus + "...</font>";
+            },
+            showError: function(errorText) {
+
+                status.innerHTML = "<font color=yellow>" + errorText + "</font>";
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+            },
+            showExit: function() {
+                status.innerHTML = "";
+                spinner.style.display = 'block';
+                canvas.style.display = 'none';
+            },
+            showCanvas: function() {
+
+                spinner.style.display = 'none';
+                canvas.style.display = 'block';
+
+                setTimeout(
+                  function() {
+                    
+                    var host = window.location.hostname;
+                    host = "ws://" + window.location.hostname;
+                    var webUrl = qtLoader.module.allocateUTF8(host);
+                    var webMac = qtLoader.module.allocateUTF8(cam_mac);
+                    var webPort = window.location.port;
+
+                    var webPort = window.location.port;
+
+                    if (webPort == "" || !webPort || webPort == null || webPort == NaN || webPort == undefined)
+                    {
+                        var result = qtLoader.module._uweblive_setSiteInfo(webUrl, 8080, 8080, webMac, 0, 1);
+                    }
+                    else
+                    {
+                        var result = qtLoader.module._uweblive_setSiteInfo(webUrl, webPort, webPort, webMac, 0, 1);
+                    }
+
+                    var webUser = qtLoader.module.allocateUTF8(loginid);
+                    var webPass = qtLoader.module.allocateUTF8(loginpwd);
+                    
+
+                    result = qtLoader.module._uweblive_setUserPass(webUser, webPass);
+                    
+                    {
+                      var result = qtLoader.module._uweblive_connect();
+                    }
+                    }, 
+                    100
+                  );
+
+                
+            },
+        });
+        qtLoader.loadEmscriptenModule("/js/WebLiveViewer");
+
+      	}
+        init();
+        
+
+
+      -->
+    </script>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/icons.min.css" />
+    <link rel="stylesheet" href="../css/app.min.css" />
+
+    <style>
+      /* .card-box {
+        display: flex;
+        background-color: #343c49;
+        color: white;
+      } */
+
+      /* Make the html body cover the entire (visual) viewport with no scroll bars. */
+      /* html, body { padding: 0; margin: 0; overflow: hidden; height: 100% } */
+      html, body { padding: 0; margin: 0; height: 100% }
+
+      /* canvas { border: 0px none; height:##PARAM_CANVAS_HEIGHT##; width:100%; } */
+      /* canvas { border: 0px none; height:100%; width:100%; }
+      canvas { outline: 0px solid transparent; caret-color: transparent; cursor:default } */
+
+
+
+      /* #header_menu { width: 100%; height: 10%; } */
+      /* #screen { left: 10%; width: 80%; height: 90%; } */
+      #screen { border: 0px none; float: center; margin-left: 0; margin-top: 0px; width: 100%; height: 100%; } 
+      /* #screen { border: 0px none; float: center; margin-left: 0; width: 90%; height: 100%; }  */
+      #screen { outline: 0px solid transparent; caret-color: transparent; cursor:default }
+
+
+
+      /* #screen { margin-left: 8.8%; width: 90%; height: 100%; }  */
+      /* #screen { padding-left: 9%; width: 100%; height: 90%; }  */
+      /* #screen { padding-left: 70%;  width: 100%; height: 90%; }  */
+    </style>
+  </head>
+
+
+
+
+    
+    
+    <!-- <div id="screen"></div> -->
+    <body onload="onload_body()"> 
+
+
+        
+      
+      
+    <div id="wrapper">  
+          
+          
+          <!-- Topbar Start -->
+      <div class="navbar-custom">
+        <ul class="list-unstyled topnav-menu float-end mb-0">
+          <li class="notification-list">
+            <a
+              class="nav-link nav-user mr-0 waves-effect waves-light"
+              role="button"
+            >
+              <i class="fe-user user-image"></i>
+              <span class="pro-user-name ml-1">  </span>
+
+
+              <label
+                class="btn btn-secondary"
+                id="update_save"
+                style="
+                  padding: 5px;
+                  margin-left: 5px;
+                  font-size: 20px !important;
+                "
+                onclick="location.href = '../cgi-bin/websetup.cgi'"
+                ><i class="fe-settings"></i
+              ></label>
+
+              <label
+                class="btn btn-secondary"
+                id="update_save"
+                style="
+                  padding: 5px;
+                  margin-left: 5px;
+                  font-size: 20px !important;
+                "
+                onclick="onclick_logout()"
+                ><i class="fe-log-out"></i
+              ></label>
+            </a>
+          </li>
+        </ul>
+
+        <!-- LOGO -->
+        <div class="logo-box button-menu-mobile waves-effect waves-light">
+          <a href="#" class="logo text-center">
+            <span class="logo-lg">
+			  <p class="logo"></p>
+            </span>
+
+            <span class="logo-sm">
+              <p class="logo">M</p>
+            </span>
+          </a>
+        </div>
+      </div>
+      <!-- end Topbar -->
+
+      <!-- ========== Left Sidebar Start ========== -->
+      <div class="left-side-menu">
+        <div class="slimscroll-menu">
+          <!--- Sidemenu -->
+          <div id="sidebar-menu">
+            <ul class="metismenu" id="side-menu">
+              <li class="mm-active">
+                <a href="javascript: void(0);">
+                  <i class="fe-airplay"></i>
+                  <span> MENU </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="true">
+                  <div class="card-box widget-box-four">
+                    <select id="select_profile" class="select_flat form-select">
+                      ##PARAM_PROFILE##
+                    </select>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- End Sidebar -->
+        </div>
+        <!-- Sidebar -left -->
+      </div>
+      <!-- Left Sidebar End -->
+
+      <!-- ============================================================== -->
+      <!-- Start Page Content here -->
+      <!-- ============================================================== -->
+
+
+
+
+
+      <div class="content-page">
+        <div class="content">
+          <!-- Start Content-->
+          <div class="container-fluid">
+            <!-- start page title -->
+
+            <div class="row">
+              <div class="col-xl-12" style="width: 100%" style="height: 100%">
+                <figure style="overflow:visible;" id="qtspinner">
+                  <center style="margin-top:1.5em; line-height:150%">
+                    <img src="../img/qtlogo.svg" width="320" height="200" style="display:block"></img>
+                    <strong>WebLiveViewer</strong>
+                    <div id="qtstatus"></div>
+                  </center>
+                </figure>
+          
+                <div id="screen"></div>
+
+                <div style="padding:450px"></div>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    
+      <!-- <figure style="overflow:visible;" id="qtspinner">
+        <center style="margin-top:1.5em; line-height:150%">
+          <img src="qtlogo.svg" width="320" height="200" style="display:block"></img>
+          <strong>Qt for WebAssembly: WebLiveViewer</strong>
+          <div id="qtstatus"></div>
+          <noscript>JavaScript is disabled. Please enable JavaScript to use this application.</noscript>
+        </center>
+      </figure> -->
+  
+  
+      <!-- <figure style="overflow:visible;" id="qtspinner">
+        <center style="margin-top:1.5em; line-height:150%">
+          <img src="../img/qtlogo.svg" width="320" height="200" style="display:block"></img>
+          <strong>Qt for WebAssembly: WebLiveViewer</strong>
+          <div id="qtstatus"></div>
+          <noscript>JavaScript is disabled. Please enable JavaScript to use this application.</noscript>
+        </center>
+      </figure>
+      <div id="screen"></div> -->
+
+
+
+      <!-- <canvas id="screen"></canvas> -->
+      <!-- <canvas id="qtcanvas" oncontextmenu="event.preventDefault()" contenteditable="true"></canvas> -->
+      <!-- <canvas id="screen" oncontextmenu="event.preventDefault()" contenteditable="true"></canvas> -->
+  
+  
+  
+      <!-- <figure style="overflow:visible;" id="qtspinner">
+        <center style="margin-top:1.5em; line-height:150%">
+          <img src="/img/start_vms.png" width=300px height=300px style="display:block"></img>
+          <strong><font size=4 color="##COLOR_LOGIN_ID##">##RES_MSG_AJAX_LOADING##<br>Smart Web Viewer</font></strong>
+          <div id="qtstatus"></div>
+          <noscript>JavaScript is disabled. Please enable JavaScript to use this application.</noscript>
+        </center>
+      </figure>
+      <canvas id="qtcanvas" oncontextmenu="event.preventDefault()" contenteditable="true"></canvas> -->
+
+
+
+
+    </body>
+
+
+
+
+    <script src="../js/vendor.min.js"></script>
+    <script src="../js/app.min.js"></script>
+
+
+
+
+
+
+
+  </html>
+
+
+
+<html>
+</html>
+

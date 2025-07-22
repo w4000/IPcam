@@ -1,0 +1,38 @@
+#!/bin/sh
+
+wait_dev_or_mkvol()
+{
+	x=0
+	timeout=5
+	while [ "$x" -lt "$timeout" -a ! -e $1 ]; do
+		x=$((x+1))
+		sleep .1
+	done
+	if [ "$x" -ge "$timeout" ]; then
+		echo "[ipm mount] $1 not found"
+		
+		ubimkvol /dev/ubi1 -s 50MiB -N app
+	fi
+}
+
+echo "/sbin/mdev" > /proc/sys/kernel/hotplug
+mdev -s
+
+# if /proc/mtd not exist, exit
+if [ ! -f /proc/mtd ]; then
+	echo "[fs overlay] /proc/mtd not ready"
+	exit -1
+fi
+
+# if the partition not found, exit
+num=`cat /proc/mtd | grep \"app\" | awk -F' ' '{print $1}' | tr -d 'mtd' | tr -d ':'`;
+if [ -z "$num" ]; then
+	echo " no ipm partition"
+	exit 0
+fi
+
+ubiattach /dev/ubi_ctrl -m $num
+wait_dev_or_mkvol /dev/ubi1_0
+mount -o sync -t ubifs /dev/ubi1_0 /mnt/ipm;
+sync
+echo 1 > /proc/sys/vm/drop_caches

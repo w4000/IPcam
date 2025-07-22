@@ -1,0 +1,21 @@
+#!/bin/sh
+
+ETHADDR=`fw_printenv ethaddr | awk -F= '{print $2}'`
+
+# SAVE_ETHADDR="11:22:33:44:55:66"
+
+
+if [ ."${ETHADDR}" == ."" ]; then
+	ETHADDR=`echo 00:01$(hexdump -n4 -e '/1 ":%02X"' /dev/urandom)`
+	echo "new mac set: "${ETHADDR}
+fi
+
+
+if [ ! -d /mnt/ipm/setup ]; then
+	mkdir -p /mnt/ipm/setup
+fi	
+
+
+fw_setenv ethaddr ${ETHADDR}
+/etc/init.d/BS_Net_eth ${ETHADDR}
+ifconfig lo up

@@ -1,0 +1,1 @@
+videosprite_open.c

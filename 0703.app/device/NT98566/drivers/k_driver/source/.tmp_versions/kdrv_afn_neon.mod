@@ -1,0 +1,3 @@
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_gfx2d/kdrv_affine/affine_neon/kdrv_afn_neon.ko
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_gfx2d/kdrv_affine/affine_neon/affine_neon_no_tracer.o
+

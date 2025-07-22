@@ -1,0 +1,15 @@
+User root
+Group root
+ErrorLog /dev/null
+AccessLog /dev/null
+ServerName 127.0.0.1
+DocumentRoot /var/www
+UserDir public_html
+DirectoryIndex index.html
+DirectoryMaker /usr/lib/boa/boa_indexer
+KeepAliveMax 1000
+KeepAliveTimeout 10
+MimeTypes /etc/mime.types
+DefaultType text/plain
+AddType application/x-httpd-cgi cgi
+ScriptAlias /cgi-bin/ /var/www/cgi-bin/

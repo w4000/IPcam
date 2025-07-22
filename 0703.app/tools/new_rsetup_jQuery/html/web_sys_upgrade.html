@@ -1,0 +1,580 @@
+<!--##PARAM_JQUERY_INCLUDE##-->
+<script src="/js/jquery.form.js"></script>
+
+<script language="JavaScript">
+  <!--
+  var sensor_name = "##PARAM_SENSOR_NAME##";
+  var upgrade_timer;
+  var waiting_timer;
+  var fail_timer;
+  var step;
+
+  // $("a").button();
+
+  function set_status(err, errmsg) {
+    $("#status").empty();
+
+    if (err < 0) {
+      if (errmsg.length > 0)
+        $("#status").append(
+          "<font color='#D74026'><b>##RES_MSG_UPGRADE_FAIL## " +
+            "(" +
+            errmsg +
+            ")</b></font>"
+        );
+      else
+        $("#status").append(
+          "<font color='#D74026'><b>##RES_MSG_UPGRADE_FAIL##</b></font>"
+        );
+    } else if (err == 2) {
+      $("#status").append("##RES_MSG_UPGRADE_PROGRESS##");
+    } else {
+      $("#status").append("##RES_MSG_UPGRADE_DONE##");
+    }
+  }
+
+  function disable_buttons() {
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+    $(".selectable").attr("disabled", true);
+    $(".mainmenu").attr("disabled", true);
+    $(".sidemenu_style").attr("disabled", true);
+    $("#logout").attr("disabled", true);
+  }
+
+  function enable_buttons() {
+    $("#update_save").removeAttr("disabled");
+    $("#ajax_save").hide();
+    $(".selectable").removeAttr("disabled");
+    $(".mainmenu").removeAttr("disabled");
+    $(".sidemenu_style").removeAttr("disabled");
+    $("#logout").removeAttr("disabled");
+  }
+
+  var progressbar_upload = $("#progressbar_upload"),
+    progressLabel_upload = $(".progress_upload-label");
+
+  $("#progressbar_upload").progressbar({
+    value: 0,
+    change: function () {
+      progressLabel_upload.text(progressbar_upload.progressbar("value") + "%");
+    },
+    complete: function () {
+      if (Number(progressbar_upload.progressbar("value")) > 99) {
+        progressLabel_upload.text("Complete!");
+        progressLabel_writing.text("Wait a moment...");
+      }
+    },
+  });
+
+  var progressbar_writing = $("progressbar_writing"),
+    progressLabel_writing = $(".progress_writing-label");
+
+  $("#progressbar_writing").progressbar({
+    value: 0,
+  });
+
+  $("#update_save").bind("click", function () {
+    var upgr_file_name = trim($("#upgr_file").val());
+
+    if (!upgr_file_name || upgr_file_name.length == 0) {
+      alert("##RES_MSG_SELECT_UPGRADE_FILE##");
+      return;
+    }
+    if (upgr_file_name.indexOf(".bin") < 0) {
+      alert("##RES_MSG_INVALID_UPGRADE_FILE##");
+      return;
+    }
+
+    $("#dialog-upgrade-confirm")
+      .dialog({
+        autoOpen: false,
+        resizable: false,
+        width: 450,
+        modal: true,
+        buttons: {
+          "##RES_UPGRADE##": function () {
+            $(this).dialog("close");
+            disable_buttons();
+            wait_upload();
+          },
+          "##RES_CANCEL##": function () {
+            $(this).dialog("close");
+          },
+        },
+      })
+      .dialog("open");
+  });
+
+  function init() {
+    $("#dialog-upgrade-confirm").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_UPGRADE##": function () {
+          $(this).dialog("close");
+          disable_buttons();
+          wait_upload();
+        },
+        "##RES_CANCEL##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+
+    $("#dialog-finish-ok, #dialog-finish-fail").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_OK##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+  }
+
+
+  function setup_step(v)
+  {
+    step = v;
+  }
+
+ 
+  function wait_upload() {
+    clearInterval(upgrade_timer);
+    upgrade_timer = null;
+
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "system_upgrade",
+      },
+      success: function (data) {
+        setTimeout("form_submit()", 2000); // 2sec
+      },
+      error: function (err) {
+        enable_buttons();
+        set_status(-1, "");
+      },
+    });
+
+    $("#progressbar_upload").progressbar("value", 0);
+    $("#progressbar_writing").progressbar("value", 0);
+  }
+
+  function form_submit() {
+    $("#system_upgrade").submit();
+  }
+
+  function check_upload_fail() {
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/cgi_sys_upgrade_3.cgi",
+      success: function (data) {
+        
+
+        if (data == "err") {
+          clearInterval(fail_timer);
+        } else {
+          setup_step(4);
+
+          if (data == 100) {
+          }
+        }
+      },
+      error: function (err) {
+      },
+    });
+  }
+
+  $("#system_upgrade").ajaxForm({
+    beforeSubmit: function () {
+      set_status(2, "");
+      $("#progressbar_upload").progressbar("value", 0);
+      fail_timer = setInterval(function () {
+        check_upload_fail();
+      }, 1500);
+    },
+
+
+    uploadProgress: function (event, position, total, percentComplete) {
+      $("#progressbar_upload").progressbar("value", Number(percentComplete));
+    },
+
+
+    
+    beforeSend: function (xhr) {
+      clearInterval(fail_timer);
+      fail_timer = null;
+
+      
+      {
+        $("#progressbar_upload").progressbar("value", 100);
+        waiting_timer = setInterval(function () {
+          wait_write();
+        }, 500);
+      }
+    },
+
+    complete: function (xhr) {
+      clearInterval(fail_timer);
+      fail_timer = null;
+
+
+      if (Number(progressbar_upload.progressbar("value")) > 99) {
+        $("#progressbar_upload").progressbar("value", 100);
+        waiting_timer = setInterval(function () {
+          wait_write();
+        }, 500);
+      }
+    },
+    success: function (data) {
+      if (data == "err") {
+        show_msg(0);
+        clearInterval(fail_timer);
+        fail_timer = null;
+      }
+    },
+
+    error: function (err) {
+      show_msg(0);
+      clearInterval(fail_timer);
+      fail_timer = null;
+    },
+  });
+
+  function show_msg(result) {
+    $("#upgrade_wait").hide();
+    clearInterval(waiting_timer);
+    waiting_timer = null;
+
+    if (result == 1) {
+      set_status(3, "");
+      $("#upgrade_done").show("slide", { direction: "down" }, 500);
+    } else {
+      set_status(-1, "");
+      $("#upgrade_fail").show("slide", { direction: "down" }, 500);
+    }
+    enable_buttons();
+    setTimeout("wait_reboot ()", 500);
+    $("#dialog-finish-ok")
+      .dialog({
+        autoOpen: false,
+        resizable: false,
+        width: 450,
+        modal: true,
+        buttons: {
+          "##RES_OK##": function () {
+            $(this).dialog("close");
+          },
+        },
+      })
+      .dialog("open");
+    $("#update_save").attr("disabled", true);
+  }
+
+  function wait_write() {
+
+    var first = 1;
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/cgi_sys_upgrade_3.cgi",
+      async: false,
+      success: function (data) {
+        var val = Number(data);
+
+
+        if ($.isNumeric(val)) {
+          if (val >= 0) {
+
+              
+            if (val > 99) {
+              $("#progressbar_writing").progressbar("value", 100);
+              progressLabel_writing.text("Complete!");
+              show_msg(1);
+              clearInterval(waiting_timer);
+            } else if (
+              val != Number($("#progressbar_writing").progressbar("value"))
+            ) {
+              $("#progressbar_writing").progressbar("value", val);
+              progressLabel_writing.text(data + "%");
+            }
+            else 
+            {
+              if ($.isNumeric(val) > 0) {
+                $("#progressbar_writing").progressbar("value", val);
+              }
+            }
+          }
+        } else if (data == "err") {
+        }
+        else 
+        {
+        }
+      },
+      error: function (err) {
+        progressLabel_writing.text("Failed!");
+        alert(msgAjaxFail);
+        enable_buttons();
+        clearInterval(waiting_timer);
+      },
+    });
+  }
+
+  var wait_cnt = parseInt("##PARAM_WAIT_CNT##");
+  function wait_reboot() {
+    upgrade_timer = setInterval(function () {
+      --wait_cnt
+      if (wait_cnt == 0) {
+        clearInterval(upgrade_timer);
+        onunload_body();
+        document.location.href = "/cgi-bin/login.cgi";
+      }
+    }, 1000);
+  }
+
+  init();
+  -->
+</script>
+
+<style>
+  .sub_key_right {
+    width: 200px;
+  }
+
+  .upgrade-system-div,
+  .file-update-div {
+    display: flex;
+    margin-top: 50px;
+    padding-left: 15px;
+  }
+
+  .upgrade-version-div,
+  .upgrade-date-div,
+  .new-system-version-div {
+    display: flex;
+  }
+
+  .upgrade-date-div {
+    margin-left: 200px;
+  }
+
+  .ui-corner-all {
+    height: 20px !important;
+  }
+
+  .progress-div {
+    margin-top: 15px;
+  }
+
+  .input-group {
+    width: 50%;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  #save-button {
+    margin-top: 0px;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+
+  .ui-dialog-titlebar,
+  .ui-icon-alert {
+    display: none;
+  }
+
+  .ui-dialog-content,
+  .ui-dialog-buttonpane {
+    border: none !important;
+  }
+
+  .ui-dialog-buttonset button {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: #434e6e !important;
+    border-color: #434e6e !important;
+    font-size: 1rem !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .ui-dialog-buttonset button span {
+    font-size: 12px !important;
+  }
+
+  #dialog-upgrade-confirm,
+  #dialog-finish-ok,
+  #dialog-finish-fail {
+    font-size: 17px !important;
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
+
+  .ui-progressbar-value {
+    height: 20px !important;
+  }
+</style>
+
+<div id="dialog-upgrade-confirm" title="##RES_UPGRADE_CONFIRM##">
+  <p>
+    <span
+      class="ui-icon ui-icon-alert"
+      style="float: left; margin: 0 7px 40px 0"
+    ></span
+    >##RES_MSG_UPGRADE1##<br />##RES_MSG_UPGRADE2##
+  </p>
+</div>
+
+<div id="dialog-finish-fail" title="##RES_UPGRADE_FAIL##">
+  <table border="0" cellspacing="0" cellpadding="10px">
+    <tr>
+      <td>
+        <span
+          class="ui-icon ui-icon-alert"
+          style="float: left; margin: 0 7px 20px 0"
+        ></span
+        >&nbsp;
+      </td>
+      <td>
+        <font color="red"><strong>##RES_MSG_UPGRADE_FAIL##</strong></font>
+        <div name="reboot_time"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div id="dialog-finish-ok" title="##RES_UPGRADE_OK##">
+  <table border="0" cellspacing="0" cellpadding="10px">
+    <tr>
+      <td>
+        <span
+          class="ui-icon ui-icon-info"
+          style="float: left; margin: 0 7px 40px 0"
+        ></span
+        >&nbsp;
+      </td>
+      <td>
+        <font color="#1E445E"
+          ><strong
+            >##RES_MSG_UPGRADE_END_1##</strong
+          ></font
+        >
+        <div name="reboot_time"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<form
+  name="system_upgrade"
+  id="system_upgrade"
+  method="POST"
+  action="/cgi-bin/cgi_sys_upgrade_2.cgi"
+  enctype="multipart/form-data"
+>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card-box card-white-box ribbon-box">
+          <div class="ribbon ribbon-primary">Upgrade</div>
+
+          <div class="upgrade-system-div">
+            <div class="upgrade-version-div">
+              <div>System Version : &nbsp;</div>
+              <div>##PARAM_CURRENT_VERSION##</div>
+            </div>
+<!-- 
+            <div class="upgrade-date-div">
+              <div>Build Date :</div>
+              <div></div>
+            </div> -->
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+    </div>
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card-box card-white-box ribbon-box" style="height: 91%">
+          <div class="col-xl-10" style="padding-left: 15px; margin-top: 10px">
+            <div class="new-system-version-div">
+              <!-- <div>New System Version : &nbsp;</div>
+              <div>##PARAM_CURRENT_VERSION##</div> -->
+            </div>
+
+            <div id="upload_progress" class="progress-div">
+              <div>##RES_UPLOAD_PROGRESS##</div>
+              <div
+                id="progressbar_upload"
+                style="margin-top: 10px; height: 40px !important"
+              >
+                <div class="progress_upload-label"></div>
+              </div>
+            </div>
+
+            <div id="write_progress" class="progress-div">
+              <div>##RES_WRITING_PROGRESS##</div>
+              <div
+                id="progressbar_writing"
+                style="margin-top: 10px; height: 40px !important"
+              >
+                <div class="progress_writing-label"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card-box card-white-box ribbon-box">
+          <div class="ribbon ribbon-primary">File Update</div>
+
+          <div
+            class="file-update-div"
+            style="height: 35px; align-items: center"
+          >
+            <div class="path-label-text">Path</div>
+
+            <div class="input-group">
+              <input
+                type="file"
+                name="upgr_file"
+                class="form-control input_flat"
+                id="upgr_file"
+              />
+            </div>
+
+            <div class="mb-1" style="text-align: right">
+              <button
+                type="button"
+                class="btn btn-secondary waves-effect waves-light"
+                id="update_save"
+              >
+                ##RES_UPGRADE##
+              </button>
+            </div>
+          </div>
+          <!-- end col -->
+        </div>
+        <!-- end row -->
+      </div>
+    </div>
+  </div>
+</form>

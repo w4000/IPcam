@@ -1,0 +1,239 @@
+<!--##PARAM_JQUERY_INCLUDE##-->
+
+<script language="JavaScript">
+  <!--
+  // $("a").button();
+
+  $("#update_save").bind("click", function () {
+    $("#dialog-reboot-confirm")
+      .dialog({
+        autoOpen: false,
+        resizable: false,
+        width: 450,
+        modal: true,
+        buttons: {
+          "##RES_REBOOT##": function () {
+            $(this).dialog("close");
+            reboot_confirm();
+          },
+          "##RES_CANCEL##": function () {
+            $(this).dialog("close");
+          },
+        },
+      })
+      .dialog("open");
+  });
+
+  var wait_cnt = parseInt("##PARAM_WAIT_CNT##");
+  function wait_reboot() {
+    $("div[name=reboot_time]").empty();
+    $("div[name=reboot_time]").append(
+      "<br><font color='red'>##RES_MSG_REBOOT_TIME## : " +
+        --wait_cnt +
+        " ##RES_SEC##</font>"
+    );
+
+    if (wait_cnt == 0) {
+      clearInterval(upgrade_timer);
+
+      onunload_body();
+      document.location.href = "/cgi-bin/login.cgi";
+    }
+  }
+
+  function reboot_confirm() {
+    if ($("#update_save").attr("disabled")) return;
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "reBoot",
+      },
+      success: function (data) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+
+        $("#reboot_table").show("slide", { direction: "down" }, 500);
+
+        $("#dialog-reboot")
+          .dialog({
+            autoOpen: false,
+            resizable: false,
+            width: 450,
+            modal: true,
+            buttons: {
+              "##RES_OK##": function () {
+                $(this).dialog("close");
+              },
+            },
+          })
+          .dialog("open");
+        upgrade_timer = setInterval(function () {
+          // wait_reboot();
+        }, 1000);
+      },
+      error: function (err) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+      },
+    });
+  }
+
+  function init() {
+    $("#dialog-reboot-confirm").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_REBOOT##": function () {
+          $(this).dialog("close");
+          reboot_confirm();
+        },
+        "##RES_CANCEL##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+
+    $("#dialog-reboot").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_OK##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+  }
+
+  init();
+  -->
+</script>
+
+<style>
+  .table-responsive {
+    text-align: center;
+  }
+
+  .table-tr {
+    height: 30px;
+  }
+</style>
+
+<style>
+  .card {
+    display: block;
+    margin-top: 50px;
+  }
+
+  .card-text {
+    margin-bottom: 5px;
+    margin-bottom: 0px;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+
+  .ui-dialog-titlebar,
+  .ui-icon-alert {
+    display: none;
+  }
+
+  .ui-dialog-content,
+  .ui-dialog-buttonpane {
+    border: none !important;
+  }
+
+  .ui-dialog-buttonset button {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: #434e6e !important;
+    border-color: #434e6e !important;
+    font-size: 1rem !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .ui-dialog-buttonset button span {
+    font-size: 12px !important;
+  }
+
+  #dialog-reboot-confirm,
+  #dialog-reboot {
+    font-size: 17px !important;
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
+</style>
+
+<div id="dialog-reboot-confirm" title="##RES_REBOOT_CONFIRM##">
+  <p>
+    <span
+      class="ui-icon ui-icon-alert"
+      style="float: left; margin: 0 7px 20px 0"
+    ></span
+    >##RES_MSG_REBOOT##
+  </p>
+</div>
+
+<div id="dialog-reboot" title="##RES_REBOOT##">
+  <table border="0" cellpadding="0" cellspacing="10px" width="100%">
+    <tr>
+      <td align="center">
+        <span class="ui-icon ui-icon-info" style="display: inline-block"></span
+        >&nbsp; <br /><font color="#1E445E"
+          ><strong>##RES_MSG_UPGRADE_END_2##</strong></font
+        >
+        <div name="reboot_time"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box menu-height">
+            <div class="ribbon ribbon-primary">SYSTEM REBOOT</div>
+
+            <div class="card card-body" style="width: 25%">
+              <h5
+                class="card-title badge badge-danger"
+                style="margin-bottom: 5px"
+              >
+                ##RES_WARNING##
+              </h5>
+
+              <!-- <p class="card-text">##RES_MSG_REBOOT_1##</p>
+              <p class="card-text">##RES_MSG_REBOOT_2##</p>
+              <p class="card-text">##RES_MSG_REBOOT_3##</p>
+              <p class="card-text">##RES_MSG_REBOOT_4##</p>
+              <p class="card-text">##RES_MSG_REBOOT_5##</p> -->
+
+              <a
+                href="#"
+                class="btn btn-secondary waves-effect waves-light"
+                id="update_save"
+                style="margin-top: 10px; width: 100%"
+                >##RES_REBOOT##</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

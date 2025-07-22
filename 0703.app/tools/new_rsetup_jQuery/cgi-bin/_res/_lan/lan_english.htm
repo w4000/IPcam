@@ -1,0 +1,386 @@
+/*
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<meta http-equiv="Content-Type" content="text/html" charset="euc-kr">
+*/
+
+#define RES_COMMON_CHARSET_ENG						";charset=utf-8"
+#define RES_ENGLISH_ENG								"ENGLISH"
+#define RES_KOREAN_ENG								"GERMAN"
+#define RES_JAPANESE_ENG							"FRENCH"
+#define RES_LANGUAGE_ENG							"LANGUAGE"
+#define RES_DATE_ENG								"DATE"
+#define RES_TIME_ENG								"TIME"
+
+#define RES_JAN_ENG									"JAN"
+#define RES_FEB_ENG									"FEB"
+#define RES_MAR_ENG									"MAR"
+#define RES_APR_ENG									"APR"
+#define RES_MAY_ENG									"MAY"
+#define RES_JUN_ENG									"JUN"
+#define RES_JUL_ENG									"JUL"
+#define RES_AUG_ENG									"AUG"
+#define RES_SEP_ENG									"SEP"
+#define RES_OCT_ENG									"OCT"
+#define RES_NOV_ENG									"NOV"
+#define RES_DEC_ENG									"DEC"
+
+#define RES_JAN_2_ENG								"JANUARY"
+#define RES_FEB_2_ENG								"FEBRUARY"
+#define RES_MAR_2_ENG								"MARCH"
+#define RES_APR_2_ENG								"APRIL"
+#define RES_MAY_2_ENG								"MAY"
+#define RES_JUN_2_ENG								"JUNE"
+#define RES_JUL_2_ENG								"JULY"
+#define RES_AUG_2_ENG								"AUGUST"
+#define RES_SEP_2_ENG								"SEPTEMBER"
+#define RES_OCT_2_ENG								"OCTOBER"
+#define RES_NOV_2_ENG								"NOVEMBER"
+#define RES_DEC_2_ENG								"DECEMBER"
+
+#define RES_SUN_ENG									"SUN"
+#define RES_MON_ENG									"MON"
+#define RES_TUE_ENG									"TUE"
+#define RES_WED_ENG									"WED"
+#define RES_THU_ENG									"THU"
+#define RES_FRI_ENG									"FRI"
+#define RES_SAT_ENG									"SAT"
+#define RES_HOL_ENG									"HOLIDAY"
+
+#define RES_DAY_OF_WEEK_ENG							"DAY OF THE WEEK"
+#define RES_SUN_2_ENG								"SUNDAY"
+#define RES_MON_2_ENG								"MONDAY"
+#define RES_TUE_2_ENG								"TUESDAY"
+#define RES_WED_2_ENG								"WEDNESDAY"
+#define RES_THU_2_ENG								"THURSDAY"
+#define RES_FRI_2_ENG								"FRIDAY"
+#define RES_SAT_2_ENG								"SATURDAY"
+#define RES_HOL_2_ENG								"HOLIDAY"
+
+#define RES_SEC_ENG									"SEC"
+#define RES_MIN_ENG									"MIN"
+#define RES_HOUR_ENG								"HOUR"
+
+#define RES_AM_ENG									"AM"
+#define RES_PM_ENG									"PM"
+
+#define RES_ASPECT_RATIO_ENG                    "ASPECT RATIO"
+#define RES_DATE_FMT_MMDDYYYY_ENG					"MM/DD/YYYY"
+#define RES_DATE_FMT_DDMMYYYY_ENG					"DD/MM/YYYY"
+#define RES_DATE_FMT_YYYYMMDD_ENG					"YYYY/MM/DD"
+#define RES_DATE_FMT_mmDDYYYY_ENG					"MONTH DAY, YEAR"
+#define RES_DATE_FMT_DDmmYYYY_ENG					"DAY MONTH, YEAR"
+#define RES_DATE_FMT_YYYYmmDD_ENG					"YEAR, MONTH DAY"
+
+#define RES_TIME_FMT_AMPM_ENG						"HH:MM:SS AM/PM"
+#define RES_TIME_FMT_24H_ENG						"HH:MM:SS"
+#define RES_TIME_FMT_AMPM_FRONT_ENG					"AM/PM HH:MM:SS"
+
+#define RES_LOWEST_QUALITY_ENG						"LOWEST"
+#define RES_LOW_QUALITY_ENG							"LOW"
+#define RES_STANDARD_QUALITY_ENG					"STANDARD"
+#define RES_HIGH_QUALITY_ENG						"HIGH"
+#define RES_HIGHEST_QUALITY_ENG						"HIGHEST"
+#define RES_ON_ENG									"ON"
+#define RES_OFF_ENG									"OFF"
+
+#define RES_NONE_ENG								"NONE"
+
+#define RES_LOGOUT_ENG								"Logout"
+#define RES_SAVE_ENG								"SAVE"
+
+#define RES_LOGIN_TITLE_ENG							"WEB LOGIN"
+#define RES_LOGIN_TITLE2_ENG						"LOGIN"
+#define RES_LOGIN_USERID_ENG						"USER ID"
+#define RES_LOGIN_PASSWORD_ENG						"PASSWORD"
+
+#define RES_MSG_RELOGIN_ENG							"Please log in with the changed account."
+
+#define RES_MSG_PASSWORD1_ENG						"Please set a password of at least 9 characters."
+#define RES_MSG_PASSWORD2_ENG						"Invalid password configuration"
+#define RES_MSG_PASSWORD3_ENG						"Space characters are not allowed."
+#define RES_MSG_PASSWORD4_ENG						"It is not available."
+
+
+#define RES_MSG_USERID1_ENG							"ID must be at least 4 characters long."
+#define RES_MSG_USERID2_ENG							"The ID must consist of English and numeric characters."
+
+#define RES_PROFILE_ENG								"PROFILE"
+#define RES_MAIN_STREAM_ENG							"MAIN STREAM"
+#define RES_SUB_STREAM_ENG							    "SUB STREAM"
+#define RES_SUB2_STREAM_ENG							"SUB2 STREAM"
+#define RES_LIVE_MONITORING_ENG						"Live View"
+#define RES_SETUP_ENG								" CAM"
+#define RES_TOOLS_ENG								"TOOLS"
+#define RES_SYSTEM_INFO_ENG							"SYSTEM INFORMATION"
+#define RES_HIDE_MENU_ENG							"HIDE MENU"
+#define RES_SHOW_MENU_ENG							"SHOW MENU"
+#define RES_MODEL_ENG								"MODEL"
+#define RES_VERSION_ENG								"VERSION"
+#define RES_DST_ENG									"USE DST"
+
+#define RES_MSG_FAILED_TO_RECEIVE_DATA_ENG			"didn't Get a response, please try again."
+#define RES_EVENT_ENG								"EVENT"
+
+
+#define RES_VIDEO_CONFIG_ENG						"VIDEO CONFIGURATION"
+#define RES_VIDEO_ENG								"VIDEO"
+#define RES_CODEC_ENG								"CODEC"
+#define RES_RESOLUTION_ENG							"RESOLUTION"
+#define RES_FPS_ENG									"FPS"
+#define RES_QUALITY_ENG								"QUALITY"
+#define RES_GOP_ENG									"GOP"
+#define RES_TITLE_ENG								"TITLE"
+#define RES_MSG_STREAM_OVER_ERR_ENG			    	"Invalid setting, please reset"
+
+#define RES_VIDEO_AUDIO_ENG							"VIDEO &amp; AUDIO"
+#define RES_VIDEO_STREAM_ENG						"VIDEO STREAM"
+#define RES_VIDEO_SETUP_ENG							"VIDEO SETUP"
+#define RES_CAMERA_SETUP_ENG						"CAMERA SETUP"
+#define RES_NETWORK_ENG								"NETWORK"
+#define RES_INTERFACE_ENG							"INTERFACE"
+#define RES_PORT_ENG								"PORT"
+#define RES_DDNS_ENG								"DDNS"
+#define RES_RTSP_ENG								"RTSP"
+#define RES_ONVIF_ENG								"ONVIF"
+#define RES_EVENT_ENG								"EVENT"
+#define RES_SENSOR_SETUP_ENG						"SENSOR SETUP"
+
+#define RES_SYSTEM_ENG								"SYSTEM"
+#define RES_DATE_TIME_ENG							"DATE &amp; TIME"
+#define RES_USER_MANAGEMENT_ENG						"USER MANAGEMENT"
+#define RES_SYSTEM_DEFAULT_ENG						"SYSTEM DEFAULT"
+#define RES_SYSTEM_REBOOT_ENG						"SYSTEM REBOOT"
+#define RES_SYSTEM_UPGRADE_ENG						"SYSTEM UPGRADE"
+#define RES_NETWORK_CONFIG_ENG						"NETWORK CONFIGURATION"
+#define RES_NETWORK_TYPE_ENG						"NETWORK TYPE"
+#define RES_IP_ADDRESS_ENG							"IP ADDRESS"
+#define RES_SUBNET_MASK_ENG							"SUBNET MASK"
+#define RES_GATEWAY_ENG								"GATEWAY"
+#define RES_MAC_ADDRESS_ENG							"MAC ADDRESS"
+#define RES_NETWORK_SPEED_ENG						"NETWORK SPEED"
+
+#define RES_MSG_IP_ADDR_ENG							"Please enter a valid IP."
+#define RES_MSG_SUBNET_MASK_ENG						"Please enter a valid subnet."
+#define RES_MSG_GATEWAY_ENG							"Please enter a valid gateway."
+#define RES_PORT_CONFIG_ENG							"PORT CONFIGURATION"
+#define RES_BASE_PORT_ENG							"BASE"
+#define RES_WEB_PORT_ENG							"WEB PORT"
+#define RES_DEFAULT_PORT_ENG						"DEFAULT PORT"
+#define RES_SET_DEFAULT_PORT_ENG					"Reset port defaults"
+#define RES_MSG_PORT_ERR_ENG						"Please enter a valid port."
+#define RES_USER_ID_ENG								"USER ID"
+#define RES_PWD_ENG									"PASSWORD"
+#define RES_PWD_CONFIRM_ENG							"CONFIRM PASSWORD"
+
+
+
+#define RES_MSG_PASSWORD_ENG						"The maximum length of the user password is 32 characters."
+#define RES_MSG_NOT_MATCH_PWD_ENG 					"Password is not valid."
+#define RES_MSG_UPDATE_OK_ENG						"The update has been completed."
+#define RES_MSG_UPDATE_FAIL_ENG						"Update failed."
+#define RES_NO_ENG									"NO"
+#define RES_NOT_CONNECTED_ENG						"NOT CONNECTED"
+#define RES_NEW_ENG									"NEW"
+#define RES_ADD_ENG									"ADD"
+#define RES_MODIFY_ENG								"MODIFY"
+#define RES_MSG_MAX_NUM_ENG							"Exceeded the number of lists."
+#define RES_VIDEO_SIGNAL_ENG						"VIDEO SIGNAL"
+#define RES_VIDEO_FLIP_ENG							"VIDEO FLIP"
+#define RES_VERTICAL_FLIP_ENG						"VERTICAL FLIP"
+#define RES_HORIZONTAL_FLIP_ENG						"HORIZONTAL FLIP"
+#define RES_APPLY_AFTER_REBOOT_ENG					"Applies after reboot."
+
+
+
+#define RES_ZONE_ENG								"ZONE"
+#define RES_MASK_ENG								"MASK"
+#define RES_COLOR_ENG								"COLOR"
+#define RES_CYAN_ENG								"CYAN"
+#define RES_GREEN_ENG								"GREEN"
+#define RES_MAGENTA_ENG								"MAGENTA"
+#define RES_RED_ENG									"RED"
+#define RES_BLUE_ENG								"BLUE"
+#define RES_BLACK_ENG								"BLACK"
+#define RES_WHITE_ENG								"WHITE"
+#define RES_YELLOW_ENG								"YELLOW"
+#define RES_TRANSPARENT_ENG							"TRANSPARENT"
+#define RES_POSITION_ENG							"POSITION"
+#define RES_SIZE_ENG								"SIZE"
+
+
+#define RES_MOVE_UP_ENG								"MOVE UP"
+#define RES_MOVE_DOWN_ENG							"MOVE DOWN"
+#define RES_MOVE_LEFT_ENG							"MOVE LEFT"
+#define RES_MOVE_RIGHT_ENG							"MOVE RIGHT"
+#define RES_MOVE_NW_ENG								"MOVE UPPER-LEFT"
+#define RES_MOVE_NE_ENG								"MOVE UPPER-RIGHT"
+#define RES_MOVE_SW_ENG								"MOVE LOWER-LEFT"
+#define RES_MOVE_SE_ENG								"MOVE LOWER-RIGHT"
+#define RES_SIZE_UP_ENG								"SCALING UPWARD"
+#define RES_SIZE_DOWN_ENG							"SCALING DOWNWARD"
+#define RES_SIZE_LEFT_ENG							"SCALING TO LEFT"
+#define RES_SIZE_RIGHT_ENG							"SCALING TO RIGHT"
+
+
+#define RES_CAMERA_CONFIG_ENG						"CAMERA CONFIGURATION"
+#define RES_IMAGE_QUALITY_ENG						"IMAGE QUALITY"
+#define RES_WHITE_BALANCE_ENG						"WHITE BALANCE"
+#define RES_BACKLIGHT_ENG							"BACKLIGHT"
+#define RES_EXPOSURE_ENG							"EXPOSURE"
+#define RES_DAY_NIGHT_ENG							"DAY &amp; NIGHT"
+#define RES_OSD_ENG									"OSD"
+#define RES_SPECIAL_ENG								"SPECIAL FEATURE"
+#define RES_USAGE_ENG								"USAGE"
+
+#define RES_RTSP_CONFIG_ENG							"RTSP CONFIGURATION"
+#define RES_USE_RTSP_ENG							"USE RTSP"
+#define RES_RTSP_SECURITY_ENG						"RTSP SECURITY"
+#define RES_ACCESS_CONTROL_ENG						"ACCESS CONTROL"
+#define RES_RTSP_PORT_ENG							"RTSP PORT"
+#define RES_RTSP_ADDRESS_ENG						"RTSP ADDRESS"
+#define RES_ONVIF_CONFIG_ENG						"ONVIF CONFIGURATION"
+#define RES_DESCRIPTION_ENG							"DESCRIPTION"
+
+
+
+#define RES_SYSTEM_UPGRADE_ENG						"SYSTEM UPGRADE"
+#define RES_USER_ENG								"USER"
+#define RES_PASSWORD_ENG							"PASSWORD"
+
+#define RES_ENTER_NEW_USER_ENG						"Please enter a new ID"
+#define RES_MSG_USER_IS_NEEDED_ENG					"Please enter a valid ID."
+#define RES_MSG_USER_EXIST_ENG						"The same ID exists."
+#define RES_MSG_NEED_ONE_USER_ENG					"User is missing."
+#define RES_USER_CONFIG_ENG						    ""
+#define RES_PERMISSION_ENG							""
+
+#define RES_MODEL_ENG								"MODEL"
+#define RES_MOTION_ENG								"MOTION"
+#define RES_SENSOR_ENG								"SENSOR"
+
+
+
+#define RES_UPGRADE_ENG								"UPGRADE"
+#define RES_MSG_SELECT_UPGRADE_FILE_ENG				"Please select a firmware file."
+#define RES_MSG_INVALID_UPGRADE_FILE_ENG			"Please select a firmware file."
+#define RES_MSG_UPGRADE1_ENG						"Do you want to proceed with the firmware upgrade?"
+#define RES_MSG_UPGRADE2_ENG						""
+#define RES_MSG_UPGRADE_PROGRESS_ENG 				""
+
+
+#define RES_MSG_UPGRADE_END_1_ENG					"The upgrade has been completed."
+#define RES_MSG_UPGRADE_END_2_ENG					"We'll start again in a minute."
+#define RES_MSG_UPGRADE_DONE_ENG					"Upgrade is complete."
+#define RES_MSG_UPGRADE_FAIL_ENG					"Upgrade failed"
+#define RES_MSG_REBOOT_TIME_ENG						"System Restart"
+#define RES_UPGRADE_CONFIRM_ENG						"Check Upgrade"
+#define RES_UPGRADE_FAIL_ENG						"Upgrade failed"
+#define RES_UPGRADE_OK_ENG							"It has been upgraded."
+#define RES_PROGRESS_STATUS_ENG						"PROGRESS"
+#define RES_STATUS_ENG								"STATUS"
+#define RES_UPLOAD_PROGRESS_ENG						"UPLOADING STATUS"
+#define RES_WRITING_PROGRESS_ENG					"WRITING STATUS"
+
+#define RES_REBOOT_ENG								"SYSTEM REBOOT"
+#define RES_REBOOT_CONFIRM_ENG						"CONFIRM SYSTEM REBOOT"
+#define RES_MSG_REBOOT_ENG							"Do you want to reboot the system?"
+#define RES_MSG_REBOOT_1_ENG						"'SYSTEM REBOOT' will reboot the system"
+
+#define RES_DEFAULT_ENG								"DEFAULT"
+#define RES_DEFAULT_CONFIRM_ENG						"Checking System Initialization"
+#define RES_MSG_DEFAULT_ENG							"Do you want to initialize the system?"
+#define RES_KEEP_NETWORK_ENG						"Maintain network settings"
+
+#define RES_DAY_LIGHT_SAVING_ENG					"DAY LIGHT SAVING"
+#define RES_TIME_SYNC_ENG							"SYNC"
+#define RES_NONE_ENG								"NONE"
+#define RES_SERVER_ENG								"SERVER"
+#define RES_TIME_SYNC_NTP_ENG						"NTP"
+#define RES_TIME_SYNC_SERVER_ENG					"SERVER"
+#define RES_TIME_SYNC_NTP_SERVER_ENG				"SERVER"
+#define RES_SYSTEM_TIME_ENG							"SYSTEM TIME"
+#define RES_USE_CURRENT_SYSTEM_TIME_ENG				"USE CURRENT SYSTEM TIME"
+#define RES_USE_NTP_SERVER_ENG						"USE NTP"
+#define RES_TIME_SYNC_CYCLE_ENG						"CYCLE"
+
+
+
+
+#define RES_COLLAPSE_MENU_ENG						"Hide the menu"
+#define RES_EXPAND_MENU_ENG							"Expanding the menu"
+#define RES_MENU_ENG								"menu"
+
+
+
+
+#define RES_OPTIONS_ENG								"OPTIONS"
+#define RES_OK_ENG									"OK"
+#define RES_CANCEL_ENG								"CANCEL"
+
+
+#define RES_MODE_ENG								"MODE"
+#define RES_R_OFFSET_ENG							"R-OFFSET"
+#define RES_B_OFFSET_ENG							"B-OFFSET"
+#define RES_SET_ENG									"SET"
+#define RES_R_GAIN_ENG								"R-GAIN"
+#define RES_G_GAIN_ENG								"G-GAIN"
+#define RES_B_GAIN_ENG								"B-GAIN"
+#define RES_SET_DEFAULT_ENG							"SET DEFAULT"
+
+#define RES_BLC_MODE_ENG							"BLC "
+#define RES_WDR_MODE_ENG							"WDR "
+#define RES_DWDR_MODE_ENG							"DWDR "
+#define RES_BLC_AREA_ENG							"BLC AREA"
+#define RES_BLC_SHOW_ENG							"SHOW BLC"
+#define RES_BLC_MOVE_ENG							"BLC MOVEMENT"
+#define RES_WDR_LEVEL_ENG							"WDR LEVEL"
+
+#define RES_SHUTTER_ENG								"SHUTTER"
+#define RES_DSS_ENG									"DSS "
+#define RES_BRIGHTNESS_ENG							"BRIGHTNESS"
+#define RES_AGC_ENG									"AGC "
+
+#define RES_LOW_ENG									"LOW"
+#define RES_MIDDLE_ENG								"MIDDLE"
+#define RES_HIGH_ENG								"HIGH"
+#define RES_USE_OSD_ENG								"USE OSD"
+#define RES_USE_ENG									"USE"
+
+#define RES_SERVICE_ENG								"SERVICE"
+#define RES_MOVE_STEP_ENG							"MOVE STEP"
+
+
+
+#define RES_WEBGATE_ENG								""
+#define RES_WEBGATE_WARNING_ENG						""
+#define RES_WEBGATE_WARNING2_ENG					""
+
+#define RES_SATURATION_ENG							"SATURATION"
+#define RES_MAX_BITRATE_ENG							"MAX BITRATE"
+#define RES_VIDEO_VERTICAL_ENG						"VIDEO ROTATION"
+#define RES_ROTATE_90_ENG							"90degree"
+#define RES_ROTATE_270_ENG							"270degree"
+#define RES_UPDATE_ENG                              "UPDATE"
+#define RES_UPLOAD_OK_ENG                           "UPLOAD SUCCESS"
+#define RES_UPLOAD_FAIL_ENG                         "UPLOAD FAIL"
+#define RES_ID_ENG                                  "ID"
+#define RES_UPDATE_MSG_ENG                          "It will be saved in a few seconds"
+
+#define RES_REFRESH_ENG								"REFRESH"
+#define RES_NET_GATEWAY_ENG							"GATEWAY"
+#define RES_STREAM_CH_ENG							"STREAM CH "
+#define RES_NET_SUBNET_ENG							"SUBNET"
+#define RES_NET_IP_ENG								"IP"
+#define RES_NET_TYPE_ENG							"NETWORK TYPE"
+#define RES_ONVIF_SECURITY_ENG						"ONVIF SECURITY"
+#define RES_MSG_INVALID_PORT_ENG					"Please enter a valid port value."
+#define RES_WARNING_ENG								"WARNING"
+
+
+
+
+
+
+
+
+

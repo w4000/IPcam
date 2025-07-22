@@ -1,0 +1,3 @@
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_videoout/fbdev/nvt_fb.ko
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_videoout/fbdev/nvt_fb_na51000_no_tracer.o /home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_videoout/fbdev/nvt_fb_osd_no_tracer.o /home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_videoout/fbdev/nvt_fb_video_no_tracer.o
+

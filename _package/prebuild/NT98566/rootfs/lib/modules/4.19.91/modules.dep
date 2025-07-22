@@ -1,0 +1,196 @@
+kernel/arch/arm/crypto/sha256-arm.ko:
+kernel/arch/arm/crypto/chacha20-neon.ko: kernel/crypto/chacha20_generic.ko
+kernel/arch/arm/crypto/aes-arm-ce.ko: kernel/crypto/crypto_simd.ko
+kernel/arch/arm/crypto/sha2-arm-ce.ko: kernel/arch/arm/crypto/sha256-arm.ko
+kernel/arch/arm/crypto/ghash-arm-ce.ko:
+kernel/arch/arm/crypto/crc32-arm-ce.ko:
+kernel/fs/fat/msdos.ko:
+kernel/fs/nls/nls_iso8859-1.ko:
+kernel/fs/mbcache.ko:
+kernel/fs/configfs/configfs.ko:
+kernel/fs/ext4/ext4.ko: kernel/fs/mbcache.ko kernel/fs/jbd2/jbd2.ko
+kernel/fs/jbd2/jbd2.ko:
+kernel/crypto/echainiv.ko:
+kernel/crypto/cmac.ko:
+kernel/crypto/gcm.ko:
+kernel/crypto/ccm.ko:
+kernel/crypto/chacha20_generic.ko:
+kernel/crypto/crypto_simd.ko:
+kernel/drivers/video/fbdev/core/cfbfillrect.ko:
+kernel/drivers/video/fbdev/core/cfbcopyarea.ko:
+kernel/drivers/video/fbdev/core/cfbimgblt.ko:
+kernel/drivers/net/phy/libphy.ko:
+kernel/drivers/net/phy/fixed_phy.ko: kernel/drivers/net/phy/libphy.ko
+kernel/drivers/net/phy/na51055_phy.ko: kernel/drivers/net/phy/libphy.ko
+kernel/drivers/net/ethernet/novatek/na51089/ntkimethmac.ko: kernel/drivers/of/of_mdio.ko kernel/drivers/net/phy/fixed_phy.ko kernel/drivers/net/phy/libphy.ko
+kernel/drivers/net/mii.ko:
+kernel/drivers/watchdog/na51055_wdt.ko:
+kernel/drivers/of/of_mdio.ko: kernel/drivers/net/phy/fixed_phy.ko kernel/drivers/net/phy/libphy.ko
+kernel/net/ipv4/inet_diag.ko:
+kernel/net/ipv4/tcp_diag.ko: kernel/net/ipv4/inet_diag.ko
+kernel/net/ipv4/udp_diag.ko: kernel/net/ipv4/inet_diag.ko
+kernel/net/unix/unix.ko:
+kernel/net/unix/unix_diag.ko: kernel/net/unix/unix.ko
+kernel/net/packet/af_packet.ko:
+kernel/net/packet/af_packet_diag.ko: kernel/net/packet/af_packet.ko
+extra/net/rtl8189fs/8189fs.ko:
+hdal/sen_gc4653/nvt_sen_gc4653.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx307_slave/nvt_sen_imx307_slave.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc3332/nvt_sen_sc3332.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_ai/kflow_ai.ko: hdal/kdrv_ai/kdrv_ai.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/sen_imx317/nvt_sen_imx317.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audio_device/emu/nvt_audext_emu.ko:
+hdal/sen_sc3338/nvt_sen_sc3338.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx326/nvt_sen_imx326.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audlib_aec/nvt_audlib_aec.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/kflow_videoout/unit/kflow_videoout.ko: hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/sen_os04a10/nvt_sen_os04a10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+extra/touch/touch_gt911/touch_gt911.ko:
+hdal/kflow_videoenc/unit/kflow_videoenc.ko: hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/display_panel/disp_if8b_lcd1_tp2803/disp_if8b_lcd1_tp2803.ko: hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko hdal/comm/kdrv_comm.ko
+hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko: hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/kdrv_audioio/audlib_src/nvt_audlib_src.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/sen_sc3336/nvt_sen_sc3336.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+extra/nvt_sen_det/nvt_sen_det.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_os04c10/nvt_sen_os04c10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc223a/nvt_sen_sc223a.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_f35/nvt_sen_f35.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx290/nvt_sen_imx290.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_os02h10/nvt_sen_os02h10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_gfx2d/kdrv_affine/kdrv_afn.ko: hdal/kdrv_gfx2d/kdrv_affine/affine_neon/kdrv_afn_neon.ko
+hdal/sen_os04b10/nvt_sen_os04b10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_gc4653_slave/nvt_sen_gc4653_slave.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/comm/nvtmem/nvtmem.ko:
+extra/msdcnvt/msdcnvt_adj/msdcnvt_adj.ko: extra/msdcnvt/msdcnvt/msdcnvt.ko
+hdal/sen_ar0221/nvt_sen_ar0221.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ov2715/nvt_sen_ov2715.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_videoprocess/kflow_videoprocess.ko: hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/display_panel/disp_if8b_lcd1_pw35p00_hx8238d/disp_if8b_lcd1_pw35p00.ko: hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko hdal/comm/kdrv_comm.ko
+hdal/sen_imx230/nvt_sen_imx230.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_videoout/ide/nvt_ide.ko:
+hdal/sen_imx334/nvt_sen_imx334.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_gfx2d/kdrv_gfx2d.ko: hdal/comm/kdrv_comm.ko
+hdal/mtr_ti8833/nvt_mtr_ti8833.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_gc5035/nvt_sen_gc5035.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_tc358743/nvt_sen_ad_tc358743.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ps5268/nvt_sen_ps5268.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ov2740/nvt_sen_ov2740.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_ai/kdrv_ai.ko: hdal/comm/kdrv_comm.ko
+hdal/kdrv_audioio/audlib_adpcm/nvt_audlib_adpcm.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/comm/kdrv_comm.ko:
+hdal/kdrv_ive/kdrv_ive.ko:
+hdal/sen_sc301iot/nvt_sen_sc301iot.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_gc2053/nvt_sen_gc2053.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc500ai/nvt_sen_sc500ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_audiodec/unit/kflow_audiodec.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/kdrv_videocodec/kdrv_h26x.ko: hdal/comm/kdrv_comm.ko
+hdal/aud_ac108/nvt_aud_ac108.ko: hdal/kflow_audiocapture/unit/kflow_audiocap.ko hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/sen_sc200ai/nvt_sen_sc200ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+extra/crypto/cryptodev-linux/cryptodev.ko:
+hdal/samples/sample_awb/sample_nvt_awb.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/disp_off/disp_off.ko:
+hdal/comm/drvdump/drvdump.ko:
+hdal/kflow_audiocapture/unit/kflow_audiocap.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/sen_vd55g0/nvt_sen_vd55g0.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/display_panel/disp_ifpa_lcd1_wm08001_sn75lvds83b/disp_if8b_lcd1_wm08001_sn75lvds83b.ko: hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko hdal/comm/kdrv_comm.ko
+hdal/sen_sc450ai/nvt_sen_sc450ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/display_panel/disp_ifdsi_lcd1_nt35510/disp_ifdsi_lcd1_nt35510.ko: hdal/kdrv_videoout/dsi/nvt_dsi.ko hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko
+hdal/comm/usb2dev/nvt_usb2dev.ko:
+hdal/kdrv_videoout/display_obj/kdrv_videoout.ko: hdal/kdrv_videoout/ide/nvt_ide.ko
+hdal/sen_off/nvt_sen_off.ko:
+hdal/aud_emu/nvt_aud_emu.ko: hdal/kflow_audiocapture/unit/kflow_audiocap.ko hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/sen_jinglin_ti_module/nvt_sen_jinglin_ti_module.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_tp2855/nvt_sen_ad_tp2855.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audio_common/nvt_audio.ko:
+hdal/sen_ar0237/nvt_sen_ar0237.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_videodec/unit/kflow_videodec.ko: hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+extra/msdcnvt/msdcnvt/msdcnvt.ko:
+extra/sample/fake/fake.ko:
+hdal/sen_os12d40/nvt_sen_os12d40.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/display_panel/disp_if8b_lcd1_psd300_ili8961/disp_if8b_lcd1_psd300_ili8961.ko: hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko hdal/comm/kdrv_comm.ko
+hdal/sen_imx335/nvt_sen_imx335.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_videocapture/kflow_videocapture.ko: hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx464/nvt_sen_imx464.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/samples/sample_iq/sample_nvt_iq.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audio_device/ac108/nvt_audext_ac108.ko: hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/sen_ad_nvp6124b/nvt_sen_ad_nvp6124b.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_tc358840/nvt_sen_ad_tc358840.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/samples/sample_ae/sample_nvt_ae.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audlib_g711/nvt_audlib_g711.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/sen_os02k10/nvt_sen_os02k10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc4238/nvt_sen_sc4238.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_f37p/nvt_sen_f37p.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc2239/nvt_sen_sc2239.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audlib_anr/nvt_audlib_anr.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/sen_ad_nvp6188/nvt_sen_ad_nvp6188.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc230ai/nvt_sen_sc230ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_videoout/fbdev/nvt_fb.ko: kernel/drivers/video/fbdev/core/cfbfillrect.ko kernel/drivers/video/fbdev/core/cfbimgblt.ko kernel/drivers/video/fbdev/core/cfbcopyarea.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko
+hdal/af/nvt_af.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_os02g10/nvt_sen_os02g10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_audioout/unit/kflow_audioout.ko: hdal/kflow_audiocapture/unit/kflow_audiocap.ko hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+extra/msdcnvt/msdcnvt_custom_si/msdcnvt_custom_si.ko: extra/msdcnvt/msdcnvt/msdcnvt.ko
+hdal/sen_gc4c33/nvt_sen_gc4c33.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_os08a10/nvt_sen_os08a10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc4210/nvt_sen_sc4210.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_dummy/nvt_sen_ad_dummy.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_dis/kflow_dis.ko: hdal/kdrv_dis/kdrv_dis.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/kdrv_videoout/dsi/nvt_dsi.ko:
+hdal/sen_ad_tp9950/nvt_sen_ad_tp9950.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/display_panel/disp_ifdsi_lcd1_tb093/disp_ifdsi_lcd1_tb093.ko: hdal/kdrv_videoout/dsi/nvt_dsi.ko hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko
+hdal/sen_f37/nvt_sen_f37.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/iq/nvt_iq.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_common/kflow_common.ko: hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/mtr_an41908/nvt_mtr_an41908.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/comm/dummy/drvdummy.ko:
+hdal/sen_sc530ai/nvt_sen_sc530ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/display_panel/disp_if8b_lcd1_aucn01/disp_if8b_lcd1_aucn01.ko: hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko hdal/comm/kdrv_comm.ko
+hdal/sen_ad_pr2020k/nvt_sen_ad_pr2020k.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc4336/nvt_sen_sc4336.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx347/nvt_sen_imx347.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_audioio/audlib_filt/nvt_audlib_filt.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/sen_imx415/nvt_sen_imx415.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ov2718/nvt_sen_ov2718.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_q03p/nvt_sen_q03p.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/isp/nvt_isp.ko: hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx327/nvt_sen_imx327.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/comm/tse/nvt_tse.ko:
+hdal/sen_s5k231y/nvt_sen_s5k231y.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/nvt_vencrc/nvt_vencrc.ko:
+hdal/sen_os05a10/nvt_sen_os05a10.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc8238/nvt_sen_sc8238.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_tp2854/nvt_sen_ad_tp2854.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc3335/nvt_sen_sc3335.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_imx307/nvt_sen_imx307.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_audioenc/unit/kflow_audioenc.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/kdrv_videoprocess/kdrv_videoprocess.ko: hdal/comm/kdrv_comm.ko
+hdal/ae/nvt_ae.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/awb/nvt_awb.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_dis/kdrv_dis.ko: hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/kdrv_audioio/audlib_aac/nvt_audlib_aac.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/kdrv_audioio/audlib_agc/nvt_audlib_agc.ko: hdal/kdrv_audioio/kdrv_audio/nvt_kdrv_audio.ko hdal/kdrv_audioio/audio_common/nvt_audio.ko
+hdal/display_panel/nvt_dispdev_panel.ko:
+hdal/sen_sc2310/nvt_sen_sc2310.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_tp9963/nvt_sen_ad_tp9963.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_gc4663/nvt_sen_gc4663.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kflow_gfx/videosprite/nvt_videosprite.ko: hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/samples/sample_af/sample_nvt_af.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/display_panel/disp_ifdsi_lcd1_ut35067a0_ili9488/disp_ifdsi_lcd1_ut35067a0_ili9488.ko: hdal/kdrv_videoout/dsi/nvt_dsi.ko hdal/display_panel/nvt_dispdev_panel.ko hdal/kdrv_videoout/display_obj/kdrv_videoout.ko hdal/kdrv_videoout/ide/nvt_ide.ko
+hdal/kflow_gfx/nvt_gfx.ko: hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko
+hdal/mtr_ms41949/nvt_mtr_ms41949.ko: hdal/isp/nvt_isp.ko hdal/kflow_videoenc/unit/kflow_videoenc.ko hdal/kdrv_videocodec/kdrv_h26x.ko hdal/kflow_videoprocess/kflow_videoprocess.ko hdal/kdrv_videoprocess/kdrv_videoprocess.ko hdal/kflow_gfx/videosprite/nvt_videosprite.ko hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ad_pr2100k/nvt_sen_ad_pr2100k.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ov2736ir/nvt_sen_ov2736ir.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc2335/nvt_sen_sc2335.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_gfx2d/kdrv_affine/affine_neon/kdrv_afn_neon.ko:
+hdal/sen_sc500cs/nvt_sen_sc500cs.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc830ai/nvt_sen_sc830ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc401ai/nvt_sen_sc401ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_videocapture/kdrv_videocapture.ko:
+hdal/sen_ad_tp9930/nvt_sen_ad_tp9930.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc430ai/nvt_sen_sc430ai.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_ov48b/nvt_sen_ov48b.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/kdrv_md/kdrv_md.ko: hdal/comm/nvtmem/nvtmem.ko
+hdal/comm/uvcp/nvt_uvcp.ko:
+hdal/sen_ar0237ir/nvt_sen_ar0237ir.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/sen_sc2336/nvt_sen_sc2336.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko
+hdal/comm/usb_chrgdet/nvt_usb_chrgdet.ko:
+hdal/sen_sc2232h/nvt_sen_sc2232h.ko: hdal/kflow_videocapture/kflow_videocapture.ko hdal/kflow_common/kflow_common.ko hdal/kdrv_gfx2d/kdrv_gfx2d.ko hdal/comm/kdrv_comm.ko hdal/kdrv_videocapture/kdrv_videocapture.ko

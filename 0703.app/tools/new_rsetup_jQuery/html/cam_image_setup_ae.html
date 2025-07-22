@@ -1,0 +1,310 @@
+<script language="JavaScript">
+  <!--
+  // $("button").button();
+
+  var pause_put = 0;
+  var support_compensation = 0;
+  var shutter_easy = 0;
+  var is_pal = 0;
+
+  var ss_arr_ntsc = [
+    33333, 16666, 11111, 8333, 6666, 5555, 4167, 2778, 1852, 1408, 1000,
+    666.667, 333.333, 166.667, 100, 66.666, 50, 33.333,
+  ];
+  var ss_arr = ss_arr_ntsc;
+  function init_shutter_combo(obj, min, max) {
+    obj.append("<option value=0>AUTO</option>");
+    for (var i = 0; i < ss_arr.length; i++) {
+      obj.append(
+        "<option value=" +
+          ss_arr[i] +
+          ">" +
+          disp_exp_time(ss_arr[i]) +
+          "</option>"
+      );
+    }
+
+    if (min != max) {
+      obj.val(0).prop("selected", "selected");
+    } else {
+      obj.val(min).prop("selected", "selected");
+    }
+  }
+
+  function refresh_shutter_combo(obj, min, max) {
+    if (min != max) {
+      obj.val(0).prop("selected", "selected");
+    } else {
+      obj.val(min).prop("selected", "selected");
+    }
+  }
+
+  function get_ae_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/ae/all";
+
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        
+
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        init_exptime_slider(
+          $("#shutter_speed"),
+          $("#shutter_speed_val1"),
+          $("#shutter_speed_val2"),
+          data.exposure_range.shutter.min.min,
+          data.exposure_range.shutter.max.max,
+          data.exposure.shutter.min,
+          data.exposure.shutter.max,
+          10,
+          put_ae_setup_value
+        );
+
+
+        // init_agc_slider(
+        //   $("#gain"),
+        //   $("#gain_val1"),
+        //   $("#gain_val2"),
+        //   data.exposure_range.gain.min.min,
+        //   data.exposure_range.gain.max.max,
+        //   data.exposure.gain.min,
+        //   data.exposure.gain.max,
+        //   1024,
+        //   put_ae_setup_value
+        // );
+
+
+        
+        init_agc_slider(
+          $("#gain"),
+          $("#gain_val1"),
+          $("#gain_val2"),
+          0,
+          20,
+          0,
+          20,
+          1,
+          put_ae_setup_value
+        );
+
+        put_ae_setup_value();
+
+
+      },
+      error: function (err) {},
+    });
+  }
+
+  function put_ae_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/ae";
+
+    if (pause_put) return;
+
+
+	var form = {
+		"exposure": {
+			"shutter": {
+				"min": $("#shutter_speed").slider("values", 0),
+				"max": $("#shutter_speed").slider("values", 1)
+			},
+			"gain": {
+				"min": 0,
+				"max": 20
+			},
+		}
+	};
+
+
+	$.ajax({
+		url: req_url,
+		type: "PUT",
+		dataType: "json",
+		cache: false,
+		data: JSON.stringify(form),
+		success:function(data) {
+		},
+		error:function(err) {
+		}
+	})
+}
+
+
+
+  function onchange_shutter() {
+    var ss = Number($("#shutter_speed_easy option:selected").val());
+    if (ss == 0) {
+      $("#shutter_speed").slider("values", 0, ss_arr[ss_arr.length - 1]);
+      $("#shutter_speed").slider("values", 1, ss_arr[0]);
+    } else {
+      $("#shutter_speed").slider("values", 0, ss);
+      $("#shutter_speed").slider("values", 1, ss);
+    }
+    put_ae_setup_value();
+  }
+
+  function onclick_ae_default() {
+    var req_url = "/_fcgiapi/video/quality/ae/default";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        
+
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+        
+
+        pause_put = 1;
+
+        refresh_exptime_slider_value(
+          $("#shutter_speed"),
+          $("#shutter_speed_val1"),
+          $("#shutter_speed_val2"),
+          data.exposure_default.shutter.min,
+          data.exposure_default.shutter.max
+        );
+
+        // refresh_agc_slider_value(
+        //   $("#gain"),
+        //   $("#gain_val1"),
+        //   $("#gain_val2"),
+        //   data.exposure_default.gain.min,
+        //   data.exposure_default.gain.max,
+        //   1024
+        // );
+
+        
+
+        pause_put = 0;
+        put_ae_setup_value();
+      },
+    });
+  }
+
+  function init_ae() {
+    load_language("setup_camera_tab_ae");
+    get_ae_setup_value();
+  }
+
+  init_ae();
+
+
+  -->
+</script>
+
+<style>
+  .input_status {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    border: 0px solid #4e99ca;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="table-responsive">
+              <table class="table table-centered mb-0">
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>SHUTTER SPEED</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="shutter_speed_val1"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+
+                        <td width="95%" style="padding: 8px">
+                          <div id="shutter_speed"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="shutter_speed_val2"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>GAIN</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="gain_val1"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+
+                        <td width="95%" style="padding: 8px">
+                          <div id="gain"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="gain_val2"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+
+                
+              </table>
+
+              <div class="mb-1" style="text-align: right; margin-top: 20px">
+                <button
+                  class="btn btn-secondary waves-effect waves-light"
+                  onclick="onclick_ae_default();"
+                  id="iq_default"
+                >
+                  RESET
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

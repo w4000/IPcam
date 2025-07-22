@@ -1,0 +1,83 @@
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:28:	json_object_set_new(jgain, "min", json_integer(gain->min.val));
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:29:	json_object_set_new(jgain, "max", json_integer(gain->max.val));
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:54:	json_object_set_new(jgain, "min", json_integer(gain->min.init_val));
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:55:	json_object_set_new(jgain, "max", json_integer(gain->max.init_val));
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:88:	jrange = json_range_minmax(gain->min.min, gain->min.max);
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:91:	jrange = json_range_minmax(gain->max.min, gain->max.max);
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:227:	if(min >= gain->min.min && min <= gain->min.max) {
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:228:		gain->min.val = min;
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:232:	if(min >= gain->max.min && min <= gain->max.max) {
+tools/new_rsetup_jQuery/cgi-api/api_video_quality_ae.c:233:		gain->max.val = max;
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:429:			awb_param[id]->mwb_gain->r_gain[0] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:431:			awb_param[id]->mwb_gain->r_gain[1] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:433:			awb_param[id]->mwb_gain->r_gain[2] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:435:			awb_param[id]->mwb_gain->r_gain[3] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:437:			awb_param[id]->mwb_gain->r_gain[4] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:439:			awb_param[id]->mwb_gain->r_gain[5] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:441:			awb_param[id]->mwb_gain->r_gain[6] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:443:			awb_param[id]->mwb_gain->r_gain[7] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:445:			awb_param[id]->mwb_gain->r_gain[8] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:447:			awb_param[id]->mwb_gain->r_gain[9] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:449:			awb_param[id]->mwb_gain->r_gain[10] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:451:			awb_param[id]->mwb_gain->r_gain[11] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:453:			awb_param[id]->mwb_gain->g_gain[0] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:455:			awb_param[id]->mwb_gain->g_gain[1] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:457:			awb_param[id]->mwb_gain->g_gain[2] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:459:			awb_param[id]->mwb_gain->g_gain[3] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:461:			awb_param[id]->mwb_gain->g_gain[4] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:463:			awb_param[id]->mwb_gain->g_gain[5] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:465:			awb_param[id]->mwb_gain->g_gain[6] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:467:			awb_param[id]->mwb_gain->g_gain[7] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:469:			awb_param[id]->mwb_gain->g_gain[8] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:471:			awb_param[id]->mwb_gain->g_gain[9] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:473:			awb_param[id]->mwb_gain->g_gain[10] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:475:			awb_param[id]->mwb_gain->g_gain[11] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:477:			awb_param[id]->mwb_gain->b_gain[0] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:479:			awb_param[id]->mwb_gain->b_gain[1] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:481:			awb_param[id]->mwb_gain->b_gain[2] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:483:			awb_param[id]->mwb_gain->b_gain[3] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:485:			awb_param[id]->mwb_gain->b_gain[4] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:487:			awb_param[id]->mwb_gain->b_gain[5] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:489:			awb_param[id]->mwb_gain->b_gain[6] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:491:			awb_param[id]->mwb_gain->b_gain[7] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:493:			awb_param[id]->mwb_gain->b_gain[8] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:495:			awb_param[id]->mwb_gain->b_gain[9] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:497:			awb_param[id]->mwb_gain->b_gain[10] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:499:			awb_param[id]->mwb_gain->b_gain[11] = simple_strtoul(argv[5], NULL, 0);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1314:		seq_printf(sfile, "Rgain %d %d %d %d %d %d %d %d %d %d %d %d \n", awb_param[param_f]->mwb_gain->r_gain[0], awb_param[param_f]->mwb_gain->r_gain[1], awb_param[param_f]->mwb_gain->r_gain[2],
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1315:			awb_param[param_f]->mwb_gain->r_gain[3], awb_param[param_f]->mwb_gain->r_gain[4], awb_param[param_f]->mwb_gain->r_gain[5], awb_param[param_f]->mwb_gain->r_gain[6], awb_param[param_f]->mwb_gain->r_gain[7],
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1316:			awb_param[param_f]->mwb_gain->r_gain[8], awb_param[param_f]->mwb_gain->r_gain[9], awb_param[param_f]->mwb_gain->r_gain[10], awb_param[param_f]->mwb_gain->r_gain[11]);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1317:		seq_printf(sfile, "Ggain %d %d %d %d %d %d %d %d %d %d %d %d \n", awb_param[param_f]->mwb_gain->g_gain[0], awb_param[param_f]->mwb_gain->g_gain[1], awb_param[param_f]->mwb_gain->g_gain[2],
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1318:			awb_param[param_f]->mwb_gain->g_gain[3], awb_param[param_f]->mwb_gain->g_gain[4], awb_param[param_f]->mwb_gain->g_gain[5], awb_param[param_f]->mwb_gain->g_gain[6], awb_param[param_f]->mwb_gain->g_gain[7],
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1319:			awb_param[param_f]->mwb_gain->g_gain[8], awb_param[param_f]->mwb_gain->g_gain[9], awb_param[param_f]->mwb_gain->g_gain[10], awb_param[param_f]->mwb_gain->g_gain[11]);
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1320:		seq_printf(sfile, "Bgain %d %d %d %d %d %d %d %d %d %d %d %d \n", awb_param[param_f]->mwb_gain->b_gain[0], awb_param[param_f]->mwb_gain->b_gain[1], awb_param[param_f]->mwb_gain->b_gain[2],
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1321:			awb_param[param_f]->mwb_gain->b_gain[3], awb_param[param_f]->mwb_gain->b_gain[4], awb_param[param_f]->mwb_gain->b_gain[5], awb_param[param_f]->mwb_gain->b_gain[6], awb_param[param_f]->mwb_gain->b_gain[7],
+isp/tools/vendor/isp/drivers/source/awb/awb_proc.c:1322:			awb_param[param_f]->mwb_gain->b_gain[8], awb_param[param_f]->mwb_gain->b_gain[9], awb_param[param_f]->mwb_gain->b_gain[10], awb_param[param_f]->mwb_gain->b_gain[11]);
+isp/tools/vendor/isp/drivers/source/isp/ispt_api.c:583:		data->gain[0] = builtin_cgain->r;
+isp/tools/vendor/isp/drivers/source/isp/ispt_api.c:584:		data->gain[1] = builtin_cgain->g;
+isp/tools/vendor/isp/drivers/source/isp/ispt_api.c:585:		data->gain[2] = builtin_cgain->b;
+isp/tools/vendor/isp/drivers/source/isp/isp_api.c:1583:		awb_init_info.r_gain = builtin_cgain->r;
+isp/tools/vendor/isp/drivers/source/isp/isp_api.c:1584:		awb_init_info.g_gain = builtin_cgain->g;
+isp/tools/vendor/isp/drivers/source/isp/isp_api.c:1585:		awb_init_info.b_gain = builtin_cgain->b;
+Binary file isp/tools/vendor/isp/drivers/source/iq/nvt_iq.ko matches
+Binary file isp/tools/vendor/isp/drivers/source/iq/iq_lib/iq_msg.o matches
+Binary file isp/tools/vendor/isp/drivers/source/iq/iq_lib/iq_msg_no_tracer.o matches
+Binary file isp/tools/vendor/isp/drivers/source/iq/libnvt_iq.a matches
+Binary file isp/tools/vendor/isp/drivers/source/iq/nvt_iq.o matches
+Binary file device/NT98566/drivers/k_driver/source/kdrv_videocapture/kdrv_sie/kdrv_debug/kdrv_sie_debug_int_no_tracer.o matches
+Binary file device/NT98566/drivers/k_driver/source/kdrv_videocapture/kdrv_sie/kdrv_debug/kdrv_sie_debug_int.o matches
+Binary file device/NT98566/drivers/k_driver/source/kdrv_videocapture/kdrv_videocapture.o matches
+Binary file device/NT98566/drivers/k_driver/source/kdrv_videocapture/kdrv_videocapture.ko matches
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:1792:		if (cgain->g == 0) {
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:1796:			curr_rgain_sqrt_id = (cgain->r * 5) / cgain->g;
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:1797:			curr_bgain_sqrt_id = (cgain->b * 5) / cgain->g;
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:1798:			curr_rgain_sqrt = iq_intpl(cgain->r, iq_sqrt_tab[curr_rgain_sqrt_id], iq_sqrt_tab[curr_rgain_sqrt_id + 1], (curr_rgain_sqrt_id * cgain->g) / 5, ((curr_rgain_sqrt_id + 1) * cgain->g) / 5);
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:1799:			curr_bgain_sqrt = iq_intpl(cgain->b, iq_sqrt_tab[curr_bgain_sqrt_id], iq_sqrt_tab[curr_bgain_sqrt_id + 1], (curr_bgain_sqrt_id * cgain->g) / 5, ((curr_bgain_sqrt_id + 1) * cgain->g) / 5);
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:5020:	if ((awb_cgain->r == 0) | (awb_cgain->g == 0) | (awb_cgain->b == 0)) {
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:5021:		awb_cgain->r = 256;
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:5022:		awb_cgain->g = 256;
+device/NT98566/drivers/k_driver/source/kdrv_builtin/isp/iq_builtin.c:5023:		awb_cgain->b = 256;
+Binary file device/NT98566/drivers/k_flow/source/kflow_videocapture/kflow_videocapture.o matches
+Binary file device/NT98566/drivers/k_flow/source/kflow_videocapture/ctl_sie/sie_debug/ctl_sie_debug_int.o matches
+Binary file device/NT98566/drivers/k_flow/source/kflow_videocapture/ctl_sie/sie_debug/ctl_sie_debug_int_no_tracer.o matches
+Binary file device/NT98566/drivers/k_flow/source/kflow_videocapture/kflow_videocapture.ko matches

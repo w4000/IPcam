@@ -1,0 +1,9 @@
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/isp/nvt_isp.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/ae/nvt_ae.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/awb/nvt_awb.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/af/nvt_af.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/iq/nvt_iq.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/samples/sample_ae/sample_nvt_ae.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/samples/sample_af/sample_nvt_af.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/samples/sample_awb/sample_nvt_awb.ko
+kernel//home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/vendor/isp/drivers/source/samples/sample_iq/sample_nvt_iq.ko

@@ -1,0 +1,43 @@
+#!/bin/sh
+GROUP_KO=ON
+KERVER=`cat /proc/version | awk -F'version ' '{print $2}' | awk -F' ' '{print $1}'`
+
+
+mount /etc/app /mnt/app
+free
+
+insmod /lib/modules/$KERVER/hdal/comm/nvtmem/nvtmem.ko
+insmod /lib/modules/$KERVER/hdal/comm/kdrv_comm.ko
+insmod /lib/modules/$KERVER/hdal/kdrv_gfx2d/kdrv_gfx2d.ko
+insmod /lib/modules/$KERVER/hdal/kdrv_videocapture/kdrv_videocapture.ko
+insmod /lib/modules/$KERVER/hdal/kdrv_videoprocess/kdrv_videoprocess.ko
+insmod /lib/modules/$KERVER/hdal/kflow_common/kflow_common.ko
+insmod /lib/modules/$KERVER/hdal/kflow_gfx/videosprite/nvt_videosprite.ko
+insmod /lib/modules/$KERVER/hdal/kflow_videocapture/kflow_videocapture.ko
+insmod /lib/modules/$KERVER/hdal/kflow_videoprocess/kflow_videoprocess.ko
+insmod /lib/modules/$KERVER/hdal/kdrv_videoout/ide/nvt_ide.ko
+insmod /lib/modules/$KERVER/hdal/kdrv_videoout/display_obj/kdrv_videoout.ko
+insmod /lib/modules/$KERVER/hdal/kflow_videoout/unit/kflow_videoout.ko
+insmod /lib/modules/$KERVER/hdal/kdrv_videocodec/kdrv_h26x.ko
+insmod /lib/modules/$KERVER/hdal/nvt_vencrc/nvt_vencrc.ko
+insmod /lib/modules/$KERVER/hdal/kflow_videoenc/unit/kflow_videoenc.ko
+insmod /lib/modules/$KERVER/hdal/kflow_videodec/unit/kflow_videodec.ko
+
+
+if [ ${NVT_CHIP_ID} == "CHIP_NA51084" ]; then
+echo "isp_id_list: 0x1B, ae_id_list: 0x1B, awb_id_list: 0x1B, iq_id_list 0x1B"
+else
+echo "isp_id_list: 0x3, ae_id_list: 0x3, awb_id_list: 0x3, iq_id_list 0x3"
+insmod /lib/modules/$KERVER/hdal/isp/nvt_isp.ko
+insmod /lib/modules/$KERVER/hdal/ae/nvt_ae.ko
+insmod /lib/modules/$KERVER/hdal/awb/nvt_awb.ko
+insmod /lib/modules/$KERVER/hdal/iq/nvt_iq.ko
+fi
+modprobe nvt_sen_imx327 sen_cfg_path=/mnt/app/sensor/sen_imx327.cfg
+insmod /lib/modules/$KERVER/hdal/kdrv_md/kdrv_md.ko
+free
+
+
+#add
+modprobe nvt_adc
+echo d > /proc/nvt_info/nvt_clk/clk_childless

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+DATETIME=`fw_printenv datetime | awk -F= '{print $2}'`
+echo "Get bootenv : datetime=${DATETIME}"
+
+if [ ."${DATETIME}" == ."" ]; then
+	exit 0
+fi
+
+# echo "** Set System Time"
+date ${DATETIME}
+
+if [ $? -eq 0 ]; then
+	echo "** Set RTC"
+	/sbin/hwclock --systohc --localtime
+else
+	echo "Fail..."
+fi 
+
+fw_setenv datetime

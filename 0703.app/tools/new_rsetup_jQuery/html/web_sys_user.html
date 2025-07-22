@@ -1,0 +1,544 @@
+<script src="../js/login_change.js"></script>
+
+<script language="JavaScript">
+  <!--
+  var user_sum = 0;
+  var user_max = 10;
+
+  var user_mod_id = -1;
+  var user_modify_state = 0;
+  var user_add_state = 0;
+  var _pub_key = "##PARAM_RSA_PUBLIC_KEY##";
+  var _session_key = "##PARAM_RSA_SESSION_KEY##";
+
+  // $(document).tooltip();
+  // $("a").button();
+  // $("button").button();
+
+  $(".accordion").accordion({
+    heightStyle: "content",
+    collapsible: true,
+  });
+
+  $("#update_save").bind("click", function () {
+    var i;
+    var perm_check = 0;
+    var obj_user_id, obj_user_perm_setup;
+
+    for (i = 0; i < user_max; i++) {
+      obj_user_id = $("#u_id_" + i);
+      obj_user_perm_setup = $("#user_perm_setup_" + i);
+
+      if (obj_user_id.val() != "") {
+        if (obj_user_perm_setup.val() == 1) {
+          perm_check = 1;
+          break;
+        }
+      }
+    }
+
+
+    if ($("#update_save").attr("disabled")) return;
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "userInfo"
+        //##PARAM_USER_DATA##
+      },
+      success: function (data) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        $("#msg_out").append(data);
+      },
+      error: function (err) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        alert(msgAjaxFail);
+      },
+    });
+  });
+
+  $("#new_btn").bind("click", function () {
+    if ($("#new_btn").attr("disabled")) return;
+
+    user_mod_id = -1;
+    user_modify_state = -1;
+    user_add_state = 0;
+
+    $("#user_id").removeAttr("disabled").css("background", "#ffffff");
+    $("#user_id").attr("value", "##RES_ENTER_NEW_USER##");
+    $("#user_id").select();
+
+    $("#user_desc").attr("value", "");
+    $("#user_pwd").attr("value", "");
+    $("input[name=user_perm]").attr("checked", true);
+
+    $("#add_btn").removeAttr("disabled");
+    $("#modify_btn").attr("disabled", true);
+  });
+
+  var exception_id = "##EXCEPTION_ID##";
+
+  $("#add_btn").bind("click", function () {
+    if ($("#add_btn").attr("disabled")) return;
+
+    var obj_user_id,
+      obj_user_desc,
+      obj_user_pwd,
+      obj_user_perm_live,
+      obj_user_perm_vod,
+      obj_user_perm_setup;
+
+    var trim_id = trim($("#user_id").val());
+    var trim_desc = trim($("#user_desc").val());
+    var trim_pwd = trim($("#user_pwd").val());
+    var trim_pwd2 = trim($("#user_pwd2").val());
+
+    if (user_add_state == 0) {
+      if (trim_id == "") {
+        alert("##RES_MSG_USER_IS_NEEDED##");
+        return;
+      }
+      if (trim_pwd == "") {
+        alert("##RES_MSG_PASSWORD##");
+        return;
+      }
+      if (trim_pwd != trim_pwd2) {
+        alert("##RES_MSG_NOT_MATCH_PWD##");
+        return;
+      }
+
+      if ($("#user_id").val() != exception_id) {
+        if ($("#user_id").val().length < 4) {
+          alert("##RES_MSG_USERID1##");
+          return;
+        }
+
+        if (
+          input_korean_check($("#user_id").val(), $("#user_id").val().length)
+        ) {
+          alert("##RES_MSG_USERID2##");
+          return;
+        }
+
+        if (
+          idrule_check($("#user_id").val()) < 0 &&
+          $("#user_id").val().length > 0
+        ) {
+          alert("##RES_MSG_USERID2##");
+          return;
+        }
+      }
+
+      if ($("#user_pwd").val().length < 9) {
+        alert("##RES_MSG_PASSWORD1##");
+        return;
+      }
+
+      if (
+        pwdrule_check($("#user_pwd").val()) < 0 &&
+        $("#user_pwd").val().length > 0
+      ) {
+        alert(
+          "##RES_MSG_PASSWORD3##"
+        );
+        return;
+      }
+
+      if (pwd_insert_rule($("#user_pwd").val()) == 1) {
+        alert(
+          "'=', '[', ']', ';',  ''', '/', '$', '%', '&', '+', ':', '\"', '', '~', '{','}', '`', '|', '*', '<', '>'\n##RES_MSG_PASSWORD4##"
+        );
+        return;
+      }
+
+
+      for (i = 0; i < user_max; i++) {
+        obj_user_id = $("#u_id_" + i);
+
+        if (obj_user_id.val() == trim_id) {
+          alert("##RES_MSG_USER_EXIST##");
+          return;
+        }
+      }
+
+      if (user_sum >= user_max) {
+        alert("##RES_MSG_MAX_NUM##");
+        return;
+      }
+
+      if (trim_id == "##RES_ENTER_NEW_USER##") {
+        alert("##RES_MSG_USER_IS_NEEDED##");
+        return;
+      }
+
+      for (i = 0; i < user_max; i++) {
+        obj_user_id = $("#u_id_" + i);
+        obj_user_desc = $("#u_desc_" + i);
+        obj_user_pwd = $("#u_pwd_" + i);
+
+        if (obj_user_id.val() == "") {
+          obj_user_id.attr("value", trim_id);
+          obj_user_desc.attr("value", trim_desc);
+          obj_user_pwd.attr("value", trim_pwd);
+
+
+          $("#user_id").attr("value", "");
+          $("#user_desc").attr("value", "");
+          $("#user_pwd").attr("value", "");
+          $("#user_pwd2").attr("value", "");
+          $("input[name=user_perm]").attr("checked", false);
+
+          $("#add_btn").removeAttr("disabled");
+          $("#modify_btn").removeAttr("disabled");
+          
+
+
+          break;
+        }
+      }
+
+      load_user_list();
+    }
+  });
+
+  $("#modify_btn").bind("click", function () {
+    if ($("#modify_btn").attr("disabled")) return;
+
+    var id = user_mod_id;
+    var trim_desc = trim($("#user_desc").val());
+    var trim_pwd = trim($("#user_pwd").val());
+    var trim_pwd2 = trim($("#user_pwd2").val());
+
+    if (user_modify_state == 0) {
+      if (trim_pwd == "") {
+        alert("##RES_MSG_PASSWORD##");
+        return;
+      }
+
+      if (trim_pwd != trim_pwd2) {
+        alert("##RES_MSG_NOT_MATCH_PWD##");
+        return;
+      }
+
+      if ($("#user_pwd").val().length < 9) {
+        alert("##RES_MSG_PASSWORD1##");
+        return;
+      }
+
+      if (
+        pwdrule_check($("#user_pwd").val()) < 0 &&
+        $("#user_pwd").val().length > 0
+      ) {
+        alert(
+          "##RES_MSG_PASSWORD3##"
+        );
+        return;
+      }
+
+      if (pwd_insert_rule($("#user_pwd").val()) == 1) {
+        alert(
+          "'=', '[', ']', ';',  ''', '/', '$', '%', '&', '+', ':', '\"', '', '~', '{','}', '`', '|', '*', '<', '>'\n##RES_MSG_PASSWORD4##"
+        );
+        return;
+      }
+
+      user_add_state = 0;
+      user_modify_state = -1;
+
+      $("#u_desc_" + id).attr("value", trim_desc);
+      $("#u_pwd_" + id).attr("value", trim_pwd);
+
+
+      user_mod_id = -1;
+
+      $("#user_id").attr("value", "");
+      $("#user_id").removeAttr("disabled", "").css("background", "#ffffff");
+      $("#user_desc").attr("value", "");
+      $("#user_pwd").attr("value", "");
+      $("#user_pwd2").attr("value", "");
+
+      $("#add_btn").removeAttr("disabled");
+      $("#modify_btn").removeAttr("disabled");
+
+      load_user_list();
+    }
+  });
+
+  function edit_user_proc(id) {
+    var cnt = 0;
+
+    user_add_state = -1;
+    user_modify_state = 0;
+    user_mod_id = id;
+
+    $("#user_id").attr("value", $("#u_id_" + id).val());
+    $("#user_desc").attr("value", $("#u_desc_" + id).val());
+    $("#user_pwd").attr("value", $("#u_pwd_" + id).val());
+    $("#user_pwd2").attr("value", "");
+
+
+    $("#user_id").attr("disabled", true).css("background", "#f3f3f3");
+    $("#add_btn").attr("disabled", true);
+    $("#modify_btn").removeAttr("disabled");
+  }
+
+  function del_user_proc(id) {
+    if (user_sum <= 1) {
+      alert("##RES_MSG_NEED_ONE_USER##");
+      return;
+    }
+
+    $("#u_id_" + id).attr("value", "");
+    $("#u_desc_" + id).attr("value", "");
+    $("#u_pwd_" + id).attr("value", "");
+
+    user_mod_id = -1;
+    user_add_state = 0;
+
+    $("#user_id").removeAttr("disabled").css("background", "#ffffff");
+    $("#user_id").attr("value", "");
+    $("#user_desc").attr("value", "");
+    $("#user_pwd").attr("value", "");
+    $("#user_pwd2").attr("value", "");
+
+    $("#add_btn").removeAttr("disabled");
+    $("#modify_btn").removeAttr("disabled");
+
+    load_user_list();
+  }
+
+  function delrow_user_tableRow(id) {
+    $("#user_tr_" + id).remove();
+  }
+
+  function addrow_user_tableRow(id) {
+    var data =
+      "<tr id='user_tr_" +
+      user_sum +
+      "' class='sub_value' style='height: 25px'>";
+    data += "<td align='center'>" + parseInt(user_sum + 1) + "</td>";
+    data += "<td align='center'>" + $("#u_id_" + id).val() + "</td>";
+    data += "<td align='center'>" + $("#u_desc_" + id).val() + "</td>";
+    data +=
+      "<td align='center'><button id='edit_btn' name='edit_btn' onclick='edit_user_proc(" +
+      id +
+      ");'><i class='fe-edit'></i></button>" +
+      "<button id='del_btn' name='del_btn' onclick='del_user_proc(" +
+      id +
+      ");'><i class='fe-trash'></i></button></td>";
+    data += "</tr>";
+
+    $("#user_table").append(data);
+
+    user_sum++;
+  }
+
+  function load_user_list() {
+    user_modify_state = -1;
+
+
+    for (i = 0; i < user_sum; i++) delrow_user_tableRow(i);
+
+    user_sum = 0;
+    for (i = 0; i < user_max; i++) {
+      if (
+        $("#u_id_" + i).val() != undefined &&
+        $("#u_id_" + i).val() != ""
+      ) {
+        addrow_user_tableRow(i);
+      }
+    }
+  }
+
+  function init() 
+  {
+    load_user_list();
+  }
+
+  init();
+
+  -->
+</script>
+
+<style>
+  .select_lang {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    width: 200px;
+    height: 20px;
+    border: 1px solid #79b7e7;
+  }
+
+  .form-group {
+    margin-top: 20px;
+  }
+
+  input[type="text"] {
+    text-transform: none !important;
+  }
+
+  #edit_btn,
+  #del_btn {
+    background: transparent;
+    border: transparent;
+  }
+
+  #edit_btn i,
+  #del_btn i {
+    font-size: 17px;
+    color: #6c757d !important;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+</style>
+
+<!--##PARAM_USER_VALUE##-->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="ribbon ribbon-primary">##RES_USER_CONFIG##</div>
+
+            <div class="table-responsive">
+              <table id="user_table" class="table table-centered mb-0">
+                <thead>
+                  <tr>
+                    <th>##RES_NO##</th>
+                    <th>##RES_USER_ID##</th>
+                    <th>##RES_DESCRIPTION##</th>
+                    <!-- <th>##RES_PERMISSION##</th> -->
+                    <th>Operation</th>
+                  </tr>
+                </thead>
+
+                <tbody></tbody>
+              </table>
+
+              <div class="mb-1" style="text-align: right">
+                <button
+                  type="submit"
+                  class="btn btn-secondary waves-effect waves-light"
+                  id="new_btn"
+                >
+                  ##RES_NEW##
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card-box card-white-box ribbon-box">
+        <div class="ribbon ribbon-primary">##RES_ADD## / ##RES_MODIFY##</div>
+
+        <div class="mb-1" style="width: 100%">
+          <table width="100%" class="table m-0 table-hover side-table">
+            <tr>
+              <td class="side-table-head">##RES_USER_ID##</td>
+              <td>
+                <input
+                  type="text"
+                  id="user_id"
+                  class="input_flat form-control"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side-table-head">##RES_DESCRIPTION##</td>
+              <td>
+                <input
+                  type="text"
+                  id="user_desc"
+                  class="input_flat form-control"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side-table-head">##RES_PASSWORD##</td>
+              <td>
+                <input
+                  type="password"
+                  id="user_pwd"
+                  class="input_flat form-control"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side-table-head">##RES_PWD_CONFIRM##</td>
+              <td>
+                <input
+                  type="password"
+                  id="user_pwd2"
+                  class="input_flat form-control"
+                />
+              </td>
+            </tr>
+
+          </table>
+
+          <div class="mb-1" style="text-align: right">
+            <button
+              type="submit"
+              class="btn btn-secondary waves-effect waves-light"
+              id="add_btn"
+            >
+              ##RES_ADD##
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-secondary waves-effect waves-light"
+              id="modify_btn"
+            >
+              ##RES_MODIFY##
+            </button>
+          </div>
+
+          <div class="mt-5" style="text-align: right">
+            <button
+              type="submit"
+              class="btn btn-secondary waves-effect waves-light"
+              id="update_save"
+            >
+              ##RES_SAVE##
+            </button>
+          </div>
+
+          <div class="mt-5" style="text-align: right">
+            <div
+              id="msg_out"
+              style="width: 300px; float: right; margin-top: -40px"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</div>

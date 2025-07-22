@@ -1,0 +1,36 @@
+#!/bin/sh
+
+mount -t squashfs rootfs_home.squashfs /home
+
+make_soft_link_folder() {
+	if [ -d $2 ]
+	then :
+	else
+		ln -s $1 $2
+	fi
+}
+
+make_soft_link_file() {
+	if [ -f $2 ]
+	then :
+	else
+		ln -s $1 $2
+	fi
+}
+
+make_folder() {
+	if [ -d $1 ]
+	then :
+	else
+		mkdir -p $1
+	fi
+}
+
+make_soft_link_folder /home/edvr /edvr
+make_soft_link_folder /home/www /var/www
+
+
+make_folder /mnt/ipm/setup
+make_folder /mnt/ipm/upgr
+
+/edvr/start.sh

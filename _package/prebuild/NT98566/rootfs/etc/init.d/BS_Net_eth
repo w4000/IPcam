@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "eth" > /proc/nvt_info/bootts
+modprobe ntkimethmac
+
+ifconfig eth0 down
+ifconfig eth0 hw ether ${1}
+ifconfig eth0 up
+
+echo "mac: ${1}"
+echo "eth" > /proc/nvt_info/bootts
+
+uctrl usys -notify net_init_ok

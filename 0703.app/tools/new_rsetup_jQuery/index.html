@@ -1,0 +1,42 @@
+<!-- ÀÌ ºÎºÐÀº ÁÖ¼®ÀÔ´Ï´Ù//w4000_iframe --
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=iso8859-1" />
+    <title>main page</title>
+    <script language="javascript">
+      function redirect() {
+        location.href = "/cgi-bin/login.cgi";
+      }
+    </script>
+  </head>
+
+  <body onload="redirect()"></body>
+</html>
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Camera Web UI</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #mainFrame {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ½ÇÁ¦ ·Î±×ÀÎ ¹× ¸ÞÀÎÆäÀÌÁö´Â iframe ¾È¿¡¼­ -->
+    <iframe id="mainFrame" src="/cgi-bin/login.cgi"></iframe>
+  </body>
+</html>
+
+
+
+

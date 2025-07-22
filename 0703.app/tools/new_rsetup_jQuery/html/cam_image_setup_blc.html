@@ -1,0 +1,273 @@
+<script language="JavaScript">
+  <!--
+  // $("button").button();
+
+  var pause_put = 0;
+
+  function get_blc_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/blc/all";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        
+
+        init_combobox(
+          $("#blc_mode"),
+          data.blc_range.blc.mode,
+          data.blc.blc.mode
+        );
+
+
+        init_combobox(
+          $("#wdr_mode"),
+          data.blc_range.wdr.mode,
+          data.blc.wdr.mode
+        );
+
+        init_slider(
+          $("#wdr_strength"),
+          $("#wdr_strength_val"),
+          data.blc_range.wdr.strength.min,
+          data.blc_range.wdr.strength.max,
+          data.blc.wdr.strength,
+          put_blc_setup_value
+        );
+ 
+        onchange_blc_mode(0);
+        onchange_wdr_mode(0);
+      },
+      error: function (err) {},
+    });
+  }
+
+  function put_blc_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/blc";
+
+    if (pause_put) return;
+
+    // var grid = get_area();
+
+    var form = {
+      blc: {
+        blc: {
+          mode: Number($("#blc_mode option:selected").val()),
+        },
+        wdr: {
+          mode: Number($("#wdr_mode option:selected").val()),
+          strength: $("#wdr_strength").slider("value"),
+        },
+ 
+      },
+    };
+
+    $.ajax({
+      url: req_url,
+      type: "PUT",
+      dataType: "json",
+      cache: false,
+      data: JSON.stringify(form),
+      success: function (data) {
+      },
+      error: function (err) {
+      },
+    });
+  }
+
+  function onchange_blc_mode(put) {
+    var mode = Number($("#blc_mode option:selected").val());
+
+    if (mode == 1) {
+      $("#blc_blc").show();
+    } else {
+      $("#blc_blc").hide();
+    }
+
+    if (put) {
+      put_blc_setup_value();
+    }
+  }
+
+  function onchange_wdr_mode(put) {
+    var mode = Number($("#wdr_mode option:selected").val());
+    enable_slider($("#wdr_strength"), $("#wdr_strength_val"), mode);
+    if (put) {
+      put_blc_setup_value();
+    }
+  }
+
+
+
+  function onclick_apply_area() {
+    put_blc_setup_value();
+  }
+
+  function onclick_default() {
+    var req_url = "/_fcgiapi/video/quality/blc/default";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        
+
+        pause_put = 1;
+        refresh_combobox_value($("#blc_mode"), data.blc_default.mode);
+        refresh_combobox_value($("#wdr_mode"), data.blc_default.wdr.mode);
+        refresh_slider_value(
+          $("#wdr_strength"),
+          $("#wdr_strength_val"),
+          data.blc_default.wdr.strength
+        );
+
+
+
+
+        pause_put = 0;
+        onchange_blc_mode(1);
+      },
+      error: function (err) {},
+    });
+  }
+
+  function init_blc() {
+    load_language("setup_camera_tab_blc");
+    get_blc_setup_value();
+  }
+
+  init_blc();
+
+  $("checkbutton").buttonset();
+  -->
+</script>
+
+<style>
+  .area-checkbox {
+    display: none;
+  }
+  input[type="checkbox"] + label {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #dee2e6;
+    position: relative;
+    background-color: white;
+    border-radius: 3px;
+  }
+  input[type="checkbox"]:checked + label {
+    background-color: #434e6e;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="table-responsive">
+              <table class="table table-centered mb-0">
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>BLC</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <select
+                            id="blc_mode"
+                            class="select_flat"
+                            style="width: 100px"
+                            onchange="onchange_blc_mode(1);"
+                          ></select>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>WDR</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <select
+                            id="wdr_mode"
+                            class="select_flat"
+                            style="width: 100px"
+                            onchange="onchange_wdr_mode(1);"
+                          ></select>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>WDR STRENGTH</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="wdr_strength"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="wdr_strength_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+
+
+
+              </table>
+
+              <div class="mb-1" style="text-align: right; margin-top: 20px">
+                <button
+                  class="btn btn-secondary waves-effect waves-light"
+                  onclick="onclick_default();"
+                  id="blc_default"
+                >
+                  RESET
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</div>

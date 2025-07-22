@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+    <title>##RES_LOGIN_TITLE##</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+<!-- 이 부분은 주석입니다//w4000_iframe -->
+    <!--##PARAM_JQUERY_INCLUDE##-->
+    <script src="../js/login.js"></script>
+    <script language="JavaScript">
+      <!--
+      var _pub_key = "##PARAM_RSA_PUBLIC_KEY##";
+      var _session_key = "##PARAM_RSA_SESSION_KEY##";
+      -->
+    </script>
+
+    <style>
+      .form-group {
+        width: 600px !important;
+      }
+    </style>
+  </head>
+
+  <body
+    leftmargin="0"
+    topmargin="0"
+    rightmargin="0"
+    bottommargin="0"
+    marginwidth="0"
+    marginheight="0"
+    onload="onload_body();"
+    onunload="onunload_body();"
+  >
+    <form
+      id="login-form"
+      name="login_frm"
+      method="post"
+      action="./login2.cgi"
+    >
+      <!-- Login Body -->
+      <div class="user-area">
+        <div class="container">
+          <div class="user-item">
+            <form>
+              <div class="title-div">
+                <h2>##RES_LOGIN_TITLE##</h2>
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="login_id"
+                  name="login_id"
+                  class="form-control"
+                  placeholder="##RES_LOGIN_USERID##"
+                  onkeydown="if(event.keyCode == '13') _login_form();"
+                />
+              </div>
+
+              <div class="form-group">
+                <input
+                  id="login_pwd"
+                  name="login_pwd"
+                  type="password"
+                  class="form-control"
+                  placeholder="##RES_LOGIN_PASSWORD##"
+                  onkeydown="if(event.keyCode == '13') _login_form();"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="btn common-btn"
+                onClick="_login_form();"
+              >
+                ##RES_LOGIN_TITLE2##
+              </button>
+
+
+              <input type="hidden" id="user_id" name="user_id" value="" />
+              <input type="hidden" id="user_pwd" name="user_pwd" value="" />
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- End Login Body -->
+
+      <!-- Copyright -->
+      <div class="copyright-area">
+        <div class="container">
+          <div class="copyright-item">
+            <p>Welcome! Please log in to use the camera</p>
+                  <!-- <p>Copyright 2023 Design & Developed by ECAM</p> -->
+          </div>
+
+          <div class="language-area">
+            <div class="language-label">##RES_LANGUAGE##</div>
+
+            <select id="select_language" class="select_lang form-select">
+              ##PARAM_LANGUAGE##
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- End Copyright -->
+    </form>
+  </body>
+</html>

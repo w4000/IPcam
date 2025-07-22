@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "############# Setting system time ##############"
+/sbin/hwclock --hctosys --localtime
+
+

@@ -1,0 +1,9 @@
+#/bin/sh
+
+echo "###### killing crond ######"
+killall crond
+echo "###### setting cron table  ######"
+crontab /edvr/crontab -u root
+echo "###### restarting crond  ######"
+crond
+

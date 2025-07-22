@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title>##RES_SETUP##</title>
+
+    <!--##PARAM_JQUERY_INCLUDE##-->
+    <script src="../js/lang.js"></script>
+    <script src="../js/controls.js"></script>
+    <script src="../js/setup.js"></script>
+
+    <script src="/js/crypto-js.min.js"></script>
+    <script language="JavaScript">
+      <!--
+
+
+      	var start_submenu_style = "##PARAM_START_SUBMENU_STYLE##";
+        var start_submenu = "##PARAM_START_SUBMENU##";
+
+        var menu_video_stream = "##RES_VIDEO_STREAM##";
+      	var menu_camera_setup = "##RES_CAMERA_SETUP##";
+
+      	var menu_interface = "##RES_INTERFACE##";
+      	var menu_port = "##RES_PORT##";
+      	var menu_rtsp_onvif = "##RES_RTSP## / ##RES_ONVIF##";
+      	var menu_service = "##RES_SERVICE##";
+
+
+
+
+
+      	var menu_info = "##RES_SYSTEM_INFO##";
+      	var menu_date = "##RES_DATE_TIME##";
+      	var menu_user = "##RES_USER_MANAGEMENT##";
+      	var menu_default = "##RES_SYSTEM_DEFAULT##";
+      	var menu_reboot = "##RES_SYSTEM_REBOOT##";
+      	var menu_upgrade = "##RES_SYSTEM_UPGRADE##";
+
+      	var timer_refresh_1 = null;
+      	var timer_refresh_2 = null;
+      	var timer_refresh_3 = null;
+      	var upgrade_timer = null;
+      	var settime_timer = null;
+      	var timer_loading = null; 
+
+        var msgAjaxLoading = ".............";
+      	var msgAjaxFail = "##RES_MSG_FAILED_TO_RECEIVE_DATA##";
+
+      	function init_setup() {
+
+      	}
+      -->
+    </script>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/icons.min.css" />
+    <link rel="stylesheet" href="../css/app.min.css" />
+
+    <style>
+      .selectable .ui-selecting {
+        background: #1076be;
+        color: white;
+        border-color: #1076be;
+      }
+
+      .selectable .ui-selected {
+        background: #2e6e9e;
+        color: white;
+        border-color: #2e6e9e;
+      }
+
+      .selectable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      .selectable li {
+        margin: 1px;
+        padding: 0.4em;
+        height: 14px;
+        color: #2e6e9e;
+      }
+
+      .card-box {
+        justify-content: start !important;
+      }
+
+      a:not([href]):not([class]) {
+        cursor: pointer;
+        color: #95a4b5;
+      }
+
+      a:not([href]):not([class]):hover {
+        color: white !important;
+      }
+
+      .menu-active a {
+        color: white !important;
+      }
+
+      #setup-iframe {
+        width: 100%;
+        height: calc(100vh - 75px);
+      }
+
+      body {
+        padding-bottom: 0px !important;
+      }
+
+      .card-box {
+        display: flex;
+        background-color: #343c49;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body onload="onload_body();" onunload="onunload_body();">
+    <!-- Begin page -->
+    <div id="wrapper">
+      <!-- Topbar Start -->
+      <div class="navbar-custom">
+        <ul class="list-unstyled topnav-menu float-end mb-0">
+          <li class="notification-list">
+            <a
+              class="nav-link nav-user mr-0 waves-effect waves-light"
+              role="button"
+            >
+              <!-- <img
+                src="../img/users/avatar-4.jpg"
+                alt="user-image"
+                class="rounded-circle"
+              /> -->
+              <i class="fe-user user-image"></i>
+              <span class="pro-user-name ml-1">  </span>
+
+              <!-- <label
+                class="btn btn-secondary"
+                style="
+                  font-size: 20px !important;
+                  padding: 5px;
+                  margin-left: 20px;
+                "
+                onclick="location.href = '../cgi-bin/video_player.cgi'"
+                ><i class="fe-play-circle"></i
+              ></label> -->
+
+              <label
+                class="btn btn-secondary"
+                style="
+                  font-size: 20px !important;
+                  padding: 5px;
+                  margin-left: 5px;
+                "
+                onclick="location.href = '../cgi-bin/live_fview.cgi'"
+                ><i class="fe-video"></i
+              ></label>
+
+              <label
+                class="btn btn-secondary"
+                style="font-size: 20px !important"
+                onclick="onclick_logout()"
+                ><i class="fe-log-out"></i
+              ></label>
+            </a>
+          </li>
+        </ul>
+
+        <!-- LOGO -->
+        <div class="logo-box button-menu-mobile waves-effect waves-light">
+          <a href="#" class="logo text-center">
+            <span class="logo-lg">
+              <!-- <img src="../img/logo-light.png" alt="" height="30" /> -->
+              <!-- <p class="logo">ECAM</p> -->
+              <p class="logo">MENU</p>
+            </span>
+
+            <span class="logo-sm">
+              <p class="logo">M</p>
+            </span>
+          </a>
+        </div>
+      </div>
+      <!-- end Topbar -->
+
+      <!-- ========== Left Sidebar Start ========== -->
+      <div class="left-side-menu">
+        <div class="slimscroll-menu">
+          <!--- Sidemenu -->
+          <div id="sidebar-menu">
+            <ul class="metismenu" id="side-menu">
+              <li class="mm-active">
+                <a href="javascript: void(0);">
+                  <i class="fe-video"></i>
+                  <span> ##RES_VIDEO_AUDIO## </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="true">
+                  <div class="card-box widget-box-four">
+                    <ul class="nav-second-level" aria-expanded="true">
+ 
+                      <li
+                        menu="ipc_video_stream"
+                        id="first_menu"
+                        class="sub-menu"
+                      >
+                        <a>##RES_VIDEO_STREAM##</a>
+                      </li>
+                      
+                      <li
+                        menu="av_camera_setup"
+                        id="av_camera_setup"
+                        class="sub-menu"
+                      >
+                        <a>##RES_CAMERA_SETUP##</a>
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </ul>
+              </li>
+
+              <li class="mm-active">
+                <a href="javascript: void(0);">
+                  <i class="fe-wifi"></i>
+                  <span> ##RES_NETWORK## </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="true">
+                  <div class="card-box widget-box-four">
+                    <ul class="nav-second-level" aria-expanded="true">
+                      <li menu="netInterFace" class="sub-menu">
+                        <a>##RES_INTERFACE##</a>
+                      </li>
+
+                      <li menu="netPort" class="sub-menu">
+                        <a>##RES_PORT##</a>
+                      </li>
+
+                      <li menu="netProto" class="sub-menu">
+                        <a>##RES_RTSP## / ##RES_ONVIF##</a>
+                      </li>
+                    </ul>
+                  </div>
+                </ul>
+              </li>
+
+              <li class="mm-active">
+                <a href="javascript: void(0);">
+                  <i class="fe-layout"></i>
+                  <span> ##RES_SYSTEM## </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="true">
+                  <div class="card-box widget-box-four">
+                    <ul class="nav-second-level" aria-expanded="true">
+                      <li menu="sys_info" class="sub-menu">
+                        <a>##RES_SYSTEM_INFO##</a>
+                      </li>
+
+                      <li menu="sys_date" class="sub-menu">
+                        <a>##RES_DATE_TIME##</a>
+                      </li>
+
+                      <li menu="sys_user" class="sub-menu">
+                        <a>##RES_USER_MANAGEMENT##</a>
+                      </li>
+
+                      <li menu="sys_default" class="sub-menu">
+                        <a>##RES_SYSTEM_DEFAULT##</a>
+                      </li>
+
+                      <li menu="sys_reboot" class="sub-menu">
+                        <a>##RES_SYSTEM_REBOOT##</a>
+                      </li>
+
+                      <li menu="sys_upgrade" class="sub-menu">
+                        <a>##RES_SYSTEM_UPGRADE##</a>
+                      </li>
+
+ 
+                    </ul>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- End Sidebar -->
+        </div>
+        <!-- Sidebar -left -->
+      </div>
+      <!-- Left Sidebar End -->
+
+      <!-- ============================================================== -->
+      <!-- Start Page Content here -->
+      <!-- ============================================================== -->
+
+      <div class="content-page">
+        <div class="content">
+          <!-- Start Content-->
+          <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+              <div id="_menu_cont"></div>
+              <!-- <iframe id="setup-iframe"></iframe> -->
+            </div>
+            <!-- end page title -->
+          </div>
+          <!-- end container-fluid -->
+        </div>
+        <!-- end content -->
+
+        <!-- Footer Start -->
+        <!-- <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              Copyright 2023 Design & Developed by ECAM
+            </div>
+          </div>
+        </div>
+      </footer> -->
+        <!-- end Footer -->
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- End Page content -->
+      <!-- ============================================================== -->
+    </div>
+    <!-- END wrapper -->
+
+    <script src="../js/vendor.min.js"></script>
+    <script src="../js/app.min.js"></script>
+  </body>
+</html>

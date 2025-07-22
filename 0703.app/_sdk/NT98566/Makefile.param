@@ -1,0 +1,23 @@
+# Makefile.param
+
+CROSS=arm-ca9-linux-gnueabihf-
+CROSS_COMPILE=arm-ca9-linux-gnueabihf-
+export CC:=$(CROSS)gcc
+export CPP:=$(CROSS)g++
+export AR:=$(CROSS)ar
+
+
+PLATFORM_CFLAGS=-march=armv7-a -mtune=cortex-a9 -mfpu=neon -mfloat-abi=hard -ftree-vectorize -fno-builtin -fno-common -Wformat=1 -fgnu89-inline -D_BSP_NA51055_
+WARNING = -Wno-unused-function #-Wall -Wundef -Wsign-compare -Wno-missing-braces #-Wstrict-prototypes
+INCLUDES = -I$(NVT_INC_PATH) -I$(NVT_INC_PATH)/hisilicon
+COMPILE_OPTS = $(INCLUDES) -O2 -fPIC -ffunction-sections -fdata-sections
+CFLAGS = $(COMPILE_OPTS) $(PLATFORM_CFLAGS) $(PRJCFG_CFLAGS) -D__LINUX520 -D__LINUX -D_NETWORK_ON_CPU1_ $(WARNING)
+SOC_LIBS = -lstdc++ -lpthread -lm -lrt
+SOC_LIBS += -lhdal -lvos -lvendor_isp -lvendor_media -lvendor_cv -lprebuilt_cv
+SOC_LIBS += -L$(NVT_LIB_PATH)
+
+KERNEL_DIR =
+#KERNEL_DIR = $(TOP_DIR)/../platform/NT9852X.sdk.v2.05.002/BSP/linux-kernel
+
+export CROSS_COMPILE
+export CFLAGS

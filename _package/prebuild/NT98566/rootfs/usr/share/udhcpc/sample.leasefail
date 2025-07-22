@@ -1,0 +1,83 @@
+#!/bin/sh
+# Sample udhcpc leasefail script
+
+RET=
+get_value()
+{
+	FILE=$1
+	KEY=$2
+	RET=""
+
+	CONT=`cat $FILE`
+	for line in $CONT
+	do
+		v1=${line#$KEY}
+		if [ ."$v1" == ."$line" ]; then
+			continue
+		fi
+		v2=${v1//\[/}
+		v3=${v2//]/}
+		if [ ."$RET" == ."" ]; then
+			RET=$v3
+		else
+			RET=$RET" $v3"
+		fi
+	done
+
+	if [ ."$RET" == ."" ]; then
+		return 0
+	fi
+	return 1
+}
+
+interface=eth0
+RESOLV_CONF="/etc/resolv.conf"
+NET_CONF="/usr/share/udhcpc/netinfo"
+
+if [ -f $NET_CONF ]
+then
+	get_value $NET_CONF "IP"
+	if [ $? ];then
+		ip=$RET
+	fi
+	get_value $NET_CONF "MASK"
+	if [ $? ];then
+		subnet=$RET
+	fi
+	get_value $NET_CONF "GW"
+	if [ $? ];then
+		router=$RET
+	fi
+	get_value $NET_CONF "DNS"
+	if [ $? ];then
+		dns=$RET
+	fi
+
+	[ -n "$subnet" ] && NETMASK="netmask $subnet"
+
+	/sbin/ifconfig $interface $ip $NETMASK
+
+	if [ -n "$router" ]
+	then
+		echo "deleting routers"
+		while /sbin/route del default gw 0.0.0.0 dev $interface
+		do :
+		done
+
+		for i in $router
+		do
+			/sbin/route add default gw $i dev $interface
+		done
+	fi
+
+	echo -n > $RESOLV_CONF
+	[ -n "$domain" ] && echo domain $domain >> $RESOLV_CONF
+	for i in $dns
+	do
+		echo adding dns $i
+		echo nameserver $i >> $RESOLV_CONF
+	done
+fi
+
+echo "1" > /tmp/leasefail
+exit 0

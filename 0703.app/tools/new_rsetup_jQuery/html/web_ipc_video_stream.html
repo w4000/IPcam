@@ -1,0 +1,434 @@
+<!--##PARAM_JQUERY_INCLUDE##-->
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+<script language="JavaScript">
+  <!--
+  var disp_osd = parseInt("##PARAM_USE_DISP_OSD##");
+  var wait_cnt = 6;
+  var over_msg = "##RES_MSG_STREAM_OVER_ERR##";
+  var init_cam_title = "##PARAM_CAM_TITEL##";
+  var init_osd_pos   = "##PARAM_OSD_POS##";
+  var init_osd_color = "##PARAM_OSD_COLOR##";
+
+
+  var codec = new Array();
+  var resol = new Array();
+  var comp_flag = 0;
+
+
+  // $("a").button();
+
+  $(".update_save").bind("click", function () {
+    if ($(".update_save").attr("disabled")) return;
+    $(".update_save").attr("disabled", true);
+    $("#ajax_save").show();
+    compare();
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "vStream",
+
+        v_codec_0: $("#v_codec_0").val(),
+        v_resol_0: $("#v_resol_0").val(),
+        v_fps_0: $("#v_fps_0").val(),
+        v_max_bitrate_0: $("#v_max_bitrate_0").val(),
+        v_gop_0: $("#v_gop_0").val(),
+        v_ratectl_0:	$("#v_ratectl_0").val(),
+
+        v_codec_1: $("#v_codec_1").val(),
+        v_resol_1: $("#v_resol_1").val(),
+        v_fps_1: $("#v_fps_1").val(),
+        v_max_bitrate_1: $("#v_max_bitrate_1").val(),
+        v_gop_1: $("#v_gop_1").val(),
+        v_Iref_1: $("#v_Iref_1").val(),
+        v_ratectl_1:	$("#v_ratectl_1").val(),
+
+        v_codec_2: $("#v_codec_2").val(),
+        v_resol_2: $("#v_resol_2").val(),
+        v_fps_2: $("#v_fps_2").val(),
+        v_max_bitrate_2: $("#v_max_bitrate_2").val(),
+        v_gop_2: $("#v_gop_2").val(),
+        v_Iref_2: $("#v_Iref_2").val(),
+        v_ratectl_2:	$("#v_ratectl_2").val(),
+
+
+        cam_title: $("#cam_title").val(),
+
+        disp_osd: $("#disp_osd").attr("checked") ? "1" : "0",
+        osd_color: $("#osd_color").val(),
+        osd_pos: $("#osd_pos").val(),
+
+      },
+      success: function (data) {
+        $(".update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        $("#msg_out").append(data);
+
+        if (data.indexOf(over_msg) == -1 && comp_flag && wait_cnt == 6) {
+          $("#config-save")
+            .dialog({
+              autoOpen: false,
+              resizable: false,
+              width: 450,
+              modal: true,
+              buttons: {
+                OK: function () {
+                  clearInterval(upgrade_timer);
+                  wait_cnt = 6;
+                  $("div[name=update_time]").empty();
+                  $(this).dialog("close");
+                },
+              },
+            })
+            .dialog("open");
+          $("div[name=update_time]").append(
+            '<br><font color="black"> ##RES_UPDATE_MSG##: ' +
+              --wait_cnt +
+              " ##RES_SEC##</font>"
+          );
+          upgrade_timer = setInterval(function () {
+            wait_update();
+          }, 1000);
+          comp_flag = 0;
+        }
+      },
+      error: function (err) {
+        $(".update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        alert(msgAjaxFail);
+      },
+    });
+  });
+
+  $(function () {
+    $("#config-save").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        OK: function () {
+          clearInterval(upgrade_timer);
+          wait_cnt = 6;
+          $("div[name=update_time]").empty();
+          $(this).dialog("close");
+        },
+      },
+    });
+  });
+
+  function onchange_fps(ch) {
+    $("#v_gop_" + ch).attr("value", $("#v_fps_" + ch).val());
+  }
+  function onclick_use_osd() {
+    if ($("#disp_osd").attr("checked")) {
+      $("#osd_opt_table *").removeAttr("disabled");
+      $("*[name=osd_opt]").css("background", "#ffffff");
+    } else {
+      $("#osd_opt_table *").attr("disabled", true);
+      $("*[name=osd_opt]").css("background", "#f3f3f3");
+    }
+  }
+
+  function init() {
+
+    // json_tset();
+    var input = document.getElementById("cam_title");
+    input.value = init_cam_title;
+
+
+    if (disp_osd == 1) $("#disp_osd").attr("checked", true);
+    else $("#disp_osd").removeAttr("checked");
+
+    onclick_use_osd();
+
+
+
+
+    var select = document.getElementById("osd_pos");
+    select.value = parseInt(init_osd_pos); 
+
+
+    var select2 = document.getElementById("osd_color");
+    select2.value = parseInt(init_osd_color); 
+
+
+  }
+
+  function wait_update() {
+    $("div[name=update_time]").empty();
+    $("div[name=update_time]").append(
+      '<br><font color="black"> ##RES_UPDATE_MSG##: ' +
+        --wait_cnt +
+        " ##RES_SEC##</font>"
+    );
+
+    if (wait_cnt == 0) {
+      clearInterval(upgrade_timer);
+      wait_cnt = 6;
+      $("div[name=update_time]").empty();
+      $("#config-save").dialog("close");
+    }
+  }
+
+  $(function () {
+    for (var i = 0; i < 3; i++) {
+      codec[i] = $("#v_codec_" + i + "").val();
+      resol[i] = $("#v_resol_" + i + "").val();
+    }
+  });
+
+  function compare() {
+    for (var i = 0; i < 3; i++) {
+      if (
+        codec[i] != $("#v_codec_" + i + "").val() ||
+        resol[i] != $("#v_resol_" + i + "").val()
+      ) {
+        codec[i] = $("#v_codec_" + i + "").val();
+        resol[i] = $("#v_resol_" + i + "").val();
+        comp_flag++;
+      } else continue;
+    }
+  }
+  init();
+  -->
+</script>
+
+<script language="JavaScript">
+  <!--
+  -->
+</script>
+
+<style>
+  #cam_title {
+    position: relative;
+  }
+
+  #osd_pos {
+    height: 30px;
+  }
+
+  #osd_color {
+    height: 30px;
+    margin-top: 7px;
+  }
+
+  .tab-content {
+    padding: 15px;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+
+  .ui-dialog-titlebar,
+  .ui-icon-alert {
+    display: none;
+  }
+
+  .ui-dialog-content,
+  .ui-dialog-buttonpane {
+    border: none !important;
+  }
+
+  .ui-dialog-buttonset button {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: #434e6e !important;
+    border-color: #434e6e !important;
+    font-size: 1rem !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .ui-dialog-buttonset button span {
+    font-size: 12px !important;
+  }
+
+  #config-save {
+    font-size: 17px !important;
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
+</style>
+
+<div id="config-save" title="##RES_UPDATE##">
+  <table border="0" cellpadding="0" cellspacing="10px" width="100%">
+    <tr>
+      <td align="center">
+        <!-- <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>&nbsp; -->
+        <span class="" style="display: inline-block"></span>&nbsp;
+        <!-- <br><font color="#1E445E"><strong>##RES_MSG_UPDATE_END##</strong></font> -->
+        <br /><font color="#1E445E"><strong></strong></font>
+        <div name="update_time"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row card-box card-white-box ribbon-box menu-height">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              href="#config"
+              data-toggle="tab"
+              aria-expanded="false"
+              class="nav-link active"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-account"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_VIDEO_CONFIG##</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#title"
+              data-toggle="tab"
+              aria-expanded="true"
+              class="nav-link"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-home-variant"></i
+              ></span>
+              <span class="d-none d-sm-block">##RES_TITLE##</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane col-xl-12 show active" id="config">
+            <div class="table-responsive">
+              <table class="table table-centered mb-0">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>#1</th>
+                    <th>#2</th>
+                    <th>#3</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <!--##PARAM_VIDEO_LIST##-->
+                </tbody>
+              </table>
+
+              <div class="mb-1" style="text-align: right">
+                <button
+                  class="btn btn-secondary waves-effect waves-light update_save"
+                  id="update_save"
+                >
+                  ##RES_SAVE##
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane col-xl-12" id="title">
+            <div class="mb-1" style="width: 100%">
+              <div style="display: flex">
+                <div>
+                  <input
+                    type="text"
+                    id="cam_title"
+                    class="input_flat"
+                    style="width: 200px; height: 30px"
+                    value="Video"
+                    maxlength="16"
+                  />
+
+                  <div class="form-check" style="margin-top: 12px">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="disp_osd"
+                      onclick="onclick_use_osd();"
+                    />
+                    <label class="form-check-label" for="disp_osd"
+                      >USE OSD</label
+                    >
+                  </div>
+     <!--w4000 ------------------------------------------------------------------------------   
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="disp_osd_bg"
+      onclick="onclick_use_osd_bg();"
+    />
+    <label class="form-check-label" for="disp_osd_bg">USE OSD BACKGROUND</label>
+
+    ------------------------------------------------------------------------------    -->
+   				</div>
+                </div>
+                <div class="form-check" style="margin-top: 12px">
+    
+
+                <div style="width: 200px" id="osd_opt_table">
+                  <select
+                    id="osd_pos"
+                    name="osd_opt"
+                    class="select_osd_pos"
+                    disabled="disabled"
+                    style="background: rgb(243, 243, 243)"
+                  >
+                    <option selected="" value="0" disabled="disabled"> 
+                    <!--w4000 ----------MOVE UPPER-LEFT--------------------------------------------------------------------    -->
+                      MOVE UPPER
+                    </option>
+                    <option value="1" disabled="disabled">                    
+                    <!--w4000 ----------MOVE LOWER-LEFT--------------------------------------------------------------------    -->
+                      MOVE LOWER
+                    </option>
+                  </select>
+
+                  <select
+                    id="osd_color"
+                    name="osd_opt"
+                    class="select_osd_color"
+                    disabled="disabled"
+                    style="background: rgb(243, 243, 243)"
+                  >
+                    <option selected="" value="0" disabled="disabled">
+                      WHITE
+                    </option>
+                    <!-- <option value="1" disabled="disabled">BLACK</option>
+                    <option value="2" disabled="disabled">RED</option>
+                    <option value="3" disabled="disabled">BLUE</option> -->
+                    <option value="4" disabled="disabled">GREEN</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-1" style="text-align: left">
+                <button
+                  class="btn btn-secondary waves-effect waves-light update_save"
+                  id="update_save"
+                >
+                  ##RES_SAVE##
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="msg_out"
+            style="width: 300px; float: right; margin-top: 10px"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

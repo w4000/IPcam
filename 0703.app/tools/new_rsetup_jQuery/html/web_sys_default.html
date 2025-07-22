@@ -1,0 +1,246 @@
+<!--##PARAM_JQUERY_INCLUDE##-->
+
+<script language="JavaScript">
+  <!--
+  // $("a").button();
+
+  $("#update_save").bind("click", function () {
+    $("#dialog-default-confirm")
+      .dialog({
+        autoOpen: false,
+        resizable: false,
+        width: 450,
+        modal: true,
+        buttons: {
+          "##RES_DEFAULT##": function () {
+            $(this).dialog("close");
+            default_confirm();
+          },
+          "##RES_CANCEL##": function () {
+            $(this).dialog("close");
+          },
+        },
+      })
+      .dialog("open");
+  });
+
+  var wait_cnt = parseInt("##PARAM_WAIT_CNT##");
+  function wait_reboot() {
+    $("div[name=reboot_time]").empty();
+    $("div[name=reboot_time]").append(
+      "<br>##RES_MSG_REBOOT_TIME## : " + --wait_cnt + " ##RES_SEC##"
+    );
+
+    if (wait_cnt == 0) {
+      clearInterval(upgrade_timer);
+
+      onunload_body();
+      document.location.href = "/cgi-bin/login.cgi";
+    }
+  }
+
+  function default_confirm() {
+    if ($("#update_save").attr("disabled")) return;
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "dFault",
+
+        keep_ip: $("#keep_ip").attr("checked") ? "1" : "0",
+      },
+      success: function (data) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+
+        $("#default_table").show("slide", { direction: "down" }, 500);
+
+        $("#dialog-default-reboot")
+          .dialog({
+            autoOpen: false,
+            resizable: false,
+            width: 450,
+            modal: true,
+            buttons: {
+              "##RES_OK##": function () {
+                $(this).dialog("close");
+              },
+            },
+          })
+          .dialog("open");
+        upgrade_timer = setInterval(function () {
+          wait_reboot();
+        }, 1000);
+      },
+      error: function (err) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+      },
+    });
+  }
+
+  function init() {
+    $("#dialog-default-confirm").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_DEFAULT##": function () {
+          $(this).dialog("close");
+          default_confirm();
+        },
+        "##RES_CANCEL##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+
+    $("#dialog-default-reboot").dialog({
+      autoOpen: false,
+      resizable: false,
+      width: 450,
+      modal: true,
+      buttons: {
+        "##RES_OK##": function () {
+          $(this).dialog("close");
+        },
+      },
+    });
+  }
+
+  init();
+  -->
+</script>
+
+<style>
+  .table-responsive {
+    text-align: center;
+  }
+
+  .table-tr {
+    height: 30px;
+  }
+</style>
+
+<style>
+  .card {
+    display: block;
+    margin-top: 50px;
+  }
+
+  .card-text {
+    margin-bottom: 5px;
+    margin-bottom: 0px;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+
+  .ui-dialog-titlebar,
+  .ui-icon-alert {
+    display: none;
+  }
+
+  .ui-dialog-content,
+  .ui-dialog-buttonpane {
+    border: none !important;
+  }
+
+  .ui-dialog-buttonset button {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: #434e6e !important;
+    border-color: #434e6e !important;
+    font-size: 1rem !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .ui-dialog-buttonset button span {
+    font-size: 12px !important;
+  }
+
+  #dialog-default-confirm,
+  #dialog-default-reboot {
+    font-size: 17px !important;
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
+</style>
+
+<div id="dialog-default-confirm" title="##RES_DEFAULT_CONFIRM##">
+  <p>
+    <span
+      class="ui-icon ui-icon-alert"
+      style="float: left; margin: 0 7px 20px 0"
+    ></span
+    >##RES_MSG_DEFAULT##
+  </p>
+</div>
+
+<div id="dialog-default-reboot" title="##RES_REBOOT##">
+  <table border="0" cellpadding="0" cellspacing="10px" width="100%">
+    <tr>
+      <td align="center">
+        <span class="ui-icon ui-icon-info" style="display: inline-block"></span
+        >&nbsp; <br /><font color="#1E445E"
+          ><strong>##RES_MSG_UPGRADE_END_2##</strong></font
+        >
+        <div name="reboot_time"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box menu-height">
+            <div class="ribbon ribbon-primary">SYSTEM DEFAULT</div>
+
+            <div class="card card-body" style="width: 25%">
+              <h5
+                class="card-title badge badge-danger"
+                style="margin-bottom: 20px"
+              >
+                ##RES_WARNING##
+              </h5>
+
+              <!-- <p class="card-text">##RES_MSG_DEFAULT_1##</p>
+              <p class="card-text">##RES_MSG_DEFAULT_2##</p>
+              <p class="card-text">##RES_MSG_DEFAULT_3##</p>
+              <p class="card-text">##RES_MSG_DEFAULT_4##</p>
+              <p class="card-text">##RES_MSG_DEFAULT_5##</p> -->
+
+              <div class="form-check" style="margin-top: 5px">
+                <input class="form-check-input" type="checkbox" id="keep_ip" />
+                <label class="form-check-label" for="keep_ip"
+                  >##RES_KEEP_NETWORK##</label
+                >
+              </div>
+
+              <a
+                href="#"
+                class="btn btn-secondary waves-effect waves-light"
+                id="update_save"
+                style="width: 100%; margin-top: 10px"
+                >##RES_DEFAULT##</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_audioio/audio_device/emu/nvt_audext_emu.ko
+/home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_audioio/audio_device/emu/audext_emu_main_no_tracer.o /home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_audioio/audio_device/emu/audext_emu_drv_no_tracer.o /home/namba/workspace/src/bak/220901.nt9856x_linux_sdk_release_glibc_v1.01.005/code/hdal/drivers/k_driver/source/kdrv_audioio/audio_device/emu/AudExtEMU_no_tracer.o
+

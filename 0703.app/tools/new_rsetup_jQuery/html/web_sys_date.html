@@ -1,0 +1,1010 @@
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+<script language="JavaScript">
+  <!--
+  var cur_year = "##PARAM_CUR_YEAR##";
+  var cur_month = "##PARAM_CUR_MONTH##";
+  var cur_day = "##PARAM_CUR_DAY##";
+  var cur_hour = "##PARAM_CUR_HOUR##";
+  var cur_min = "##PARAM_CUR_MIN##";
+  var cur_sec = "##PARAM_CUR_SEC##";
+  var current_time = new Date(
+    parseInt(cur_year),
+    parseInt(cur_month),
+    parseInt(cur_day),
+    parseInt(cur_hour),
+    parseInt(cur_min),
+    parseInt(cur_sec)
+  );
+
+  var timesync_mode = parseInt("##PARAM_TIME_SYNC_MODE##");
+
+
+  function refreshPage() {
+            location.reload(); 
+        }
+
+        window.onload = function() {
+            setTimeout(refreshPage, 1000);
+        };
+
+  // $("a").button();
+
+  $("#update_save").bind("click", function () {
+    if ($("#update_save").attr("disabled")) return;
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+    var date = $("#datepicker_settime").datepicker("getDate");
+
+
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "timeNdate",
+
+        use_settime: $("#use_settime").attr("checked") ? "1" : "0",
+        settime_year: date.getFullYear(),
+        settime_month: date.getMonth() + 1,
+        settime_day: date.getDate(),
+        settime_hour: $("#settime_hour").val(),
+        settime_min: $("#settime_min").val(),
+        settime_sec: $("#settime_sec").val(),
+        settime_timezone: $("#settime_timezone").val(),
+
+        date_format: $("#date_format").val(),
+        time_format: $("#time_format").val(),
+
+        timesync_mode: $("input:radio[name=timesync_mode]:checked").val(),
+        timesync_server: $("#timesync_server").val(),
+        timesync_port: $("#timesync_port").val(),
+        timesync_cycle: $("#timesync_cycle").val(),
+        use_ntp: $("#use_ntp").attr("checked") ? "1" : "0",
+        timesync_ntp_server: $("#timesync_ntp_server").val(),
+        timesync_ntp_cycle: $("#timesync_ntp_cycle").val(),
+      },
+      success: function (data) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        $("#msg_out").append(data);
+      },
+      error: function (err) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        alert(msgAjaxFail);
+      },
+    });
+  });
+
+  var c_Month = [
+    "##RES_JAN##",
+    "##RES_FEB##",
+    "##RES_MAR##",
+    "##RES_APR##",
+    "##RES_MAY##",
+    "##RES_JUN##",
+    "##RES_JUL##",
+    "##RES_AUG##",
+    "##RES_SEP##",
+    "##RES_OCT##",
+    "##RES_NOV##",
+    "##RES_DEC##",
+  ];
+
+  var c_JAN = "##RES_JAN##";
+  var c_FEB = "##RES_FEB##";
+  var c_MAR = "##RES_MAR##";
+  var c_APR = "##RES_APR##";
+  var c_MAY = "##RES_MAY##";
+  var c_JUN = "##RES_JUN##";
+  var c_JUL = "##RES_JUL##";
+  var c_AUG = "##RES_AUG##";
+  var c_SEP = "##RES_SEP##";
+  var c_OCT = "##RES_OCT##";
+  var c_NOV = "##RES_NOV##";
+  var c_DEC = "##RES_DEC##";
+
+  var c_JAN_2 = "##RES_JAN_2##";
+  var c_FEB_2 = "##RES_FEB_2##";
+  var c_MAR_2 = "##RES_MAR_2##";
+  var c_APR_2 = "##RES_APR_2##";
+  var c_MAY_2 = "##RES_MAY_2##";
+  var c_JUN_2 = "##RES_JUN_2##";
+  var c_JUL_2 = "##RES_JUL_2##";
+  var c_AUG_2 = "##RES_AUG_2##";
+  var c_SEP_2 = "##RES_SEP_2##";
+  var c_OCT_2 = "##RES_OCT_2##";
+  var c_NOV_2 = "##RES_NOV_2##";
+  var c_DEC_2 = "##RES_DEC_2##";
+
+  var c_SUN = "##RES_SUN##";
+  var c_MON = "##RES_MON##";
+  var c_TUE = "##RES_TUE##";
+  var c_WED = "##RES_WED##";
+  var c_THU = "##RES_THU##";
+  var c_FRI = "##RES_FRI##";
+  var c_SAT = "##RES_SAT##";
+
+  var c_SUN_2 = "##RES_SUN_2##";
+  var c_MON_2 = "##RES_MON_2##";
+  var c_TUE_2 = "##RES_TUE_2##";
+  var c_WED_2 = "##RES_WED_2##";
+  var c_THU_2 = "##RES_THU_2##";
+  var c_FRI_2 = "##RES_FRI_2##";
+  var c_SAT_2 = "##RES_SAT_2##";
+
+  $("#datepicker_settime").datepicker({
+    changeMonth: true,
+    changeYear: true,
+    monthNamesShort: [
+      c_JAN,
+      c_FEB,
+      c_MAR,
+      c_APR,
+      c_MAY,
+      c_JUN,
+      c_JUL,
+      c_AUG,
+      c_SEP,
+      c_OCT,
+      c_NOV,
+      c_DEC,
+    ],
+    monthNames: [
+      c_JAN_2,
+      c_FEB_2,
+      c_MAR_2,
+      c_APR_2,
+      c_MAY_2,
+      c_JUN_2,
+      c_JUL_2,
+      c_AUG_2,
+      c_SEP_2,
+      c_OCT_2,
+      c_NOV_2,
+      c_DEC_2,
+    ],
+    dayNames: [c_SUN_2, c_MON_2, c_TUE_2, c_WED_2, c_THU_2, c_FRI_2, c_SAT_2],
+    dayNamesMin: [c_SUN, c_MON, c_TUE, c_WED, c_THU, c_FRI, c_SAT],
+    dayNamesShort: [c_SUN, c_MON, c_TUE, c_WED, c_THU, c_FRI, c_SAT],
+
+    onChangeMonthYear: function (year, month) {},
+
+    onSelect: function (dateText, inst) {},
+  });
+
+  $("#datepicker_settime").datepicker(
+    "option",
+    "dateFormat",
+    get_date_format()
+  );
+
+  function onchange_timezone(bInit) {
+    var cur_timezone = $("#settime_timezone").val();
+
+    if (bInit == 0) {
+    }
+  }
+
+  function onclick_use_settime() {
+    if ($("#use_settime").attr("checked")) {
+      $("#settime_table *").removeAttr("disabled");
+      $("*[name=settime]").css("background", "#ffffff");
+
+      onchange_timezone(1);
+      onclick_use_systime();
+    } else {
+      $("#settime_table *").prop("disabled", true);
+      $("*[name=settime]").css("background", "#f3f3f3");
+    }
+  }
+
+
+  function onclick_timesync(idx) {
+    switch (idx) {
+      case 0:
+        $("#sync_client_table").hide();
+        $("#sync_server_table").hide();
+        $("#inlineRadio1").attr("checked", true);
+        $("#inlineRadio2").removeAttr("checked");
+        break;
+
+      case 2:
+        $("#sync_client_table").hide();
+        $("#sync_server_table").show("slide", { direction: "up" }, 500);
+        $("#inlineRadio2").attr("checked", true);
+        $("#inlineRadio1").removeAttr("checked");
+        break;
+    }
+  }
+
+  function onclick_use_ntp() {//w4000_tm
+
+
+    // if ($("#use_ntp").attr("checked") || $("#inlineRadio3").attr("checked")) {
+    if ($("#use_ntp").attr("checked")) {
+      $("*[name=ntp]").removeAttr("disabled");
+      $("*[name=ntp]").css("background", "#ffffff");
+	  //fetchNtpTime(); //w4000
+    } else {
+      $("*[name=ntp]").attr("disabled", true);
+      $("*[name=ntp]").css("background", "#f3f3f3");
+    }
+  }
+
+  function get_date_format() {
+    var fmt = "d MM, yy";
+    var cur_fmt = $("#date_format").val();
+
+    switch (parseInt(cur_fmt)) {
+      case 0:
+        fmt = "mm-dd-yy";
+        break;
+
+      case 1:
+        fmt = "dd-mm-yy";
+        break;
+
+      case 2:
+        fmt = "yy-mm-dd";
+        break;
+
+      case 3:
+        fmt = "MM dd, yy";
+        break;
+
+      case 4:
+        fmt = "dd MM, yy";
+        break;
+
+      case 5:
+        fmt = "yy, MM dd";
+        break;
+    }
+
+    return fmt;
+  }
+
+  
+  function make_day(d) {
+    var str = new String();
+
+    if (parseInt(d) < 10) {
+      str = "0" + parseInt(d);
+    } else {
+      str = "" + parseInt(d);
+    }
+
+    return str;
+  }
+
+
+
+  function get_date_string(cur_date) {
+    var fmt = "";
+    var cur_fmt = $("#date_format").val();
+
+    switch (parseInt(cur_fmt)) {
+      case 0:
+        fmt =
+          make_day(cur_date.getMonth() + 1) +
+          "/" +
+          make_day(cur_date.getDate()) +
+          "/" +
+          (cur_date.getYear() + 1900);
+        break;
+
+      case 1:
+        fmt =
+          make_day(cur_date.getDate()) +
+          "/" +
+          make_day(cur_date.getMonth() + 1) +
+          "/" +
+          (cur_date.getYear() + 1900);
+        break;
+
+      case 2:
+        fmt =
+          cur_date.getYear() +
+          1900 +
+          "/" +
+          make_day(cur_date.getMonth() + 1) +
+          "/" +
+          make_day(cur_date.getDate());
+        break;
+
+      case 3:
+        fmt =
+          c_Month[cur_date.getMonth()] +
+          "&nbsp;" +
+          make_day(cur_date.getDate()) +
+          ", " +
+          (cur_date.getYear() + 1900);
+        break;
+
+      case 4:
+        fmt =
+          make_day(cur_date.getDate()) +
+          "&nbsp;" +
+          c_Month[cur_date.getMonth()] +
+          ", " +
+          (cur_date.getYear() + 1900);
+        break;
+
+      case 5:
+        fmt =
+          cur_date.getYear() +
+          1900 +
+          ", " +
+          c_Month[cur_date.getMonth()] +
+          "&nbsp;" +
+          make_day(cur_date.getDate());
+        break;
+    }
+
+    return fmt;
+  }
+
+
+  function get_t_string(cur_date) {
+    var fmt = "";
+    var cur_fmt = $("#time_format").val();
+    var hour = cur_date.getHours();
+    var ampm = "##RES_AM##";
+    if (hour > 12) {
+      hour -= 12;
+      ampm = "##RES_PM##";
+    }
+
+    switch (parseInt(cur_fmt)) {
+      case 0:
+        fmt =
+          make_day(hour) +
+          ":" +
+          make_day(cur_date.getMinutes()) +
+          ":" +
+          make_day(cur_date.getSeconds()) +
+          "&nbsp;" +
+          ampm;
+        break;
+
+      case 1:
+        fmt =
+          make_day(cur_date.getHours()) +
+          ":" +
+          make_day(cur_date.getMinutes()) +
+          ":" +
+          make_day(cur_date.getSeconds()) +
+          "&nbsp;";
+        break;
+
+      case 2:
+        fmt =
+          ampm +
+          "&nbsp;" +
+          make_day(hour) +
+          ":" +
+          make_day(cur_date.getMinutes()) +
+          ":" +
+          make_day(cur_date.getSeconds());
+        break;
+    }
+
+    return fmt;
+  }
+
+  
+
+  function get_dt_string(cur_date, type) {
+    switch (type) {
+      case "date":
+        return (
+          get_date_string(current_time).replace(/\//gi, "-") +
+          " " +
+          current_time.toLocaleString("en-us", { weekday: "long" })
+        );
+
+      case "time":
+        return get_t_string(current_time);
+    }
+  }
+
+  function onclick_use_systime() {//w4000_tm
+    if ($("#settime_systime").attr("checked")) {
+      $("#datepicker_settime").attr("disabled", true);
+      $("#datepicker_settime").css("background", "#f3f3f3");
+      $("#settime_hour").attr("disabled", true);
+      $("#settime_hour").css("background", "#f3f3f3");
+      $("#settime_min").attr("disabled", true);
+      $("#settime_min").css("background", "#f3f3f3");
+      $("#settime_sec").attr("disabled", true);
+      $("#settime_sec").css("background", "#f3f3f3");
+
+
+      
+    var com_time = new Date();
+    current_time.setHours(com_time.getHours());
+    current_time.setMinutes(com_time.getMinutes());
+    current_time.setSeconds(com_time.getSeconds());
+
+
+    } else {
+      $("#datepicker_settime").removeAttr("disabled");
+      $("#datepicker_settime").css("background", "#ffffff");
+      $("#settime_hour").removeAttr("disabled");
+      $("#settime_hour").css("background", "#ffffff");
+      $("#settime_min").removeAttr("disabled");
+      $("#settime_min").css("background", "#ffffff");
+      $("#settime_sec").removeAttr("disabled");
+      $("#settime_sec").css("background", "#ffffff");
+    }
+  }
+
+  function init() {
+
+
+    $("#settime_systime").attr("checked", false);
+    
+
+    var com_time = new Date();
+    $("#settime_hour").attr("value", make_day(com_time.getHours()));
+    $("#settime_min").attr("value", make_day(com_time.getMinutes()));
+    $("#settime_sec").attr("value", make_day(com_time.getSeconds()));
+
+
+    onclick_use_settime();
+    
+
+    $("#datepicker_settime").datepicker("setDate", new Date());
+    $("#current_date").append(get_dt_string(current_time, "date"));
+    $("#current_time").append(get_dt_string(current_time, "time"));
+
+    
+    $("#current_date_fmt").append(get_date_string(current_time));
+    $("#current_time_fmt").append(get_t_string(current_time));
+
+
+
+    onclick_timesync(timesync_mode);
+
+    if (timesync_mode)
+    {
+      $("#use_ntp").attr("checked", true);
+    }
+
+    onclick_use_ntp();
+
+    
+    var tsu = 0;
+    var first = 1;
+    settime_timer = setInterval(function () {
+      var com_time2 = new Date();
+      
+
+      if (make_day(com_time2.getSeconds()-tsu) >= 1 || make_day(com_time2.getSeconds()) == 0 && tsu == 59 || first)
+      {
+        if (!first)
+          current_time.setSeconds(current_time.getSeconds() + 1);
+
+        tsu = make_day(com_time2.getSeconds());
+        first = 0;
+      }
+
+      //  current_time > set 
+      $("#current_date").empty();
+      $("#current_date").append(get_dt_string(current_time, "date"));
+      
+      $("#current_time").empty();
+      $("#current_time").append(get_dt_string(current_time, "time"));
+
+
+
+      $("#current_date_fmt").empty();
+      $("#current_date_fmt").append(get_date_string(current_time));
+
+      $("#current_time_fmt").empty();
+      $("#current_time_fmt").append(get_t_string(current_time));
+
+
+
+    
+      if ($("#settime_systime").attr("checked")) {
+        var com_time = new Date();
+        $("#datepicker_settime").datepicker("setDate", com_time);
+        $("#settime_hour").attr("value", make_day(com_time.getHours()));
+        $("#settime_min").attr("value", make_day(com_time.getMinutes()));
+        $("#settime_sec").attr("value", make_day(com_time.getSeconds()));
+        
+
+      }
+
+
+
+    }, 500);
+
+  }
+
+
+
+  // init();
+
+  var hr = document.querySelector("#hr");
+  var mn = document.querySelector("#mn");
+  var sc = document.querySelector("#sc");
+  var degree = 6;
+
+  window.timeInterval = setInterval(() => {
+    var day = current_time;
+    var hh = day.getHours() * 30;
+    var mm = day.getMinutes() * degree;
+    var ss = day.getSeconds() * degree;
+
+    hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
+    mn.style.transform = `rotateZ(${mm}deg)`;
+    sc.style.transform = `rotateZ(${ss}deg)`;
+
+
+  });
+
+  init();
+  -->
+</script>
+<style>
+  .select_flat_time {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    width: 50px;
+    border: 1px solid #79b7e7;
+  }
+  .select_flat_timezone {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    width: 360px;
+    border: 1px solid #79b7e7;
+  }
+  .select_flat_dateformat {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    width: 250px;
+    border: 1px solid #79b7e7;
+  }
+  .select_flat_syncmode {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    width: 205px;
+    border: 1px solid #79b7e7;
+  }
+
+  .side-table-head {
+    width: 200px;
+    height: 50px;
+  }
+
+  select {
+    border: 1px solid grey !important;
+  }
+
+  .header-title {
+    margin-bottom: 10px;
+  }
+
+  #current_date_fmt,
+  #current_time_fmt {
+    margin-top: 5px;
+  }
+
+  .select_flat_time {
+    margin-right: 5px;
+  }
+
+  .clock {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("../img/clock.png");
+    background-size: cover;
+    border: 4px solid #091921;
+    border-radius: 50%;
+  }
+
+  .clock:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: black;
+    border-radius: 50%;
+    z-index: 10;
+  }
+
+  .clock .hour,
+  .clock .min,
+  .clock .sec {
+    position: absolute;
+  }
+
+  .clock .hour .hr {
+    width: 60px;
+    height: 60px;
+  }
+
+  .clock .min .mn {
+    width: 90px;
+    height: 90px;
+  }
+
+  .clock .sec .sc {
+    width: 90px;
+    height: 90px;
+  }
+
+  .hr,
+  .mn,
+  .sc {
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .hr:before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 35px;
+    background: black;
+    z-index: 10;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .mn:before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 40px;
+    background: black;
+    z-index: 10;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .sc:before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background: #ff105e;
+    z-index: 10;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .date-div-label {
+    font-weight: bold;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="ribbon ribbon-primary">Time and Time Zone</div>
+
+            <div class="row" style="width: 100%">
+              <div class="col-xl-2" style="text-align: -webkit-center">
+                <div class="clock">
+                  <div class="hour">
+                    <div id="hr" class="hr"></div>
+                  </div>
+                  <div class="min">
+                    <div id="mn" class="mn"></div>
+                  </div>
+                  <div class="sec">
+                    <div id="sc" class="sc"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-10">
+                <div class="date-div">
+                  <div>Date</div>
+                  <div id="current_date" class="date-div-label"></div>
+                </div>
+
+                <div class="date-div">
+                  <div>Time</div>
+                  <div id="current_time" class="date-div-label"></div>
+                </div>
+
+                <div class="date-div">
+                  <div>Time Zone</div>
+                  <div class="date-div-label">##PARAM_CUR_TIME_ZONE##</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card-box card-white-box ribbon-box" style="height: 90%">
+        <div class="mb-1" style="width: 100%; margin-top: -25px">
+          <table
+            width="100%"
+            class="table m-0 table-hover"
+            style="margin-top: 20px !important"
+          >
+            <tr>
+              <td class="side_table-head" width="150px">Time</td>
+              <td>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="timesync_mode"
+                    value="0"
+                    onclick="onclick_timesync(0);"
+                    id="inlineRadio1"
+                  />
+                  <label class="form-check-label" for="inlineRadio1"
+                    >##RES_NONE##</label
+                  >
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="timesync_mode"
+                    value="2"
+                    onclick="onclick_timesync(2);"
+                    id="inlineRadio2"
+                  />
+                  <label class="form-check-label" for="inlineRadio2"
+                    >##RES_SERVER##</label
+                  >
+                </div>
+              </td>
+            </tr>
+
+           
+           
+           
+           
+           
+           
+           
+            <tr>
+              <td class="side_table-head" width="150px">TIME SYNC</td>
+              <td>
+
+
+
+
+
+
+
+
+                <table id="sync_server_table" style="display: none">
+                  <tr>
+                    <td width="150px">##RES_TIME_SYNC_NTP##</td>
+
+                    <td>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="use_ntp"
+                          onclick="onclick_use_ntp();"
+                        />
+                        <label class="form-check-label" for="use_ntp"
+                          >##RES_USE_NTP_SERVER##</label
+                        >
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td width="150px">##RES_TIME_SYNC_NTP_SERVER##</td>
+
+                    <td>
+                      <input
+                        type="text"
+                        id="timesync_ntp_server"
+                        name="ntp"
+                        class="input_flat"
+                        style="width: 200px"
+                        value="##PARAM_TIME_SYNC_NTP_SERVER##"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>##RES_TIME_SYNC_CYCLE##</td>
+
+                    <td>
+                      <select
+                        id="timesync_ntp_cycle"
+                        name="ntp"
+                        class="select_flat_syncmode"
+                      >
+                        <!--##PARAM_SYNC_CYCLE##-->
+                      </select>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side_table-head" width="150px">Date Format</td>
+              <td>
+                <select id="date_format" class="select_flat_dateformat">
+                  <!--##PARAM_DATE_FORMAT##-->
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side_table-head" width="150px">Time Format</td>
+              <td>
+                <select id="time_format" class="select_flat_dateformat">
+                  <!--##PARAM_TIME_FORMAT##-->
+                </select>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12">
+      <div class="card-box card-white-box ribbon-box" style="height: 95%">
+        <div class="ribbon ribbon-primary">
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="use_settime"
+              onclick="onclick_use_settime();"
+            />
+            <label class="form-check-label" for="use_settime">Config</label>
+          </div>
+        </div>
+
+        <div class="mb-1" style="width: 100%">
+          <table
+            width="100%"
+            id="settime_table"
+            class="table m-0 table-hover"
+            style="margin-top: 20px !important"
+          >
+            <tr>
+              <td class="side_table-head" width="150px">Time Zone</td>
+              <td>
+                <select
+                  id="settime_timezone"
+                  name="settime"
+                  class="select_flat_timezone"
+                  onchange="onchange_timezone(0);"
+                >
+                  <!--##PARAM_TIME_ZONE##-->
+                </select>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td class="side_table-head" width="150px">##RES_SYSTEM_TIME##</td>
+              <td>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    checked="checked"
+                    id="settime_systime"
+                    onclick="onclick_use_systime();"
+                  />
+                  <label class="form-check-label" for="settime_systime"
+                    >##RES_USE_CURRENT_SYSTEM_TIME##</label
+                  >
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side_table-head" width="150px">New Date</td>
+              <td>
+                <div class="form-check form-check-inline" style="padding: 0">
+                  <input
+                    type="text"
+                    id="datepicker_settime"
+                    name="settime"
+                    class="input_flat"
+                    readonly="readonly"
+                  />
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="side_table-head" width="150px">New Time</td>
+              <td>
+                <div style="display: flex">
+                  <div>
+                    <select
+                      id="settime_hour"
+                      name="settime"
+                      class="select_flat_time"
+                    >
+                      <!--##PARAM_SYS_HOUR##-->
+                    </select>
+                  </div>
+                  :
+                  <div>
+                    <select
+                      id="settime_min"
+                      name="settime"
+                      class="select_flat_time"
+                      style="margin-left: 5px"
+                    >
+                      <!--##PARAM_SYS_MIN##-->
+                    </select>
+                  </div>
+                  :
+                  <div>
+                    <select
+                      id="settime_sec"
+                      name="settime"
+                      class="select_flat_time"
+                      style="margin-left: 5px"
+                    >
+                      <!--##PARAM_SYS_SEC##-->
+                    </select>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="mb-1" style="text-align: right">
+            <button
+              type="submit"
+              class="btn btn-secondary waves-effect waves-light"
+              id="update_save"
+            >
+              ##RES_SAVE##
+            </button>
+          </div>
+
+          <div class="mt-5" style="text-align: right">
+            <div
+              id="msg_out"
+              style="width: 300px; float: right; margin-top: -40px"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <!-- end col -->
+    </div>
+
+    <!-- end row -->
+  </div>
+</div>

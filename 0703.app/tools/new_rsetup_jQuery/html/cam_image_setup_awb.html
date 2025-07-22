@@ -1,0 +1,346 @@
+<script language="JavaScript">
+  <!--
+  // $("button").button();
+
+  var pause_put = 0;
+
+  function get_awb_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/awb/all";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        
+
+        init_combobox(
+          $("#wb_mode"),
+          data.white_balance_range.mode,
+          data.white_balance.mode
+        );
+
+        init_slider(
+          $("#auto_rgain"),
+          $("#auto_rgain_val"),
+          data.white_balance_range.auto.r_ratio.min,
+          data.white_balance_range.auto.r_ratio.max,
+          data.white_balance.auto.r_ratio,
+          put_awb_setup_value
+        );
+
+        init_slider(
+          $("#auto_bgain"),
+          $("#auto_bgain_val"),
+          data.white_balance_range.auto.b_ratio.min,
+          data.white_balance_range.auto.b_ratio.max,
+          data.white_balance.auto.b_ratio,
+          put_awb_setup_value
+        );
+
+        init_slider(
+          $("#manual_rgain"),
+          $("#manual_rgain_val"),
+          data.white_balance_range.manual.r_gain.min,
+          data.white_balance_range.manual.r_gain.max,
+          data.white_balance.manual.r_gain,
+          put_awb_setup_value
+        );
+
+        init_slider(
+          $("#manual_ggain"),
+          $("#manual_ggain_val"),
+          data.white_balance_range.manual.g_gain.min,
+          data.white_balance_range.manual.g_gain.max,
+          data.white_balance.manual.g_gain,
+          put_awb_setup_value
+        );
+
+        init_slider(
+          $("#manual_bgain"),
+          $("#manual_bgain_val"),
+          data.white_balance_range.manual.b_gain.min,
+          data.white_balance_range.manual.b_gain.max,
+          data.white_balance.manual.b_gain,
+          put_awb_setup_value
+        );
+
+        onchange_wb_mode(0);
+      },
+      error: function (err) {
+      },
+    });
+  }
+
+  function put_awb_setup_value() {
+    var req_url = "/_fcgiapi/video/quality/awb";
+
+    if (pause_put) return;
+
+    var form = {
+      white_balance: {
+        mode: Number($("#wb_mode option:selected").val()),
+        auto: {
+          r_ratio: $("#auto_rgain").slider("value"),
+          b_ratio: $("#auto_bgain").slider("value"),
+        },
+        manual: {
+          r_gain: $("#manual_rgain").slider("value"),
+          g_gain: $("#manual_ggain").slider("value"),
+          b_gain: $("#manual_bgain").slider("value"),
+        },
+      },
+    };
+
+    $.ajax({
+      url: req_url,
+      type: "PUT",
+      dataType: "json",
+      cache: false,
+      data: JSON.stringify(form),
+      success: function (data) {
+      },
+      error: function (err) {
+      },
+    });
+  }
+
+  function onchange_wb_mode(put) {
+    var mode = Number($("#wb_mode option:selected").val());
+
+    if (mode == 0) {
+      $("#wb_auto").hide();
+      $("#wb_manual").show();
+    } else if (mode == 1) {
+      $("#wb_auto").show();
+      $("#wb_manual").hide();
+    } else {
+      $("#wb_auto").hide();
+      $("#wb_manual").hide();
+    }
+
+    if (put) {
+      put_awb_setup_value();
+    }
+  }
+
+
+
+  function onclick_default() {
+    var req_url = "/_fcgiapi/video/quality/awb/default";
+
+    $.ajax({
+      url: req_url,
+      type: "GET",
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        
+        let decData = decryptData(data.enc.data);
+        data = JSON.parse(decData);
+
+        
+        pause_put = 1;
+        refresh_combobox_value($("#wb_mode"), data.white_balance_default.mode);
+        refresh_slider_value($("#auto_rgain"), $("#auto_rgain_val"), data.white_balance_default.auto.r_ratio);	
+        refresh_slider_value($("#auto_bgain"), $("#auto_bgain_val"), data.white_balance_default.auto.b_ratio);	
+        refresh_slider_value($("#manual_rgain"), $("#manual_rgain_val"), data.white_balance_default.manual.r_gain);	
+        refresh_slider_value($("#manual_ggain"), $("#manual_ggain_val"), data.white_balance_default.manual.g_gain);	
+        refresh_slider_value($("#manual_bgain"), $("#manual_bgain_val"), data.white_balance_default.manual.b_gain);	
+        pause_put = 0;
+        onchange_wb_mode(1);
+      },
+      error: function (err) {},
+    });
+  }
+
+  function init_awb() {
+    load_language("setup_camera_tab_awb");
+    get_awb_setup_value();
+    onchange_wb_mode(0);
+  }
+
+  init_awb();
+
+  -->
+</script>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box">
+            <div class="table-responsive">
+              <table class="table table-centered mb-0">
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>MODE</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <select
+                            id="wb_mode"
+                            class="select_flat"
+                            style="width: 100px"
+                            onchange="onchange_wb_mode(1);"
+                          ></select>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>R OFFSET</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="auto_rgain"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="auto_rgain_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>B OFFSET</web-lang>
+                  </td>
+                  <td>
+                    <table width="100%">
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="auto_bgain"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="auto_bgain_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>R GAIN</web-lang>
+                  </td>
+
+                  <td>
+                    <table>
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="manual_rgain"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="manual_rgain_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>G GAIN</web-lang>
+                  </td>
+                  <td>
+                    <table>
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="manual_ggain"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="manual_ggain_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    <web-lang>B GAIN</web-lang>
+                  </td>
+                  <td>
+                    <table>
+                      <tr>
+                        <td width="95%" style="padding: 8px">
+                          <div id="manual_bgain"></div>
+                        </td>
+
+                        <td>
+                          <input
+                            class="I_Text"
+                            id="manual_bgain_val"
+                            type="text"
+                            size="5"
+                            readonly="readonly"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <div class="mb-1" style="text-align: right; margin-top: 20px">
+                <button
+                  class="btn btn-secondary waves-effect waves-light"
+                  onclick="onclick_default();"
+                  id="blc_default"
+                >
+                  RESET
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</div>

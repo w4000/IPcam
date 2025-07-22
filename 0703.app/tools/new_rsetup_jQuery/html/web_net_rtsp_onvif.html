@@ -1,0 +1,402 @@
+<script language="JavaScript">
+  <!--
+  ///
+  var use_rtsp = "##PARAM_USE_RTSP##";
+  var rtsp_security = "##PARAM_RTSP_SECURITY##";
+  var rtsp_security_basic = "##PARAM_RTSP_SECURITY_BASIC##";
+  var onvif_security = "##PARAM_ONVIF_SECURITY##";
+  var onvif_port = "##PARAM_ONVIF_PORT##";
+
+  varrtsp_security_select = "##RES_RTSP_SECURITY_SELECT##";
+
+  var current_ipaddr = "##PARAM_IPADDR##";
+
+
+  // $("a").button();
+
+  $(".update_save").bind("click", function () {
+    var trim_port = trim($("#rtsp_port").val());
+    if (trim_port == "" || isNaN(trim_port)) {
+      alert("##RES_MSG_RTSP_PORT##");
+      $("#rtsp_port").focus();
+      return;
+    }
+
+    if ($(".update_save").attr("disabled")) return;
+    $(".update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "netProto",
+
+        use_rtsp: $("#use_rtsp").attr("checked") ? 1 : 0,
+
+        rtsp_security: $("#rtsp_security").attr("checked") ? 1 : 0,
+
+        rtsp_port: $("#rtsp_port").val(),
+        onvif_security: $("#onvif_security").attr("checked") ? 1 : 0,
+        onvif_port: $("#onvif_port").val(),
+
+        rtsp_addr1: $("#rtsp_addr1").val(),
+        rtsp_addr2: $("#rtsp_addr2").val(),
+        rtsp_addr3: $("#rtsp_addr3").val(),
+      },
+      success: function (data) {
+        $(".update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        $("#msg_out").append(data);
+      },
+      error: function (err) {
+        $(".update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        alert(msgAjaxFail);
+      },
+    });
+  });
+
+  function onclick_use_rtsp() {
+    if ($("#use_rtsp").attr("checked")) {
+      $("#rtsp_table *").removeAttr("disabled");
+      $("#rtsp_port").css("background", "#ffffff");
+    } else {
+      $("#rtsp_table *").attr("disabled", true);
+      $("#rtsp_port").css("background", "#f3f3f3");
+    }
+
+  }
+
+  function onchange_port() {
+    var trim_port = trim($("#rtsp_port").val());
+    if (trim_port == "" || isNaN(trim_port)) {
+      alert("##RES_MSG_RTSP_PORT##");
+      $("#rtsp_port").focus();
+      return false;
+    }
+  }
+
+  function onchange_onvif_port() {
+    var trim_port = trim($("#onvif_port").val());
+    if (trim_port == "" || isNaN(trim_port)) {
+      alert("##RES_MSG_ONVIF_PORT##");
+      $("#onvif_port").focus();
+      return false;
+    }
+  }
+
+  function init() {
+    if (use_rtsp == "1") $("#use_rtsp").attr("checked", true);
+
+    if (rtsp_security == "1") $("#rtsp_security").attr("checked", true);
+
+
+    if (rtsp_security_basic == "1")
+      $("#rtsp_security_basic").attr("checked", true);
+
+
+    if (onvif_security == "1") $("#onvif_security").attr("checked", true);
+
+
+    onchange_port();
+    onclick_use_rtsp();
+    // must be shown fixed port of onvif (internal:88,  external:80)
+    $("#onvif_port").attr("disabled", true).css("background", "#f3f3f3");
+  }
+
+  init();
+
+  -->
+</script>
+<style>
+  .input_flat_no_border {
+    font-family: sans-serif;
+    /* background-color: #ffffff; */
+    /* border: 0px solid #ffffff; */
+    width: 100%;
+  }
+
+  input[type="text"] {
+    text-transform: none !important;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row card-box card-white-box ribbon-box menu-height">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              href="#rtsp"
+              data-toggle="tab"
+              aria-expanded="false"
+              class="nav-link active"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-account"></i
+              ></span>
+              <span class="d-none d-sm-block">RTSP</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="#onvif"
+              data-toggle="tab"
+              aria-expanded="true"
+              class="nav-link"
+            >
+              <span class="d-block d-sm-none"
+                ><i class="mdi mdi-home-variant"></i
+              ></span>
+              <span class="d-none d-sm-block">ONVIF</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane col-xl-12 show active" id="rtsp">
+            <div class="ribbon ribbon-primary">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  id="use_rtsp"
+                  onclick="onclick_use_rtsp();"
+                  type="checkbox"
+                />
+                <label class="form-check-label" for="use_settime"
+                  >USE RTSP</label
+                >
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table id="rtsp_table" width="100%" class="table m-0 table-hover">
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    ##RES_RTSP_SECURITY##
+                  </td>
+                  <td>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        id="rtsp_security"
+                        type="checkbox"
+                      />
+                      <label class="form-check-label" for="rtsp_security">
+                        ##RES_ACCESS_CONTROL##
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td class="side-table-head">##RES_RTSP_PORT##</td>
+                  <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>
+                          <input
+                            type="text"
+                            id="rtsp_port"
+                            onchange="onchange_port();"
+                            class="input_flat"
+                            value="##PARAM_RTSP_PORT##"
+                          />
+                        </td>
+                        <td
+                          id="td_webgate_warning"
+                          style="display: none"
+                          valign="center"
+                        >
+                          <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td valign="middle" width="20px">&nbsp;</td>
+                              <td valign="middle">
+                                <span
+                                  class="ui-icon ui-icon-alert"
+                                  style="display: inline-block"
+                                ></span
+                                >&nbsp;
+                              </td>
+                              <td valign="middle">
+                                <font color="red"
+                                  ><strong
+                                    >##RES_WEBGATE_WARNING##</strong
+                                  ></font
+                                >
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head">##RES_RTSP_ADDRESS##</td>
+
+                  <td>
+                    <table class="table table-centered mb-0">
+                      <thead>
+                        <tr>
+                          <th>#1</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>
+                            <input
+                              type="text"
+                              id="rtsp_addr1"
+                              class="input_flat_no_border"
+                              value="##PARAM_RTSP_ADDR1##"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="table table-centered mb-0">
+                      <thead>
+                        <tr>
+                          <th>#2</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>
+                            <input
+                              type="text"
+                              id="rtsp_addr2"
+                              class="input_flat_no_border"
+                              value="##PARAM_RTSP_ADDR2##"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+                    <table class="table table-centered mb-0">
+                      <thead>
+                        <tr>
+                          <th>#3</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>
+                            <input
+                              type="text"
+                              id="rtsp_addr3"
+                              class="input_flat_no_border"
+                              value="##PARAM_RTSP_ADDR3##"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>                    
+                  </td>
+                </tr>
+
+
+              </table>
+
+              <div class="mb-1" style="text-align: right">
+                <button
+                  type="submit"
+                  class="btn btn-secondary waves-effect waves-light update_save"
+                  id="update_save"
+                >
+                  ##RES_SAVE##
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane col-xl-6" id="onvif">
+            <div class="mb-1" style="width: 100%">
+              <table class="table m-0 table-hover">
+                <tr>
+                  <td class="side-table-head" width="150px">
+                    ##RES_ONVIF_SECURITY##
+                  </td>
+                  <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              id="onvif_security"
+                              type="checkbox"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="onvif_security"
+                            >
+                              ##RES_ACCESS_CONTROL##
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="side-table-head">##RES_ONVIF_PORT##</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="onvif_port"
+                      onchange="onchange_onvif_port();"
+                      class="input_flat"
+                      value="##PARAM_ONVIF_PORT##"
+                    />
+                  </td>
+                </tr>
+              </table>
+
+              <div class="mb-1" style="text-align: right">
+                <button
+                  type="submit"
+                  class="btn btn-secondary waves-effect waves-light update_save"
+                  id="update_save"
+                >
+                  ##RES_SAVE##
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="msg_out"
+            style="width: 300px; float: right; margin-top: 10px"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

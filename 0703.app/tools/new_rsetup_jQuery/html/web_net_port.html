@@ -1,0 +1,256 @@
+<script language="JavaScript">
+  <!--
+
+  // $("a").button();
+
+
+  function isValidPort(port) {
+
+    if (port == "") {
+      return false;
+    }
+    
+
+    if (!Number.isInteger(parseInt(port))) {
+        return false;
+    }
+    
+    if (port < 0 || port > 65535) {
+        return false;
+    }
+    
+    return true;
+}
+
+  $("#update_save").bind("click", function () {
+    var net_prot = trim($("#net_prot").val());
+    var web_port = trim($("#web_port").val());
+
+    if (isValidPort(net_prot) == false)
+    {
+      alert("##RES_MSG_PORT_ERR##");
+      $("#net_prot").focus();
+      return false;
+    }
+    
+    if (isValidPort(web_port) == false)
+    {
+      alert("##RES_MSG_PORT_ERR##");
+      $("#web_port").focus();
+      return false;
+    }
+
+    if ($("#update_save").attr("disabled")) return;
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "netPort",
+
+        net_prot: $("#net_prot").val(),
+        web_port: $("#web_port").val(),
+      },
+      success: function (data) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        $("#msg_out").append(data);
+      },
+      error: function (err) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        alert(msgAjaxFail);
+      },
+    });
+  });
+
+  var default_baseport = "##PARAM_DEFAULT_BASEPORT##";
+  var default_webport = "##PARAM_DEFAULT_WEBPORT##";
+  var default_rtspport = "##PARAM_DEFAULT_RTSPPORT##";
+
+  var old_baseport = "##PARAM_BASEPORT##";
+  var old_webport = "##PARAM_WEBPORT##";
+  var old_rtspport = "##PARAM_RTSPPORT##";
+
+
+  function onclick_default_port() {
+    if ($("#default_port").attr("checked")) {
+      old_baseport = $("#net_prot").val();
+      old_webport = $("#web_port").val();
+
+      $("#net_prot")
+        .attr("value", default_baseport)
+        .attr("disabled", "true")
+        .css("background", "#f3f3f3");
+      $("#web_port")
+        .attr("value", default_webport)
+        .attr("disabled", "true")
+        .css("background", "#f3f3f3");
+      $("#rtsp_port").attr("value", default_rtspport);
+    } else {
+      $("#net_prot")
+        .attr("value", old_baseport)
+        .removeAttr("disabled")
+        .css("background", "#ffffff");
+      $("#web_port")
+        .attr("value", old_webport)
+        .removeAttr("disabled")
+        .css("background", "#ffffff");
+      $("#rtsp_port").attr("value", old_rtspport);
+    }
+
+
+
+
+  }
+
+
+
+ 
+
+  function init() {
+    $("#rtsp_port").css("background", "#f3f3f3");
+  }
+
+  init();
+  -->
+</script>
+<style>
+  .input_flat_no_border {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    border: 0px solid #ffffff;
+  }
+
+  input[type="text"] {
+    text-transform: none !important;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card-box card-white-box ribbon-box menu-height">
+            <div class="ribbon ribbon-primary">##RES_PORT_CONFIG##</div>
+
+            <div class="table-responsive">
+              <table
+                id="warning_webgate"
+                style="border-color: red; display: none"
+                width="100%"
+              >
+                <tr>
+                  <td bgcolor="#FEF8F6" align="center" valign="center">
+                    <div class="ui-widget">
+                      <div
+                        class="ui-state-error ui-corner-all"
+                        style="padding: 0 0.7em"
+                      >
+                        <p>
+                          <span
+                            class="ui-icon ui-icon-alert"
+                            style="display: inline-block"
+                          ></span
+                          >&nbsp; <strong>##RES_WEBGATE_WARNING##</strong>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+              <table id="table_port" width="100%" class="table m-0 table-hover">
+                <tr>
+                  <td class="side-table-head">##RES_WEB_PORT##</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="web_port"
+                      class="input_flat"
+                      value="##PARAM_WEBPORT##"
+                    />
+                  </td>
+                </tr>
+ 
+
+                <tr>
+                  <td class="side-table-head">##RES_BASE_PORT##</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="net_prot"
+                      class="input_flat"
+                      value="##PARAM_BASEPORT##"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="side-table-head">##RES_RTSP_PORT##</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="rtsp_port"
+                      class="input_flat"
+                      value="##PARAM_RTSPPORT##"
+                      disabled="true"
+                    />
+                  </td>
+                </tr>
+
+ 
+
+ 
+
+                <tr>
+                  <td class="side-table-head">##RES_DEFAULT_PORT##</td>
+                  <td>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        id="default_port"
+                        onclick="onclick_default_port();"
+                        type="checkbox"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+              <div class="mb-1" style="text-align: right">
+                <button
+                  type="submit"
+                  class="btn btn-secondary waves-effect waves-light"
+                  id="update_save"
+                >
+                  ##RES_SAVE##
+                </button>
+              </div>
+
+              <div class="mt-5" style="text-align: right">
+                <div
+                  id="msg_out"
+                  style="width: 300px; float: right; margin-top: -40px"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

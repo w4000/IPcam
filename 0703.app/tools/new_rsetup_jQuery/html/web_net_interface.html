@@ -1,0 +1,262 @@
+<script language="JavaScript">
+  <!--
+
+  // $("a").button();
+
+  $("#update_save").bind("click", function () {
+    if ($("#nettype").val() == 1) {
+      // LAN
+      if (!isvalid_ip($("#ipaddr").val())) {
+        alert("##RES_MSG_IP_ADDR##");
+        $("#ipaddr").focus();
+        return false;
+      }
+
+      if (!isvalid_ip($("#netmask").val())) {
+        alert("##RES_MSG_SUBNET_MASK##");
+        $("#netmask").focus();
+        return false;
+      }
+
+      if (!isvalid_ip($("#gateway").val())) {
+        alert("##RES_MSG_GATEWAY##");
+        $("#gateway").focus();
+        return false;
+      }
+
+    }
+
+
+    if ($("#update_save").attr("disabled")) return;
+    $("#update_save").attr("disabled", true);
+    $("#ajax_save").show();
+
+    $.ajax({
+      type: "POST",
+      url: "/cgi-bin/new_setup.cgi",
+      data: {
+        category: "netInterFace",
+
+        nettype: $("#nettype").val(),
+        ipaddr: $("#ipaddr").val(),
+        netmask: $("#netmask").val(),
+        gateway: $("#gateway").val(),
+        mtu: $("#mtu").val(),
+        speed: $("#netspeed").val(),
+      },
+      success: function (data) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        $("#msg_out").append(data);
+      },
+      error: function (err) {
+        $("#update_save").removeAttr("disabled");
+        $("#ajax_save").hide();
+        $("#msg_out").empty();
+        alert(msgAjaxFail);
+      },
+    });
+  });
+
+  function isvalid_ip(ipvalue) {
+    var ippattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+    var iparray = ipvalue.match(ippattern);
+
+    var result = "";
+    if (ipvalue == "0.0.0.0") return false;
+    else if (ipvalue == "255.255.255.255") return false;
+
+    if (iparray == null) {
+      return false;
+    } else {
+      for (i = 0; i < 4; i++) {
+        thissegment = iparray[i];
+        if (thissegment > 255) return false;
+        else if (i == 0 && thissegment > 255) return false;
+      }
+    }
+    return true;
+  }
+
+  function isvalid_ip2(ipvalue) {
+    var ippattern = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+    var iparray = ipvalue.match(ippattern);
+
+    var result = "";
+    if (ipvalue == "255.255.255.255") return false;
+
+    if (iparray == null) {
+      return false;
+    } else {
+      for (i = 0; i < 4; i++) {
+        thissegment = iparray[i];
+        if (thissegment > 255) return false;
+        else if (i == 0 && thissegment > 255) return false;
+      }
+    }
+    return true;
+  }
+
+  function isvalid_mtu(mtu_value) {
+    var ret = false;
+    if (mtu_value >= 1280 && mtu_value <= 1500) {
+      ret = true;
+    }
+    return ret;
+  }
+  function nettype_changed() {
+    if ($("#nettype").val() == 2) {
+      // DHCP
+      $("#ipaddr").attr("disabled", "true").css("background", "#f3f3f3");
+      $("#netmask").attr("disabled", "true").css("background", "#f3f3f3");
+      $("#gateway").attr("disabled", "true").css("background", "#f3f3f3");
+    } else {
+      $("#ipaddr").removeAttr("disabled").css("background", "#ffffff");
+      $("#netmask").removeAttr("disabled").css("background", "#ffffff");
+      $("#gateway").removeAttr("disabled").css("background", "#ffffff");
+    }
+  }
+
+  function init() {
+    $("#current_date_fmt").append("(1280 ~ 1500)");
+    nettype_changed();
+
+  }
+
+  init();
+  -->
+</script>
+
+<style>
+  input[type="text"] {
+    text-transform: none !important;
+  }
+
+  .ui-corner-all {
+    height: auto !important;
+  }
+
+  .ui-corner-all p {
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card-box card-white-box ribbon-box menu-height">
+        <div class="ribbon ribbon-primary">##RES_NETWORK_CONFIG##</div>
+
+        <div class="table-responsive" style="margin-top: 50px">
+          <table
+            id="warning_webgate"
+            style="border-color: red; display: none"
+            width="100%"
+          >
+            <tr>
+              <td bgcolor="#FEF8F6" align="center" valign="center">
+                <div class="ui-widget">
+                  <div
+                    class="ui-state-error ui-corner-all"
+                    style="padding: 0 0.7em"
+                  >
+                    <p>
+                      <span
+                        class="ui-icon ui-icon-alert"
+                        style="display: inline-block"
+                      ></span
+                      >&nbsp; <strong>##RES_WEBGATE_WARNING##</strong>
+                    </p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <table id="table_port" width="100%" class="table m-0 table-hover">
+            <tr>
+              <!-- <td class="side-table-head">##RES_NETWORK_TYPE##</td> -->
+              <td>
+                <select
+                  id="nettype"
+                  onchange="nettype_changed()"
+                  class="select_flat"
+                  style="width: 200px"
+                >
+                  <!--##PARAM_NETWORK_TYPE##-->
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <!-- <td class="side-table-head">##RES_IP_ADDRESS##</td> -->
+              <td>
+                <input
+                  type="text"
+                  id="ipaddr"
+                  class="input_flat"
+                  style="width: 200px"
+                  value="##PARAM_IPADDR##"
+                />
+              </td>
+            </tr>
+            <tr>
+              <!-- <td class="side-table-head">##RES_SUBNET_MASK##</td> -->
+              <td>
+                <input
+                  type="text"
+                  id="netmask"
+                  class="input_flat"
+                  style="width: 200px"
+                  value="##PARAM_SUBNET##"
+                />
+              </td>
+            </tr>
+            <tr>
+              <!-- <td class="side-table-head">##RES_GATEWAY##</td> -->
+              <td>
+                <input
+                  type="text"
+                  id="gateway"
+                  class="input_flat"
+                  style="width: 200px"
+                  value="##PARAM_GATEWAY##"
+                />
+              </td>
+            </tr>
+            <tr>
+              <!-- <td class="side-table-head">##RES_MAC_ADDRESS##</td> -->
+              <td>##PARAM_MACADDR##</td>
+            </tr>
+            <tr>
+              <!-- <td class="side-table-head">##RES_NETWORK_SPEED##</td> -->
+              <td>
+                <select id="netspeed" class="select_flat" style="width: 200px">
+                  <!--##PARAM_NETWORK_SPEED##-->
+                </select>
+              </td>
+            </tr>
+          </table>
+
+          <div class="mb-1" style="text-align: right">
+            <button
+              type="submit"
+              class="btn btn-secondary waves-effect waves-light"
+              id="update_save"
+            >
+              ##RES_SAVE##
+            </button>
+          </div>
+
+          <div class="mt-5" style="text-align: right">
+            <div
+              id="msg_out"
+              style="width: 300px; float: right; margin-top: -40px"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
